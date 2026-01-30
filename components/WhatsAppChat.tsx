@@ -1,0 +1,44 @@
+"use client";
+
+import { useState, useEffect } from "react";
+
+interface WhatsAppChatProps {
+  phoneNumber: string;
+  location: string;
+}
+
+export default function WhatsAppChat({ phoneNumber, location }: WhatsAppChatProps) {
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    // Show WhatsApp button after page loads
+    setIsVisible(true);
+  }, []);
+
+  const handleWhatsAppClick = () => {
+    // Format the phone number for WhatsApp (remove spaces and special characters)
+    const formattedPhone = phoneNumber.replace(/\D/g, "");
+    const whatsappUrl = `https://wa.me/${formattedPhone}?text=Hello%20Ikad%20Hotels%20${location}`;
+    window.open(whatsappUrl, "_blank");
+  };
+
+  if (!isVisible) return null;
+
+  return (
+    <button
+      onClick={handleWhatsAppClick}
+      className="fixed bottom-6 right-6 bg-green-500 hover:bg-green-600 text-white rounded-full p-4 shadow-lg transition-all duration-200 hover:scale-110 z-40"
+      title={`Chat with Ikad Hotels ${location} on WhatsApp`}
+      aria-label={`WhatsApp chat for ${location}`}
+    >
+      <svg
+        className="w-6 h-6"
+        fill="currentColor"
+        viewBox="0 0 24 24"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.272-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.67-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.076 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421-7.403h-.004a9.87 9.87 0 00-4.928 1.227l-.344-.172-3.557.364.371-3.587-.235-.374a9.86 9.86 0 011.51-4.857A9.9 9.9 0 0112.05.9a9.9 9.9 0 019.897 9.9c0 5.468-4.405 9.922-9.897 9.922-.33 0-.661-.015-.99-.046l-.355.236-3.871.299.365-3.286-.237-.368a9.868 9.868 0 01-1.52-4.457zM12.25 0C6.031 0 1 5.031 1 11.25S6.031 22.5 12.25 22.5 23.5 17.469 23.5 11.25 18.469 0 12.25 0z" />
+      </svg>
+    </button>
+  );
+}

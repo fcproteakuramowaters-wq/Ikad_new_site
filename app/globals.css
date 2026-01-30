@@ -1,0 +1,77 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+  --navy: #1a2332;
+  --gold: #D4AF37;
+  --light-gray: #f5f5f5;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-serif: var(--font-playfair);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Serif font for headings */
+h1, h2, h3, .serif-heading {
+  font-family: var(--font-playfair);
+}
+
+/* Navy color utilities */
+.navy { color: var(--navy); }
+.bg-navy { background-color: var(--navy); }
+.border-navy { border-color: var(--navy); }
+
+/* Gold color utilities */
+.gold { color: var(--gold); }
+.bg-gold { background-color: var(--gold); }
+.border-gold { border-color: var(--gold); }
+.hover\:text-gold:hover { color: var(--gold); }
+
+/* Hide Next.js dev tools button - Multiple aggressive methods */
+#next-logo,
+[data-next-mark="true"],
+[data-nextjs-dev-tools-button="true"],
+[aria-label="Open Next.js Dev Tools"],
+button[data-nextjs-dev-tools-button],
+div[data-nextjs-dev-tools-menu],
+[id*="nextjs-dev"],
+[class*="nextjs-dev"],
+svg[viewBox="0 0 40 40"],
+button[aria-haspopup="menu"][aria-expanded="false"] {
+  display: none !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  height: 0 !important;
+  width: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: none !important;
+  opacity: 0 !important;
+  position: fixed !important;
+  bottom: -9999px !important;
+  right: -9999px !important;
+}
+
+/* Block any dev tools container */
+body > button[style*="position"],
+body > div[style*="position: fixed"] {
+  display: none !important;
+}
