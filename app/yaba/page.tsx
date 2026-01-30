@@ -53,13 +53,13 @@ export default function Yaba() {
       type: "Standard",
       price: "₦25,000",
       features: ["Queen Bed", "Smart TV with Local Channels & Sports", "AC", "En-suite Bathroom", "Free Wi-Fi"],
-      images: ["/yaba/Standard1.jpeg", "/yaba/standard.jpeg"],
+      images: ["/yaba/20260130IMG_6861.jpg", "/yaba/standard.jpeg", "/yaba/20260130IMG_6865.jpg"],
     },
     {
       type: "Deluxe",
       price: "₦30,000",
       features: ["King Bed", "Smart TV with Local Channels & Sports", "AC", "Bathroom", "Free Wi-Fi", "Work Desk", "Coffee/Tea Maker"],
-      images: ["/yaba/Deluxe1.jpeg", "/yaba/Deluxe2.jpeg", "/yaba/Deluxea.jpeg"],
+      images: ["/yaba/20260130IMG_6855.jpg", "/yaba/Deluxe2.jpeg", "/yaba/Deluxea.jpeg", "/yaba/20260130IMG_6858.jpg"],
     },
   ];
 
@@ -75,6 +75,7 @@ export default function Yaba() {
     "/yaba/Cbar_Rest.jpeg",
     "/yaba/crecep.jpeg",
     "/yaba/cooli_entrance.jpg",
+    "/yaba/entrance.jpg",
   ];
 
   // Auto-play hero carousel every 3 seconds
