@@ -18,11 +18,42 @@ export async function POST(request: NextRequest) {
   try {
     const booking: BookingData = await request.json();
 
-    // Validate booking data
-    if (!booking.name || !booking.email || !booking.phone) {
+    // Validate booking data (require all fields used in the templates)
+    const requiredFields: Array<keyof BookingData> = [
+      "name",
+      "email",
+      "phone",
+      "checkIn",
+      "checkOut",
+      "roomType",
+      "nights",
+      "amount",
+      "total",
+      "hotelLocation",
+    ];
+
+    const missing = requiredFields.filter((f) => booking[f] === undefined || booking[f] === null || booking[f] === "");
+    if (missing.length > 0) {
       return NextResponse.json(
-        { error: "Missing required booking information" },
+        { error: `Missing required booking fields: ${missing.join(", ")}` },
         { status: 400 }
+      );
+    }
+
+    // Validate environment variables required for SMTP
+    const requiredEnvs = [
+      "SMTP_HOST",
+      "SMTP_PORT",
+      "SMTP_USER",
+      "SMTP_PASSWORD",
+      "SMTP_FROM",
+    ];
+    const missingEnvs = requiredEnvs.filter((e) => !process.env[e]);
+    if (missingEnvs.length > 0) {
+      console.error("Missing required environment variables:", missingEnvs);
+      return NextResponse.json(
+        { error: `Server misconfiguration: missing env vars: ${missingEnvs.join(", ")}` },
+        { status: 500 }
       );
     }
 
