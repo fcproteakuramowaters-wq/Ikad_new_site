@@ -57,7 +57,6 @@ export const metadata: Metadata = {
     creator: "@ikadhotels",
   },
   robots: "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
-  canonical: "https://ikadhotels.com",
   alternates: {
     canonical: "https://ikadhotels.com",
   },
