@@ -10,7 +10,7 @@ export default function Booking() {
       location: "Victoria Island, Lagos",
       description:
         "Luxury accommodation in the heart of Victoria Island. Experience premium hospitality with world-class amenities and services.",
-      image: "/vi/irecep.jpeg",
+      image: "/ikad/irecep.jpeg",
       link: "/victoria-island",
       features: [
         "5-star luxury amenities",
@@ -40,7 +40,7 @@ export default function Booking() {
       <HotelHero
         title="Select Your Hotel"
         location="Choose Your Perfect Stay"
-        image="/vi/iwalkway.jpeg"
+        image="/ikad/Ikad11.jpeg"
         description="Browse our premium hotel locations and find the perfect accommodation for your stay"
       />
 

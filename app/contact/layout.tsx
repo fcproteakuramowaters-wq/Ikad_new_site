@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "https://ikadhotels.com/vi/irecep.jpeg",
+        url: "https://ikadhotels.com/vi/IMG_2665.PNG",
         width: 1200,
         height: 630,
         alt: "Ikad Hotels Reception",
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Contact Ikad Hotels",
     description: "Get in touch with our team for reservations and support",
-    images: ["https://ikadhotels.com/vi/irecep.jpeg"],
+    images: ["https://ikadhotels.com/vi/IMG_2665.PNG"],
   },
 };
 

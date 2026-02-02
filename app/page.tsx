@@ -49,7 +49,7 @@ export default function Home() {
           <article className="shadow-lg rounded-lg overflow-hidden hover:shadow-xl transition-shadow">
             <div className="relative h-64 overflow-hidden bg-gray-200">
               <img
-                src="/vi/irecep.jpeg"
+                src="/vi/IMG_2665.PNG"
                 alt="Ikad Hotel & Suites – Victoria Island"
                 className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
               />

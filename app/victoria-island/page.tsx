@@ -18,7 +18,7 @@ export default function VictoriaIsland() {
   // Hotel showcase images for hero carousel
   const heroImages = [
     "/vi/ientrance.jpeg",
-    "/vi/irecep.jpeg",
+    "/vi/IMG_2665.PNG",
     "/vi/irest.jpeg",
     "/vi/lobby.jpeg",
   ];
@@ -50,26 +50,26 @@ export default function VictoriaIsland() {
     {
       type: "Studio",
       price: "₦30,000",
-      features: ["Queen Bed", "Smart TV with Local Channels & Sports", "AC", "En-suite Bathroom", "Free Wi-Fi", "Work Desk", "Wardrobe"],
-      images: ["/vi/elite.jpg"],
+      features: ["Single Bed", "Smart TV with Local Channels & Sports", "AC", "En-suite Bathroom", "Free Wi-Fi", "Work Desk", "Wardrobe"],
+      images: ["/ikad/Elite.jpeg", "/ikad/Elite1.jpeg"],
     },
     {
       type: "Elite",
       price: "₦40,000",
-      features: ["King Bed", "Smart TV with Local Channels & Sports", "AC", "En-suite Bathroom", "Free Wi-Fi", "Work Desk", "Mini Bar", "Safe"],
-      images: ["/vi/elite.jpg"],
+      features: ["Double Bed", "Smart TV with Local Channels & Sports", "AC", "En-suite Bathroom", "Free Wi-Fi", "Work Desk", "Mini Bar", "Safe"],
+      images: ["/ikad/Elite.jpeg", "/ikad/Elite1.jpeg"],
     },
     {
       type: "Premium",
       price: "₦50,000",
-      features: ["King Bed", "Smart TV with Local Channels & Sports", "AC", "Luxury Bathroom", "Free Wi-Fi", "Work Desk", "Mini Fridge", "Coffee/Tea Maker", "Robes & Slippers"],
-      images: ["/vi/premium.jpeg", "/vi/premium1.jpeg", "/vi/premium3.jpeg"],
+      features: ["Queen Bed", "Smart TV with Local Channels & Sports", "AC", "Luxury Bathroom", "Free Wi-Fi", "Work Desk", "Mini Fridge", "Coffee/Tea Maker", "Robes & Slippers"],
+      images: ["/ikad/premium.jpeg", "/ikad/Ikad27.jpeg", "/ikad/Ikad3.jpeg"],
     },
     {
       type: "Luxury",
       price: "₦60,000",
       features: ["King Bed", "Smart TV with Local Channels & Sports", "AC", "Premium Bathroom with Shower", "Free Wi-Fi", "Work Desk", "Living Area", "Minibar", "City View", "Premium Toiletries"],
-      images: ["/vi/luxury.jpeg", "/vi/luxuryb.jpeg", "/vi/luxurybe.jpeg", "/vi/luxury_bathroom.jpeg"],
+      images: ["/vi/IMG_2624.PNG", "/vi/IMG_2639.PNG", "/vi/IMG_2657.PNG", "/vi/IMG_2627.PNG", "/ikad/luxury.jpeg", "/ikad/Ikad31.jpeg", "/ikad/Luxury.jpeg"],
     },
     {
       type: "Master",
@@ -84,7 +84,7 @@ export default function VictoriaIsland() {
   // Amenities carousel images
   const amenitiesImages = [
     "/vi/irest.jpeg",
-    "/vi/irecep.jpeg",
+    "/vi/IMG_2665.PNG",
     "/vi/lobby.jpeg",
   ];
 

@@ -52,14 +52,14 @@ export default function Yaba() {
     {
       type: "Standard",
       price: "₦25,000",
-      features: ["Queen Bed", "Smart TV with Local Channels & Sports", "AC", "En-suite Bathroom", "Free Wi-Fi"],
-      images: ["/yaba/20260130IMG_6861.jpg", "/yaba/standard.jpeg", "/yaba/20260130IMG_6865.jpg"],
+      features: ["Double Bed", "Smart TV with Local Channels & Sports", "AC", "En-suite Bathroom", "Free Wi-Fi"],
+      images: ["/ikad/standard.jpeg", "/ikad/Ikad37.jpeg", "/ikad/standard1.jpeg"],
     },
     {
       type: "Deluxe",
       price: "₦30,000",
-      features: ["King Bed", "Smart TV with Local Channels & Sports", "AC", "Bathroom", "Free Wi-Fi", "Work Desk", "Coffee/Tea Maker"],
-      images: ["/yaba/20260130IMG_6855.jpg", "/yaba/Deluxe2.jpeg", "/yaba/Deluxea.jpeg", "/yaba/20260130IMG_6858.jpg"],
+      features: ["Double Bed", "Smart TV with Local Channels & Sports", "AC", "Bathroom", "Free Wi-Fi", "Work Desk", "Leather Chair & Reading Table", "Coffee/Tea Maker"],
+      images: ["/ikad/Deluxe1.jpeg", "/ikad/Deluxe2.jpeg", "/ikad/Deluxe3.jpeg", "/ikad/Deluxe4.jpeg", "/ikad/Ikad32.jpeg"],
     },
   ];
 

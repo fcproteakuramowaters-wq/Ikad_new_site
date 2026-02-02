@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "https://ikadhotels.com/vi/irecep.jpeg",
+        url: "https://ikadhotels.com/vi/IMG_2665.PNG",
         width: 1200,
         height: 630,
         alt: "Ikad Hotels Victoria Island Reception",
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Book Your Stay | Ikad Hotels",
     description: "Discover and reserve your perfect hotel in Lagos",
-    images: ["https://ikadhotels.com/vi/irecep.jpeg"],
+    images: ["https://ikadhotels.com/vi/IMG_2665.PNG"],
   },
 };
 
