@@ -71,8 +71,8 @@ export default function BookingConfirmation() {
               </p>
               <p>
                 <span className="font-semibold">Email:</span>{" "}
-                <a href="mailto:victoria@ikadhotel.com" className="text-blue-600 hover:underline">
-                  victoria@ikadhotel.com
+                <a href="mailto:victoria@ikadhotels.com" className="text-blue-600 hover:underline">
+                  victoria@ikadhotels.com
                 </a>
               </p>
               <p>

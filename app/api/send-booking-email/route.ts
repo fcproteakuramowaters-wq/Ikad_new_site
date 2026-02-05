@@ -58,8 +58,8 @@ export async function POST(request: NextRequest) {
     }
 
     const hotelEmail = booking.hotelLocation === "victoria-island"
-      ? process.env.VICTORIA_ISLAND_EMAIL || "victoria@ikadhotel.com"
-      : process.env.YABA_EMAIL || "yaba@ikadhotel.com";
+      ? process.env.VICTORIA_ISLAND_EMAIL || "victoria@ikadhotels.com"
+      : process.env.YABA_EMAIL || "yaba@ikadhotels.com";
 
     const guestHtmlTemplate = getGuestEmailTemplate(booking);
     const hotelHtmlTemplate = getHotelEmailTemplate(booking);
