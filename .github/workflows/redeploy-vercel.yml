@@ -19,7 +19,6 @@ jobs:
           node-version: '20'
 
       - name: Install dependencies
-        working-directory: ./ikadhotel
         run: npm ci
 
       - name: Install Vercel CLI
@@ -29,5 +28,5 @@ jobs:
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
         run: |
-          # Deploy the ikadhotel subfolder as the project root
-          npx vercel --confirm --prod --token "$VERCEL_TOKEN" --cwd ikadhotel
+          # Deploy repository root to Vercel
+          npx vercel --confirm --prod --token "$VERCEL_TOKEN"
