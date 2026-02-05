@@ -18,8 +18,8 @@ export function getGuestEmailTemplate(booking: BookingData): string {
     : "Ikad Hotels - Yaba";
   
   const hotelEmail = booking.hotelLocation === "victoria-island"
-    ? "victoria@ikadhotel.com"
-    : "yaba@ikadhotel.com";
+    ? "victoria@ikadhotels.com"
+    : "yaba@ikadhotels.com";
 
   return `
     <!DOCTYPE html>
