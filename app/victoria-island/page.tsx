@@ -51,7 +51,13 @@ export default function VictoriaIsland() {
       type: "Studio",
       price: "₦30,000",
       features: ["Single Bed", "Smart TV with Local Channels & Sports", "AC", "En-suite Bathroom", "Free Wi-Fi", "Work Desk", "Wardrobe"],
-      images: ["/ikad/Elite.jpeg", "/ikad/Elite1.jpeg"],
+      images: [
+        "/vi/IMG_6958.HEIC",
+        "/vi/IMG_6959.HEIC",
+        "/vi/IMG_6960.HEIC",
+        "/vi/IMG_6961.HEIC",
+        "/vi/IMG_6962.HEIC",
+      ],
     },
     {
       type: "Elite",
