@@ -368,7 +368,7 @@ export default function VictoriaIsland() {
 
                     {/* CTA Button */}
                     <Link
-                      href="/booking"
+                      href="/booking/details"
                       className="block w-full text-white py-3 rounded font-semibold text-center transition-colors uppercase text-sm hover:opacity-90" style={{ backgroundColor: "var(--gold)" }}
                     >
                       Book Now
