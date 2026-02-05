@@ -12,12 +12,27 @@ const roomPricing: { [key: string]: number } = {
 
 const roomTypes = Object.keys(roomPricing);
 
+type YabaFormData = {
+  name: string;
+  email: string;
+  phone: string;
+  checkIn: string;
+  checkOut: string;
+  roomType: string;
+  adults: number;
+  children: number;
+  childAge: number;
+  nights: number;
+  amount: number;
+  total: number;
+};
+
 function BookingDetailsContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
 
   const [currentStep, setCurrentStep] = useState(1);
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<YabaFormData>({
     name: "",
     email: "",
     phone: "",
@@ -26,6 +41,7 @@ function BookingDetailsContent() {
     roomType: "Standard",
     adults: parseInt(searchParams.get("adults") || "1"),
     children: parseInt(searchParams.get("children") || "0"),
+    childAge: 0,
     nights: 1,
     amount: 25000,
     total: 25000,
@@ -60,10 +76,10 @@ function BookingDetailsContent() {
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    // keep numeric fields as numbers
+    const numericFields = ["adults", "children", "childAge", "nights", "amount", "total"];
+    const parsedValue: any = numericFields.includes(name) ? parseInt(value || "0") : value;
+    setFormData((prev) => ({ ...(prev as any), [name]: parsedValue } as YabaFormData));
   };
 
   const handleRoomTypeChange = (roomType: string) => {
