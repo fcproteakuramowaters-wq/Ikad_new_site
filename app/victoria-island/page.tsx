@@ -52,11 +52,11 @@ export default function VictoriaIsland() {
       price: "₦30,000",
       features: ["Single Bed", "Smart TV with Local Channels & Sports", "AC", "En-suite Bathroom", "Free Wi-Fi", "Work Desk", "Wardrobe"],
       images: [
-        "/vi/IMG_6958.HEIC",
-        "/vi/IMG_6959.HEIC",
-        "/vi/IMG_6960.HEIC",
-        "/vi/IMG_6961.HEIC",
-        "/vi/IMG_6962.HEIC",
+        "/vi/IMG_6958.jpg",
+        "/vi/IMG_6959.jpg",
+        "/vi/IMG_6960.jpg",
+        "/vi/IMG_6961.jpg",
+        "/vi/IMG_6962.jpg",
       ],
     },
     {
