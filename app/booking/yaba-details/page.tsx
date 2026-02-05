@@ -24,6 +24,8 @@ function BookingDetailsContent() {
     checkIn: searchParams.get("check_in") || "",
     checkOut: searchParams.get("check_out") || "",
     roomType: "Standard",
+    adults: parseInt(searchParams.get("adults") || "1"),
+    children: parseInt(searchParams.get("children") || "0"),
     nights: 1,
     amount: 25000,
     total: 25000,
@@ -43,11 +45,14 @@ function BookingDetailsContent() {
       const roomPrice = roomPricing[formData.roomType] || 25000;
       const total = roomPrice * nights;
 
-      setFormData((prev) => ({
-        ...prev,
-        nights,
-        total,
-      }));
+      // Schedule state update asynchronously to avoid synchronous setState in effect
+      setTimeout(() => {
+        setFormData((prev) => ({
+          ...prev,
+          nights,
+          total,
+        }));
+      }, 0);
     }
   }, [formData.checkIn, formData.checkOut, formData.roomType]);
 
@@ -69,6 +74,7 @@ function BookingDetailsContent() {
       roomType,
       amount: newAmount,
       total,
+      children: prev.adults >= 2 ? 0 : Math.min(prev.children, 1),
     }));
   };
 
@@ -248,6 +254,45 @@ function BookingDetailsContent() {
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
                   placeholder="+234 XXX XXX XXXX"
                 />
+              </div>
+
+              <div className="grid md:grid-cols-2 gap-4">
+                <div>
+                  <label htmlFor="adults" className="block text-sm font-semibold text-gray-700 mb-2">Adults <span className="text-red-600">*</span></label>
+                  <select id="adults" value={formData.adults} onChange={(e) => {
+                    const v = Math.min(2, Math.max(1, parseInt(e.target.value)));
+                    setFormData(prev => ({ ...prev, adults: v, children: v >= 2 ? 0 : prev.children }));
+                  }} className="w-full px-4 py-3 border border-gray-300 rounded-lg">
+                    {[1,2].map(a => (
+                      <option key={a} value={a}>{a} Adult{a>1?"s":""}</option>
+                    ))}
+                  </select>
+                </div>
+
+                <div>
+                  <label htmlFor="children" className="block text-sm font-semibold text-gray-700 mb-2">Children</label>
+                  <select id="children" value={formData.children} onChange={(e) => setFormData(prev => ({ ...prev, children: Math.min(1, parseInt(e.target.value)) }))} className="w-full px-4 py-3 border border-gray-300 rounded-lg" disabled={formData.adults >= 2}>
+                    {[0,1].map(c => (
+                      <option key={c} value={c}>{c} Child{c!==1?"ren":""}</option>
+                    ))}
+                  </select>
+                </div>
+                {formData.children === 1 && (
+                  <div className="mt-3">
+                    <label htmlFor="childAge" className="block text-sm font-semibold text-gray-700 mb-2">Child Age (years)</label>
+                    <input
+                      id="childAge"
+                      type="number"
+                      min={0}
+                      max={17}
+                      value={formData.childAge}
+                      onChange={(e) => setFormData(prev => ({ ...prev, childAge: Math.max(0, parseInt(e.target.value || "0")) }))}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg"
+                      placeholder="Child age"
+                    />
+                    <p className="text-xs text-gray-500 mt-1">Yaba allows a single child with 1 adult. Age not restricted here.</p>
+                  </div>
+                )}
               </div>
 
               <div className="grid md:grid-cols-2 gap-4">
@@ -441,7 +486,7 @@ function BookingDetailsContent() {
                       Ready to confirm?
                     </h3>
                     <p className="text-green-800 text-sm mt-1">
-                      Please review all details above and click "Confirm Booking" to
+                      Please review all details above and click &quot;Confirm Booking&quot; to
                       proceed. You will receive a confirmation email with your
                       booking details.
                     </p>

@@ -155,7 +155,7 @@ export default function Yaba() {
           Perfect for business professionals, families, and leisure travelers, Ikad Hotel Yaba combines affordability with thoughtful amenities. From our friendly staff who treat you like family to our well-appointed rooms equipped with modern conveniences, every stay is designed to exceed your expectations.
         </p>
         <p className="text-lg text-gray-700 leading-relaxed">
-          Surrounded by bustling markets, excellent dining options, and seamless access to Lagos's key business districts, Ikad Hotel Yaba is your gateway to experiencing authentic Lagos while enjoying reliable comfort and unbeatable value.
+          Surrounded by bustling markets, excellent dining options, and seamless access to Lagos&apos;s key business districts, Ikad Hotel Yaba is your gateway to experiencing authentic Lagos while enjoying reliable comfort and unbeatable value.
         </p>
       </section>
 

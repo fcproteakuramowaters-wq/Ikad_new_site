@@ -115,6 +115,41 @@ export function getGuestEmailTemplate(booking: BookingData): string {
             </p>
           </div>
 
+          <h2>Hotel Policy</h2>
+          <div class="booking-details">
+            <h3 style="color: #1a1a2e; margin-top: 0;">Cancellation Policy</h3>
+            <ul>
+              <li><strong>Free Cancellation:</strong> Up to 48 hours before check-in date</li>
+              <li><strong>50% Refund:</strong> 24-48 hours before check-in date</li>
+              <li><strong>Non-Refundable:</strong> Less than 24 hours before check-in date</li>
+            </ul>
+
+            <h3 style="color: #1a1a2e;">Check-in & Check-out Times</h3>
+            <ul>
+              <li><strong>Check-in:</strong> 2:00 PM (Early check-in available upon request, subject to availability)</li>
+              <li><strong>Check-out:</strong> 11:00 AM (Late checkout available for a fee)</li>
+            </ul>
+
+            <h3 style="color: #1a1a2e;">House Rules</h3>
+            <ul>
+              <li>Guests must be at least 18 years old</li>
+              <li>Quiet hours: 10:00 PM - 8:00 AM</li>
+              <li>No smoking in rooms (smoking area available in designated spaces)</li>
+              <li>Pets are not allowed without prior arrangement</li>
+              <li>Guests are responsible for any damages to the room or property</li>
+              <li>Only registered guests are permitted in rooms</li>
+              <li>Valuables should be stored in room safes (available upon request)</li>
+            </ul>
+
+            <h3 style="color: #1a1a2e;">Payment Terms</h3>
+            <ul>
+              <li>A secure payment link will be sent to your email</li>
+              <li>Full payment is required to complete your booking</li>
+              <li>We accept all major credit/debit cards and bank transfers</li>
+              <li>Payment must be received to confirm your reservation</li>
+            </ul>
+          </div>
+
           <p>We look forward to welcoming you to ${hotelName}!</p>
 
           <p>Best regards,<br>

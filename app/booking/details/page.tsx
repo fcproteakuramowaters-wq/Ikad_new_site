@@ -27,6 +27,9 @@ function BookingDetailsContent() {
     checkIn: searchParams.get("check_in") || "",
     checkOut: searchParams.get("check_out") || "",
     roomType: "Studio",
+    adults: parseInt(searchParams.get("adults") || "1"),
+    children: parseInt(searchParams.get("children") || "0"),
+    childAge: parseInt(searchParams.get("child_age") || "0"),
     nights: 1,
     amount: 30000,
     total: 30000,
@@ -46,11 +49,14 @@ function BookingDetailsContent() {
       const roomPrice = roomPricing[formData.roomType] || 30000;
       const total = roomPrice * nights;
 
-      setFormData((prev) => ({
-        ...prev,
-        nights,
-        total,
-      }));
+      // Schedule state update asynchronously to avoid synchronous setState in effect
+      setTimeout(() => {
+        setFormData((prev) => ({
+          ...prev,
+          nights,
+          total,
+        }));
+      }, 0);
     }
   }, [formData.checkIn, formData.checkOut, formData.roomType]);
 
@@ -67,13 +73,52 @@ function BookingDetailsContent() {
   const handleRoomTypeChange = (roomType: string) => {
     const newAmount = roomPricing[roomType] || 30000;
     const total = newAmount * formData.nights;
+    setFormData((prev) => {
+      // enforce children rules for Victoria Island details page
+      let children = prev.children;
+      // If two adults and room is Studio/Elite/Premium -> no children allowed
+      if (prev.adults >= 2 && ["Studio", "Elite", "Premium"].includes(roomType)) {
+        children = 0;
+      }
+      // If room is Luxury or Master, allow at most 1 child
+      if (["Luxury", "Master"].includes(roomType)) {
+        children = Math.min(children, 1);
+      }
+      return {
+        ...prev,
+        roomType,
+        amount: newAmount,
+        total,
+        children,
+        // clear childAge if children got reset
+        childAge: children ? prev.childAge : 0,
+      };
+    });
+  };
+
+  const handleAdultsChange = (v: number) => {
+    const adults = Math.min(2, Math.max(1, v));
     setFormData((prev) => ({
       ...prev,
-      roomType,
-      amount: newAmount,
-      total,
+      adults,
+      // if two adults and roomType is Studio/Elite/Premium => children forced to 0
+      children: adults >= 2 && ["Studio", "Elite", "Premium"].includes(prev.roomType) ? 0 : prev.children,
+      childAge: adults >= 2 && ["Studio", "Elite", "Premium"].includes(prev.roomType) ? 0 : prev.childAge,
     }));
   };
+
+  const handleChildrenChange = (v: number) => {
+    // enforce max children based on room
+    let maxChild = 1; // by rules only up to 1 child allowed in victoria
+    if (["Luxury", "Master"].includes(formData.roomType)) maxChild = 1;
+    const children = Math.min(v, maxChild);
+    setFormData((prev) => ({ ...prev, children, childAge: children ? prev.childAge : 0 }));
+  };
+
+  const handleChildAgeChange = (age: number) => {
+    setFormData((prev) => ({ ...prev, childAge: Math.max(0, age) }));
+  };
+
 
   const handleNextStep = () => {
     if (currentStep < totalSteps) {
@@ -90,6 +135,19 @@ function BookingDetailsContent() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (currentStep === totalSteps) {
+      // Validation: if children present, ensure allowed by room and age rules
+      if (formData.children > 0) {
+        // For Victoria Island only Luxury/Master allow children (we already enforced elsewhere)
+        if (!["Luxury", "Master"].includes(formData.roomType)) {
+          alert("Selected room does not allow children when 2 adults are selected or by room policy.");
+          return;
+        }
+        // child age must be provided and <= 4 for Victoria Island policy
+        if (!formData.childAge || formData.childAge > 4) {
+          alert("For Luxury/Master rooms in Victoria Island a child must be age 4 or below.");
+          return;
+        }
+      }
       try {
         // Send booking confirmation emails
         const response = await fetch("/api/send-booking-email", {
@@ -251,6 +309,43 @@ function BookingDetailsContent() {
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
                   placeholder="+234 XXX XXX XXXX"
                 />
+              </div>
+
+              <div className="grid md:grid-cols-2 gap-4">
+                <div>
+                  <label htmlFor="adults" className="block text-sm font-semibold text-gray-700 mb-2">Adults <span className="text-red-600">*</span></label>
+                  <select id="adults" value={formData.adults} onChange={(e) => handleAdultsChange(parseInt(e.target.value))} className="w-full px-4 py-3 border border-gray-300 rounded-lg">
+                    {[1,2].map(a => (
+                      <option key={a} value={a}>{a} Adult{a>1?"s":""}</option>
+                    ))}
+                  </select>
+                </div>
+
+                <div>
+                  <label htmlFor="children" className="block text-sm font-semibold text-gray-700 mb-2">Children</label>
+                  <select id="children" value={formData.children} onChange={(e) => handleChildrenChange(parseInt(e.target.value))} className="w-full px-4 py-3 border border-gray-300 rounded-lg" disabled={formData.adults >= 2 && ["Studio","Elite","Premium"].includes(formData.roomType)}>
+                    {[0,1].map(c => (
+                      <option key={c} value={c}>{c} Child{c!==1?"ren":""}</option>
+                    ))}
+                  </select>
+                </div>
+                {/* Child age (only for Luxury/Master when a child is added) */}
+                {formData.children === 1 && ["Luxury", "Master"].includes(formData.roomType) && (
+                  <div className="mt-3">
+                    <label htmlFor="childAge" className="block text-sm font-semibold text-gray-700 mb-2">Child Age (years)</label>
+                    <input
+                      id="childAge"
+                      type="number"
+                      min={0}
+                      max={4}
+                      value={formData.childAge}
+                      onChange={(e) => handleChildAgeChange(parseInt(e.target.value || "0"))}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg"
+                      placeholder="Age (0-4)"
+                    />
+                    <p className="text-xs text-gray-500 mt-1">For Luxury/Master rooms a child must be 4 years or below.</p>
+                  </div>
+                )}
               </div>
 
               <div className="grid md:grid-cols-2 gap-4">
@@ -444,7 +539,7 @@ function BookingDetailsContent() {
                       Ready to confirm?
                     </h3>
                     <p className="text-green-800 text-sm mt-1">
-                      Please review all details above and click "Confirm Booking" to
+                      Please review all details above and click &quot;Confirm Booking&quot; to
                       proceed. You will receive a confirmation email with your
                       booking details.
                     </p>

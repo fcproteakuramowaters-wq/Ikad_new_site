@@ -1,28 +1,16 @@
 "use client";
 
-import { useState, useEffect } from "react";
-
 interface WhatsAppChatProps {
   phoneNumber: string;
   location: string;
 }
 
 export default function WhatsAppChat({ phoneNumber, location }: WhatsAppChatProps) {
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    // Show WhatsApp button after page loads
-    setIsVisible(true);
-  }, []);
-
   const handleWhatsAppClick = () => {
-    // Format the phone number for WhatsApp (remove spaces and special characters)
     const formattedPhone = phoneNumber.replace(/\D/g, "");
     const whatsappUrl = `https://wa.me/${formattedPhone}?text=Hello%20Ikad%20Hotels%20${location}`;
     window.open(whatsappUrl, "_blank");
   };
-
-  if (!isVisible) return null;
 
   return (
     <button

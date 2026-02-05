@@ -46,7 +46,7 @@ export default function Contact() {
         <div className="max-w-6xl mx-auto text-center">
           <h1 className="text-4xl font-bold text-gray-900 mb-3">Contact Us</h1>
           <p className="text-lg text-gray-700">
-            We'd love to hear from you. Get in touch with our team for any inquiries or bookings.
+            We&apos;d love to hear from you. Get in touch with our team for any inquiries or bookings.
           </p>
         </div>
       </section>
@@ -278,7 +278,7 @@ export default function Contact() {
               </button>
 
               <p className="text-sm text-gray-600">
-                * Required fields. We'll respond to your message within 24 hours.
+                * Required fields. We&apos;ll respond to your message within 24 hours.
               </p>
             </form>
           </div>

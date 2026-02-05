@@ -46,32 +46,4 @@ h1, h2, h3, .serif-heading {
 .hover\:text-gold:hover { color: var(--gold); }
 
 /* Hide Next.js dev tools button - Multiple aggressive methods */
-#next-logo,
-[data-next-mark="true"],
-[data-nextjs-dev-tools-button="true"],
-[aria-label="Open Next.js Dev Tools"],
-button[data-nextjs-dev-tools-button],
-div[data-nextjs-dev-tools-menu],
-[id*="nextjs-dev"],
-[class*="nextjs-dev"],
-svg[viewBox="0 0 40 40"],
-button[aria-haspopup="menu"][aria-expanded="false"] {
-  display: none !important;
-  visibility: hidden !important;
-  pointer-events: none !important;
-  height: 0 !important;
-  width: 0 !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  border: none !important;
-  opacity: 0 !important;
-  position: fixed !important;
-  bottom: -9999px !important;
-  right: -9999px !important;
-}
-
-/* Block any dev tools container */
-body > button[style*="position"],
-body > div[style*="position: fixed"] {
-  display: none !important;
-}
+/* Removed aggressive dev-tools hiding rules — handled client-side by DevToolsCleaner */

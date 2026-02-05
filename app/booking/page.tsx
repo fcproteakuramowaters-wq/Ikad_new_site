@@ -188,7 +188,7 @@ export default function Booking() {
                 Perfect Locations
               </h3>
               <p className="text-gray-600 leading-relaxed">
-                Strategically located in Lagos's most desirable areas
+                Strategically located in Lagos&apos;s most desirable areas
               </p>
             </div>
           </div>

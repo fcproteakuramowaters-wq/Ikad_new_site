@@ -80,10 +80,16 @@ export default function BookingSearch({ location = "victoria-island" }: BookingS
             <select
               id="adults"
               value={adults}
-              onChange={(e) => setAdults(parseInt(e.target.value))}
+              onChange={(e) => {
+                const v = parseInt(e.target.value);
+                // global max 2 adults
+                setAdults(v > 2 ? 2 : v);
+                // if Yaba and selecting 2 adults, force children to 0
+                if (location === "yaba" && v === 2) setChildren(0);
+              }}
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
             >
-              {[1, 2, 3, 4, 5, 6].map((num) => (
+              {[1, 2].map((num) => (
                 <option key={num} value={num}>
                   {num} Adult{num > 1 ? "s" : ""}
                 </option>
@@ -100,9 +106,10 @@ export default function BookingSearch({ location = "victoria-island" }: BookingS
               id="children"
               value={children}
               onChange={(e) => setChildren(parseInt(e.target.value))}
+              disabled={location === "yaba" && adults === 2}
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
             >
-              {[0, 1, 2, 3, 4, 5].map((num) => (
+              {[0, 1].map((num) => (
                 <option key={num} value={num}>
                   {num} Child{num !== 1 ? "ren" : ""}
                 </option>

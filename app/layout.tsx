@@ -4,6 +4,7 @@ import { Playfair_Display } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import DevToolsCleaner from "@/components/DevToolsCleaner";
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -71,24 +72,6 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <style>{`
-          #next-logo, 
-          [data-next-mark="true"], 
-          [data-nextjs-dev-tools-button="true"],
-          [data-next-badge="true"],
-          [aria-label="Open Next.js Dev Tools"],
-          button[data-nextjs-dev-tools-button],
-          div[data-nextjs-dev-tools-menu] { 
-            display: none !important; 
-            visibility: hidden !important;
-            pointer-events: none !important;
-            height: 0 !important;
-            width: 0 !important;
-            margin: 0 !important;
-            padding: 0 !important;
-            border: none !important;
-          }
-        `}</style>
         <link rel="manifest" href="/manifest.json" />
         <link rel="icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
@@ -104,25 +87,7 @@ export default function RootLayout({
         <Navbar />
         <main>{children}</main>
         <Footer />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              if (typeof window !== 'undefined') {
-                // Remove Next.js dev tools button and badge
-                const removeDevTools = () => {
-                  document.querySelectorAll('[data-nextjs-dev-tools-button], #next-logo, [data-next-mark="true"], [data-next-badge="true"], [data-nextjs-dev-tools-menu]').forEach(el => el.remove());
-                };
-                
-                const observer = new MutationObserver(removeDevTools);
-                observer.observe(document.body, { childList: true, subtree: true });
-                
-                // Initial cleanup
-                setTimeout(removeDevTools, 50);
-                setTimeout(removeDevTools, 200);
-              }
-            `,
-          }}
-        />
+        <DevToolsCleaner />
       </body>
     </html>
   );

@@ -26,7 +26,7 @@ export default function BookingPlatforms() {
         <div className="text-center mb-12">
           <p className="text-sm font-semibold tracking-widest gold uppercase mb-4">BOOK WITH US</p>
           <h3 className="text-5xl font-light text-navy mb-3" style={{ fontFamily: "var(--font-playfair)" }}>Book With Your Favorite Platform</h3>
-          <p className="text-gray-600">We're available on all major booking sites for your convenience</p>
+          <p className="text-gray-600">We&apos;re available on all major booking sites for your convenience</p>
         </div>
 
         <div className="grid md:grid-cols-3 gap-6">
