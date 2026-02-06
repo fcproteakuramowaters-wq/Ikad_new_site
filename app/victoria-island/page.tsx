@@ -176,8 +176,8 @@ export default function VictoriaIsland() {
         {/* Content */}
         <div className="relative z-10 ml-10 px-6 py-12">
           <div className="max-w-2xl">
-            <h1 className="text-6xl font-bold mb-4 leading-tight tracking-tight" style={{ fontFamily: "var(--font-playfair)" }}>Ikad Hotel & Suites</h1>
-            <p className="text-2xl text-gray-100 mb-6 font-light">Victoria Island, Lagos</p>
+            <h1 className="text-6xl font-bold mb-4 leading-tight tracking-tight" style={{ fontFamily: "var(--font-playfair)" }}>Ikad Hotel & Suites — Victoria Island, Lagos</h1>
+            <p className="text-2xl text-gray-100 mb-6 font-light">Luxury hotel in Victoria Island, Lagos — near Lekki, Etim Inyang and Lagos Island</p>
             <p className="text-lg text-gray-200 leading-relaxed">
               Experience world-class hospitality in the heart of Lagos&apos;s most prestigious location
             </p>
@@ -226,9 +226,9 @@ export default function VictoriaIsland() {
 
       {/* About Section */}
       <section className="max-w-5xl mx-auto py-40 px-6">
-        <h2 className="text-5xl font-light mb-8 text-navy" style={{ fontFamily: "var(--font-playfair)" }}>About the Hotel</h2>
+        <h2 className="text-5xl font-light mb-8 text-navy" style={{ fontFamily: "var(--font-playfair)" }}>About Ikad Hotel & Suites — Victoria Island</h2>
         <p className="text-lg text-gray-700 leading-relaxed mb-8">
-          Ikad Hotel & Suites Victoria Island represents the pinnacle of luxury hospitality in Lagos. Nestled in the heart of Nigeria&apos;s most prestigious business and leisure district, our hotel transcends expectations with world-class accommodations and impeccable service. Every detail has been meticulously crafted to provide an unforgettable experience for our discerning guests.
+          Ikad Hotel & Suites Victoria Island represents the pinnacle of luxury hospitality in Lagos. Nestled in the heart of Victoria Island, our hotel is minutes from the financial district, popular shopping destinations and the Lekki corridor. We offer world-class accommodations, fine dining and exceptional service — ideal for business travelers and leisure guests visiting Lagos Island, Etim Inyang and Lekki.
         </p>
         <p className="text-lg text-gray-700 leading-relaxed mb-8">
           Our commitment to excellence is evident in every aspect—from our exquisitely appointed suites to our award-winning culinary offerings. Whether you&apos;re in Victoria Island for a high-stakes business meeting or a romantic getaway, Ikad Hotel & Suites provides the perfect sanctuary for luxury seekers.
@@ -247,7 +247,7 @@ export default function VictoriaIsland() {
               Exquisite Suites & Rooms
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-              Each room is a sanctuary of comfort and elegance, meticulously designed with premium furnishings and world-class amenities for an unforgettable experience
+              Each room is a sanctuary of comfort and elegance, meticulously designed with premium furnishings and world-class amenities for an unforgettable stay in Victoria Island, Lagos.
             </p>
           </div>
 

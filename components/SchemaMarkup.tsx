@@ -7,7 +7,7 @@ export function HotelSchema({ hotelName, hotelType }: { hotelName: string; hotel
       ? "https://ikadhotels.com/victoria-island" 
       : "https://ikadhotels.com/yaba",
     "telephone": "+234-916-373-8458",
-    "email": "info@ikadhotels.com",
+    "email": hotelType === "victoria-island" ? "reservations.vi@ikadhotels.com" : "reservations.bw@ikadhotels.com",
     "address": {
       "@type": "PostalAddress",
       "streetAddress": hotelType === "victoria-island" 
@@ -43,6 +43,12 @@ export function HotelSchema({ hotelName, hotelType }: { hotelName: string; hotel
         "name": "Restaurant",
       },
     ],
+    "areaServed": ["Lagos", "Victoria Island", "Lagos Island", "Etim Inyang", "Lekki"],
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": "6.4389",
+      "longitude": "3.4276"
+    },
   };
 
   return (
