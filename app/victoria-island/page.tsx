@@ -571,7 +571,7 @@ export default function VictoriaIsland() {
                 </p>
                 <p>
                   <span className="font-semibold text-gray-900">Email:</span><br />
-                  <a href="mailto:victoria@ikadhotels.com" className="hover:opacity-75" style={{ color: "var(--gold)" }}>victoria@ikadhotels.com</a>
+                  <a href="mailto:reservations.vi@ikadhotels.com" className="hover:opacity-75" style={{ color: "var(--gold)" }}>reservations.vi@ikadhotels.com</a>
                 </p>
               </div>
             </div>

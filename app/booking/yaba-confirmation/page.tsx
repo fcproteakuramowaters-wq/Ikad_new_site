@@ -71,8 +71,8 @@ export default function YabaBookingConfirmation() {
               </p>
               <p>
                 <span className="font-semibold">Email:</span>{" "}
-                <a href="mailto:yaba@ikadhotels.com" className="text-blue-600 hover:underline">
-                  yaba@ikadhotels.com
+                <a href="mailto:reservations.bw@ikadhotels.com" className="text-blue-600 hover:underline">
+                  reservations.bw@ikadhotels.com
                 </a>
               </p>
               <p>

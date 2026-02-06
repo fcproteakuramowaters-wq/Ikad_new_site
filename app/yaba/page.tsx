@@ -450,8 +450,8 @@ export default function Yaba() {
               </p>
               <p className="text-gray-700">
                 <strong>Email:</strong><br />
-                <a href="mailto:yaba@ikadhotels.com" className="hover:opacity-75" style={{ color: "var(--gold)" }}>
-                  yaba@ikadhotels.com
+                <a href="mailto:reservations.bw@ikadhotels.com" className="hover:opacity-75" style={{ color: "var(--gold)" }}>
+                  reservations.bw@ikadhotels.com
                 </a>
               </p>
             </div>
@@ -515,7 +515,7 @@ export default function Yaba() {
                 </p>
                 <p>
                   <span className="font-semibold text-gray-900">Email:</span><br />
-                  <a href="mailto:yaba@ikadhotels.com" className="hover:opacity-75" style={{ color: "var(--gold)" }}>yaba@ikadhotels.com</a>
+                  <a href="mailto:reservations.bw@ikadhotels.com" className="hover:opacity-75" style={{ color: "var(--gold)" }}>reservations.bw@ikadhotels.com</a>
                 </p>
               </div>
             </div>

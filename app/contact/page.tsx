@@ -81,10 +81,10 @@ export default function Contact() {
               <p className="text-gray-700">
                 <strong>Email:</strong><br />
                 <a
-                  href="mailto:victoria@ikadhotels.com"
+                  href="mailto:reservations.vi@ikadhotels.com"
                   className="text-blue-600 hover:underline font-medium"
                 >
-                  <i className="fa-solid fa-at"></i> victoria@ikadhotels.com
+                  <i className="fa-solid fa-at"></i> reservations.vi@ikadhotels.com
                 </a>
               </p>
             </article>
@@ -111,10 +111,10 @@ export default function Contact() {
               <p className="text-gray-700">
                 <strong>Email:</strong><br />
                 <a
-                  href="mailto:yaba@ikadhotels.com"
+                  href="mailto:reservations.bw@ikadhotels.com"
                   className="text-blue-600 hover:underline font-medium"
                 >
-                  <i className="fa-solid fa-at"></i> yaba@ikadhotels.com
+                  <i className="fa-solid fa-at"></i> reservations.bw@ikadhotels.com
                 </a>
               </p>
             </article>
@@ -136,10 +136,10 @@ export default function Contact() {
               <p className="text-gray-700">
                 <strong>Email:</strong><br />
                 <a
-                  href="mailto:info@ikadhotels.com"
+                  href="mailto:reservations.vi@ikadhotels.com"
                   className="text-blue-600 hover:underline font-medium"
                 >
-                  <i className="fa-solid fa-at"></i> info@ikadhotels.com
+                  <i className="fa-solid fa-at"></i> reservations.vi@ikadhotels.com
                 </a>
               </p>
             </article>
