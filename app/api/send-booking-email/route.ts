@@ -2,17 +2,30 @@ import nodemailer from "nodemailer";
 import { getGuestEmailTemplate, getHotelEmailTemplate, BookingData } from "@/lib/emailTemplates";
 import { NextRequest, NextResponse } from "next/server";
 
-// Configure your email service here
-// Using Gmail, SendGrid, or another SMTP service
-const transporter = nodemailer.createTransport({
-  host: process.env.SMTP_HOST,
-  port: parseInt(process.env.SMTP_PORT || "587"),
-  secure: process.env.SMTP_SECURE === "true", // true for 465, false for other ports
-  auth: {
-    user: process.env.SMTP_USER,
-    pass: process.env.SMTP_PASSWORD,
-  },
-});
+// Create separate transporters for each hotel location
+const createTransporter = (location: string) => {
+  if (location === "victoria-island") {
+    return nodemailer.createTransport({
+      host: process.env.SMTP_HOST || "smtppro.zoho.com",
+      port: parseInt(process.env.SMTP_PORT || "587"),
+      secure: process.env.SMTP_SECURE === "true",
+      auth: {
+        user: process.env.VI_SMTP_USER || "reservations.vi@ikadhotels.com",
+        pass: process.env.VI_SMTP_PASSWORD || "mU6uNWPnjknm",
+      },
+    });
+  } else {
+    return nodemailer.createTransport({
+      host: process.env.SMTP_HOST || "smtppro.zoho.com",
+      port: parseInt(process.env.SMTP_PORT || "587"),
+      secure: process.env.SMTP_SECURE === "true",
+      auth: {
+        user: process.env.YABA_SMTP_USER || "reservations.bw@ikadhotels.com",
+        pass: process.env.YABA_SMTP_PASSWORD || "UwwJ60jRUmn7",
+      },
+    });
+  }
+};
 
 export async function POST(request: NextRequest) {
   try {
@@ -41,14 +54,25 @@ export async function POST(request: NextRequest) {
     }
 
     // Validate environment variables required for SMTP
+    // Note: We now use location-specific SMTP credentials
     const requiredEnvs = [
       "SMTP_HOST",
       "SMTP_PORT",
-      "SMTP_USER",
-      "SMTP_PASSWORD",
       "SMTP_FROM",
     ];
     const missingEnvs = requiredEnvs.filter((e) => !process.env[e]);
+    
+    // Check location-specific credentials
+    if (booking.hotelLocation === "victoria-island") {
+      if (!process.env.VI_SMTP_USER && !process.env.VI_SMTP_PASSWORD) {
+        // Allow fallback to defaults if env vars not set
+      }
+    } else {
+      if (!process.env.YABA_SMTP_USER && !process.env.YABA_SMTP_PASSWORD) {
+        // Allow fallback to defaults if env vars not set
+      }
+    }
+    
     if (missingEnvs.length > 0) {
       console.error("Missing required environment variables:", missingEnvs);
       return NextResponse.json(
@@ -56,6 +80,9 @@ export async function POST(request: NextRequest) {
         { status: 500 }
       );
     }
+
+    // Get the appropriate transporter based on hotel location
+    const transporter = createTransporter(booking.hotelLocation);
 
     const hotelEmail = booking.hotelLocation === "victoria-island"
       ? process.env.VICTORIA_ISLAND_EMAIL || "reservations.vi@ikadhotels.com"
