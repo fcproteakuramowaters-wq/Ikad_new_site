@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Script from "next/script";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -63,7 +64,7 @@ export default function Footer() {
             <h4 className="text-lg font-bold mb-4">Contact</h4>
             <div className="space-y-2 text-gray-400 text-sm">
               <p><a href="tel:09163738458" className="hover:text-white"><i className="fa-solid fa-phone"></i> General</a></p>
-              <p><a href="mailto:info@ikadhotels.com" className="hover:text-white"><i className="fa-solid fa-at"></i> info@ikadhotels.com</a></p>
+              <p><a href="mailto:ikadhotelvi@gmail.com" className="hover:text-white"><i className="fa-solid fa-at"></i> info@ikadhotels.com</a></p>
               <p><a href="mailto:victoria@ikadhotels.com" className="hover:text-white"><i className="fa-solid fa-at"></i> Victoria Island</a></p>
               <p><a href="mailto:yaba@ikadhotels.com" className="hover:text-white"><i className="fa-solid fa-at"></i> Yaba</a></p>
             </div>
@@ -73,6 +74,17 @@ export default function Footer() {
           <p className="text-center text-sm text-gray-400">&copy; {currentYear} Ikad Hotels. All Rights Reserved.</p>
         </div>
       </div>
+      <Script
+        src="https://www.googletagmanager.com/gtag/js?id=G-5VCFDDPX38"
+        strategy="afterInteractive"
+      />
+      <Script
+        id="gtag-init"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: `window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-5VCFDDPX38');`,
+        }}
+      />
     </footer>
   );
 }
