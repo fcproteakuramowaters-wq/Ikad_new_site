@@ -4,9 +4,13 @@ import { NextRequest, NextResponse } from "next/server";
 
 // Create separate transporters for each hotel location
 const createTransporter = (location: string) => {
+  // Prefer location-specific host if provided, then global SMTP_HOST, then Zoho default
+  const viHost = process.env.VI_SMTP_HOST || process.env.SMTP_HOST || "smtppro.zoho.com";
+  const yabaHost = process.env.YABA_SMTP_HOST || process.env.SMTP_HOST || "smtppro.zoho.com";
+
   if (location === "victoria-island") {
     return nodemailer.createTransport({
-      host: process.env.SMTP_HOST || "smtppro.zoho.com",
+      host: viHost,
       port: parseInt(process.env.SMTP_PORT || "587"),
       secure: process.env.SMTP_SECURE === "true",
       auth: {
@@ -16,7 +20,7 @@ const createTransporter = (location: string) => {
     });
   } else {
     return nodemailer.createTransport({
-      host: process.env.SMTP_HOST || "smtppro.zoho.com",
+      host: yabaHost,
       port: parseInt(process.env.SMTP_PORT || "587"),
       secure: process.env.SMTP_SECURE === "true",
       auth: {
@@ -94,6 +98,23 @@ export async function POST(request: NextRequest) {
 
     const guestHtmlTemplate = getGuestEmailTemplate(booking);
     const hotelHtmlTemplate = getHotelEmailTemplate(booking);
+
+    // Verify transporter connection early to give clearer errors in logs
+    try {
+      // Mask the user in logs to avoid leaking full credentials
+      const tOpts: any = (transporter as any).options || {};
+      const logHost = tOpts.host || process.env.SMTP_HOST || "(unknown)";
+      const logUser = tOpts.auth?.user || smtpUser || "(unknown)";
+      const maskedUser = typeof logUser === "string" ? logUser.replace(/.(?=.{2})/g, "*") : logUser;
+      console.log("[send-booking-email] Verifying SMTP connection", { host: logHost, user: maskedUser });
+
+      await transporter.verify();
+      console.log("[send-booking-email] SMTP verified successfully");
+    } catch (verifyErr) {
+      console.error("[send-booking-email] SMTP verify failed:", verifyErr);
+      // Re-throw so the outer catch will return the 500 with details
+      throw verifyErr;
+    }
 
     // Send email to guest
     const guestEmailPromise = transporter.sendMail({
