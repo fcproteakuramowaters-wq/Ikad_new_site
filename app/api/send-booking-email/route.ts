@@ -118,7 +118,7 @@ export async function POST(request: NextRequest) {
 
     // Send email to guest
     const guestEmailPromise = transporter.sendMail({
-      from: process.env.SMTP_FROM || smtpUser,
+      from: smtpUser,
       to: booking.email,
       subject: `Booking Confirmation - Ikad Hotels ${
         booking.hotelLocation === "victoria-island" ? "Victoria Island" : "Yaba"
@@ -129,7 +129,7 @@ export async function POST(request: NextRequest) {
 
     // Send email to hotel
     const hotelEmailPromise = transporter.sendMail({
-      from: process.env.SMTP_FROM || smtpUser,
+      from: smtpUser,
       to: hotelEmail,
       cc: process.env.ADMIN_EMAIL,
       subject: `New Booking Request - ${booking.name} (${
