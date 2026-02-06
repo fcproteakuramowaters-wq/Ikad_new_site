@@ -88,12 +88,16 @@ export async function POST(request: NextRequest) {
       ? process.env.VICTORIA_ISLAND_EMAIL || "reservations.vi@ikadhotels.com"
       : process.env.YABA_EMAIL || "reservations.bw@ikadhotels.com";
 
+    const smtpUser = booking.hotelLocation === "victoria-island"
+      ? process.env.VI_SMTP_USER || "reservations.vi@ikadhotels.com"
+      : process.env.YABA_SMTP_USER || "reservations.bw@ikadhotels.com";
+
     const guestHtmlTemplate = getGuestEmailTemplate(booking);
     const hotelHtmlTemplate = getHotelEmailTemplate(booking);
 
     // Send email to guest
     const guestEmailPromise = transporter.sendMail({
-      from: process.env.SMTP_FROM || process.env.SMTP_USER,
+      from: process.env.SMTP_FROM || smtpUser,
       to: booking.email,
       subject: `Booking Confirmation - Ikad Hotels ${
         booking.hotelLocation === "victoria-island" ? "Victoria Island" : "Yaba"
@@ -104,7 +108,7 @@ export async function POST(request: NextRequest) {
 
     // Send email to hotel
     const hotelEmailPromise = transporter.sendMail({
-      from: process.env.SMTP_FROM || process.env.SMTP_USER,
+      from: process.env.SMTP_FROM || smtpUser,
       to: hotelEmail,
       cc: process.env.ADMIN_EMAIL,
       subject: `New Booking Request - ${booking.name} (${
