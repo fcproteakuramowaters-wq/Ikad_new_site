@@ -6,6 +6,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import DevToolsCleaner from "@/components/DevToolsCleaner";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Analytics } from "@vercel/analytics/next";
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -89,6 +90,7 @@ export default function RootLayout({
         <main>{children}</main>
         <Footer />
         <SpeedInsights />
+        <Analytics />
         <DevToolsCleaner />
       </body>
     </html>
