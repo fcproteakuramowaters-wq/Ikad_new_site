@@ -51,13 +51,13 @@ export default function Yaba() {
   const rooms = [
     {
       type: "Standard",
-      price: "₦25,000",
+      price: "₦20,000",
       features: ["Double Bed", "Smart TV with Local Channels & Sports", "AC", "En-suite Bathroom", "Free Wi-Fi"],
       images: ["/ikad/standard.jpeg", "/ikad/Ikad37.jpeg", "/ikad/standard1.jpeg"],
     },
     {
       type: "Deluxe",
-      price: "₦30,000",
+      price: "₦25,000",
       features: ["Double Bed", "Smart TV with Local Channels & Sports", "AC", "Bathroom", "Free Wi-Fi", "Work Desk", "Leather Chair & Reading Table", "Coffee/Tea Maker"],
       images: ["/ikad/Deluxe1.jpeg", "/ikad/Deluxe2.jpeg", "/ikad/Deluxe3.jpeg", "/ikad/Deluxe4.jpeg", "/ikad/Ikad32.jpeg"],
     },

@@ -6,8 +6,8 @@ import Link from "next/link";
 
 // Room pricing data for Yaba
 const roomPricing: { [key: string]: number } = {
-  Standard: 25000,
-  Deluxe: 30000,
+  Standard: 20000,
+  Deluxe: 25000,
 };
 
 const roomTypes = Object.keys(roomPricing);
@@ -43,8 +43,8 @@ function BookingDetailsContent() {
     children: parseInt(searchParams.get("children") || "0"),
     childAge: 0,
     nights: 1,
-    amount: 25000,
-    total: 25000,
+    amount: 20000,
+    total: 20000,
   });
 
   const totalSteps = 4;
@@ -58,7 +58,7 @@ function BookingDetailsContent() {
         (checkOutDate.getTime() - checkInDate.getTime()) / (1000 * 60 * 60 * 24)
       );
       const nights = Math.max(1, nightsDifference);
-      const roomPrice = roomPricing[formData.roomType] || 25000;
+      const roomPrice = roomPricing[formData.roomType] || 20000;
       const total = roomPrice * nights;
 
       // Schedule state update asynchronously to avoid synchronous setState in effect
@@ -83,7 +83,7 @@ function BookingDetailsContent() {
   };
 
   const handleRoomTypeChange = (roomType: string) => {
-    const newAmount = roomPricing[roomType] || 25000;
+    const newAmount = roomPricing[roomType] || 20000;
     const total = newAmount * formData.nights;
     setFormData((prev) => ({
       ...prev,
