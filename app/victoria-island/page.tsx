@@ -49,7 +49,7 @@ export default function VictoriaIsland() {
   const rooms = [
     {
       type: "Studio",
-      price: "₦30,000",
+      price: "₦35,000",
       features: ["Single Bed", "Smart TV with Local Channels & Sports", "AC", "En-suite Bathroom", "Free Wi-Fi", "Work Desk", "Wardrobe"],
       images: [
         "/vi/IMG_6958.jpg",
@@ -61,7 +61,7 @@ export default function VictoriaIsland() {
     },
     {
       type: "Elite",
-      price: "₦40,000",
+      price: "₦45,000",
       features: ["Double Bed", "Smart TV with Local Channels & Sports", "AC", "En-suite Bathroom", "Free Wi-Fi", "Work Desk", "Mini Bar", "Safe"],
       images: ["/ikad/Elite.jpeg", "/ikad/Elite1.jpeg"],
     },
@@ -73,7 +73,7 @@ export default function VictoriaIsland() {
     },
     {
       type: "Luxury",
-      price: "₦60,000",
+      price: "₦65,000",
       features: ["King Bed", "Smart TV with Local Channels & Sports", "AC", "Premium Bathroom with Shower", "Free Wi-Fi", "Work Desk", "Living Area", "Minibar", "City View", "Premium Toiletries"],
       images: ["/vi/IMG_2624.PNG", "/vi/IMG_2639.PNG", "/vi/IMG_2657.PNG", "/vi/IMG_2627.PNG", "/ikad/luxury.jpeg", "/ikad/Ikad31.jpeg", "/ikad/Luxury.jpeg"],
     },
