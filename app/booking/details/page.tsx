@@ -6,10 +6,10 @@ import Link from "next/link";
 
 // Room pricing data
 const roomPricing: { [key: string]: number } = {
-  Studio: 30000,
-  Elite: 40000,
+  Studio: 35000,
+  Elite: 45000,
   Premium: 50000,
-  Luxury: 60000,
+  Luxury: 65000,
   Master: 70000,
 };
 
