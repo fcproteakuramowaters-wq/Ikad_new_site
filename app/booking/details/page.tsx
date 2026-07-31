@@ -31,8 +31,8 @@ function BookingDetailsContent() {
     children: parseInt(searchParams.get("children") || "0"),
     childAge: parseInt(searchParams.get("child_age") || "0"),
     nights: 1,
-    amount: 30000,
-    total: 30000,
+    amount: 35000,
+    total: 35000,
   });
 
   const totalSteps = 4;
@@ -46,7 +46,7 @@ function BookingDetailsContent() {
         (checkOutDate.getTime() - checkInDate.getTime()) / (1000 * 60 * 60 * 24)
       );
       const nights = Math.max(1, nightsDifference);
-      const roomPrice = roomPricing[formData.roomType] || 30000;
+      const roomPrice = roomPricing[formData.roomType] || 35000;
       const total = roomPrice * nights;
 
       // Schedule state update asynchronously to avoid synchronous setState in effect
