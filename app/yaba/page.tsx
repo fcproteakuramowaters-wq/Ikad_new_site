@@ -5,6 +5,8 @@ import { Eyebrow, FaqSection, NearbyList, RoomCards, StickyBookBar, serif } from
 import WhatsAppChat from "@/components/WhatsAppChat";
 import { BreadcrumbSchema, FaqSchema, HotelSchema } from "@/components/SchemaMarkup";
 import {
+  BoltIcon,
+  TvIcon,
   BedIcon,
   BriefcaseIcon,
   CarIcon,
@@ -25,6 +27,8 @@ const vi = HOTELS["victoria-island"];
 
 const amenities = [
   { icon: CarIcon, title: "Free secure parking", text: "On-site parking for every guest at no extra cost." },
+  { icon: BoltIcon, title: "24/7 power supply", text: "Constant electricity, day and night, so work and rest never stop." },
+  { icon: TvIcon, title: "Weekend live sports", text: "Every weekend's big matches on the restaurant screens, and on the TV in every room." },
   { icon: WifiIcon, title: "Free high-speed Wi-Fi", text: "Reliable internet throughout the property." },
   { icon: DiningIcon, title: "Restaurant & bar", text: "Hearty local dishes and cold drinks in our dining lounge." },
   { icon: ShieldIcon, title: "24-hour front desk", text: "Friendly staff on hand day and night." },
@@ -44,6 +48,15 @@ const faqs = [
   {
     question: "How much does a room cost?",
     answer: `Standard rooms are ${formatNaira(YABA_ROOMS[0].price)} per night and Deluxe rooms are ${formatNaira(YABA_ROOMS[1].price)} per night. Book direct for our best available rate.`,
+  },
+  {
+    question: "Does the hotel have 24/7 electricity?",
+    answer: "Yes. Ikad Hotel Yaba has a 24/7 power supply, so your room, air-conditioning and Wi-Fi stay on day and night.",
+  },
+  {
+    question: "Can I watch football and other sports at the hotel?",
+    answer:
+      "Yes. Every weekend we show the big matches in our restaurant and bar, so you can watch with other guests over pepper soup, drinks and more from our menu. Every room's smart TV also carries the matches if you'd rather watch in private.",
   },
   {
     question: "Is parking free?",
@@ -98,7 +111,7 @@ export default function Yaba() {
             Smart, comfortable rooms at honest prices in the heart of mainland Lagos, minutes from the Third Mainland Bridge and Yaba&apos;s tech hub.
           </p>
           <ul className="mt-8 flex flex-wrap gap-2 text-xs font-medium sm:text-sm">
-            {["Free parking", "Free Wi-Fi", "Restaurant & bar", "Conference room", `From ${hotel.fromPrice}/night`].map((chip) => (
+            {["24/7 power", "Free parking", "Free Wi-Fi", "Weekend live sports", `From ${hotel.fromPrice}/night`].map((chip) => (
               <li key={chip} className="rounded-full border border-white/25 bg-white/10 px-4 py-1.5 backdrop-blur">{chip}</li>
             ))}
           </ul>
@@ -127,7 +140,7 @@ export default function Yaba() {
                 Ikad Hotel Yaba is the smart choice for travellers who want a clean, comfortable room, a warm welcome and a fair price. On Borno Way, close to the Third Mainland Bridge, we put the start-ups of Yaba, the campuses of YABATECH and UNILAG, and the rest of Lagos within easy reach.
               </p>
               <p>
-                Whether you&apos;re here for business, study, a family visit or a quick stopover, you&apos;ll find free parking, fast Wi-Fi, a relaxed restaurant and bar, and a team that treats you like family.
+                Whether you&apos;re here for business, study, a family visit or a quick stopover, you&apos;ll find 24/7 power, free parking, fast Wi-Fi, a relaxed restaurant and bar, and a team that treats you like family.
               </p>
             </div>
           </div>
@@ -172,7 +185,7 @@ export default function Yaba() {
               </h2>
             </div>
             <p className="max-w-sm text-gray-600">
-              Every room includes air-conditioning, a smart TV with local channels and sports, and free Wi-Fi.
+              Every room includes air-conditioning, a smart TV with local channels and sports, free Wi-Fi and 24/7 power.
             </p>
           </div>
           <RoomCards hotel={hotel} rooms={YABA_ROOMS} bookingPath="/booking/yaba-details" />
@@ -188,7 +201,7 @@ export default function Yaba() {
               The little things that make a stay easy
             </h2>
           </div>
-          <div className="grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
             {amenities.map(({ icon: Icon, title, text }) => (
               <div key={title} className="flex gap-4">
                 <span className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-cream text-gold-dark">
@@ -213,10 +226,10 @@ export default function Yaba() {
           <div className="flex flex-col justify-center px-5 py-16 sm:px-12 lg:py-24">
             <Eyebrow light>Eat, meet &amp; unwind</Eyebrow>
             <h2 className="text-3xl leading-tight sm:text-4xl" style={serif}>
-              A relaxed lounge for meals, meetings and match nights
+              Match days, pepper soup & good company
             </h2>
             <p className="mt-6 leading-relaxed text-white/75">
-              Enjoy local favourites and cold drinks in our restaurant and bar, catch the big game on the screens, or book our conference room for a team meeting, training or interview, all without leaving the hotel.
+              Every weekend the big matches are live on our restaurant screens. Come and watch with fellow guests over a hot bowl of pepper soup, cold drinks and plenty more from the menu. Prefer your own space? Every room&apos;s TV shows the matches too. During the week, book our conference room for a team meeting, training or interview without leaving the hotel.
             </p>
             <div className="mt-8 grid grid-cols-2 gap-4">
               <div className="relative aspect-[4/3] overflow-hidden rounded-xl">

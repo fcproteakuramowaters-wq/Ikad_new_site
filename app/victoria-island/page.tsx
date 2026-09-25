@@ -16,6 +16,7 @@ import {
   MailIcon,
   PawIcon,
   PhoneIcon,
+  TvIcon,
   PinIcon,
   ShieldIcon,
   WifiIcon,
@@ -31,6 +32,7 @@ const amenities = [
   { icon: BoltIcon, title: "24/7 power supply", text: "Reliable backup power, so work and rest never stop." },
   { icon: DiningIcon, title: "Restaurant & bar", text: "Nigerian and international dishes, cocktails and cold drinks." },
   { icon: BellIcon, title: "24-hour room service", text: "Order in at any hour, straight to your door." },
+  { icon: TvIcon, title: "Weekend live sports", text: "Every weekend's big matches on the restaurant screens, and on the TV in every room." },
   { icon: ShieldIcon, title: "24-hour front desk", text: "A team on hand day and night to help with anything you need." },
   { icon: BriefcaseIcon, title: "Business-ready rooms", text: "Work desks in most rooms and a central Victoria Island address." },
   { icon: PawIcon, title: "Pet-friendly", text: "Pets are welcome (additional charges apply)." },
@@ -50,6 +52,11 @@ const faqs = [
   {
     question: "Which room has a jacuzzi?",
     answer: `Our Master suite (${formatNaira(VI_ROOMS[VI_ROOMS.length - 1].price)} per night) has a luxury bathroom with a jacuzzi, a king bed, a separate living space and concierge service.`,
+  },
+  {
+    question: "Can I watch football and other sports at the hotel?",
+    answer:
+      "Yes. Every weekend we show the big matches in our restaurant, so you can watch with other guests over pepper soup, drinks and more from our menu. Every room's smart TV also carries the matches if you'd rather watch in private.",
   },
   {
     question: "Are pets allowed?",
@@ -192,7 +199,7 @@ export default function VictoriaIsland() {
               Everything taken care of
             </h2>
           </div>
-          <div className="grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
             {amenities.map(({ icon: Icon, title, text }) => (
               <div key={title}>
                 <span className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-cream text-gold-dark">
@@ -215,11 +222,19 @@ export default function VictoriaIsland() {
           <div className="flex flex-col justify-center px-5 py-16 sm:px-12 lg:py-24">
             <Eyebrow light>Restaurant &amp; Bar</Eyebrow>
             <h2 className="text-3xl leading-tight sm:text-4xl" style={serif}>
-              Dine in, unwind, stay a little longer
+              Dine in, catch the game, stay a little longer
             </h2>
             <p className="mt-6 leading-relaxed text-white/75">
               Grab a bite before your meetings, host a working lunch or end the evening with a drink at the bar. Our restaurant serves international cuisine alongside local favourites, and room service is available around the clock.
             </p>
+            <div className="mt-8 rounded-xl border border-gold/40 bg-white/5 p-5">
+              <p className="flex items-center gap-2 text-sm font-semibold uppercase tracking-wider text-gold">
+                <TvIcon className="h-5 w-5" /> Weekend match days
+              </p>
+              <p className="mt-2 text-sm leading-relaxed text-white/80">
+                Every weekend the big games are live on our restaurant screens. Come and watch with fellow guests over a hot bowl of pepper soup, cold drinks and bites from the menu. Prefer your own space? Every room&apos;s TV shows the matches too.
+              </p>
+            </div>
             <div className="mt-8 grid grid-cols-2 gap-4">
               <div className="relative aspect-[4/3] overflow-hidden rounded-xl">
                 <Image src="/vi/ibar.jpeg" alt="Bar lounge at Ikad Hotel & Suites" fill sizes="(min-width: 1024px) 25vw, 50vw" className="object-cover" />

@@ -4,7 +4,7 @@ import Image from "next/image";
 import BookingPlatforms from "@/components/BookingPlatforms";
 import HeroMedia from "@/components/HeroMedia";
 import QuickBook from "@/components/QuickBook";
-import { ArrowRightIcon } from "@/components/Icons";
+import { ArrowRightIcon, TvIcon } from "@/components/Icons";
 import { VI_PLACES } from "@/lib/neighbourhood";
 import { FaqSchema, HotelsListSchema } from "@/components/SchemaMarkup";
 import { HOTEL_LIST, HOTELS } from "@/lib/hotels";
@@ -37,7 +37,12 @@ const faqs = [
   {
     question: "Do the hotels have Wi-Fi and constant electricity?",
     answer:
-      "Yes. Both hotels have free high-speed Wi-Fi and a 24-hour front desk, and our Victoria Island hotel runs a reliable 24/7 backup power supply.",
+      "Yes. Both hotels have a 24/7 power supply, free high-speed Wi-Fi and a 24-hour front desk, so work and rest never stop.",
+  },
+  {
+    question: "Can I watch football matches at the hotel?",
+    answer:
+      "Yes. Every weekend both hotels show the big matches in the restaurant, where you can watch with other guests over pepper soup, drinks and more. Every room's TV also shows the matches if you prefer to watch privately.",
   },
   {
     question: "Is parking available?",
@@ -49,7 +54,7 @@ const faqs = [
 const pillars = [
   {
     title: "Uninterrupted comfort",
-    text: "Reliable power, air-conditioned rooms and fast Wi-Fi, so work and rest never stop.",
+    text: "24/7 power at both hotels, air-conditioned rooms and fast Wi-Fi, so work and rest never stop.",
     icon: "M13 2L3 14h9l-1 8 10-12h-9l1-8z",
   },
   {
@@ -246,6 +251,39 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Weekend match days */}
+      <section className="bg-cream px-5 py-20 sm:px-8 md:py-28" aria-labelledby="matchday-heading">
+        <div className="mx-auto grid max-w-7xl items-center gap-12 lg:grid-cols-2 lg:gap-16">
+          <div className="relative aspect-[4/3] overflow-hidden rounded-2xl bg-gray-100">
+            <Image src="/yaba/IMG_2666.jpg" alt="Restaurant with a big screen showing live sport at Ikad Hotel Yaba" fill sizes="(min-width: 1024px) 50vw, 100vw" className="object-cover" />
+            <span className="absolute left-5 top-5 inline-flex items-center gap-2 rounded-full bg-navy/90 px-4 py-2 text-xs font-semibold uppercase tracking-wider text-gold">
+              <span className="h-2 w-2 animate-pulse rounded-full bg-red-500" aria-hidden="true" /> Live every weekend
+            </span>
+          </div>
+          <div>
+            <Eyebrow>Weekend match days</Eyebrow>
+            <h2 id="matchday-heading" className="text-3xl leading-tight text-navy sm:text-4xl md:text-5xl" style={serif}>
+              Big games, pepper soup &amp; good company
+            </h2>
+            <p className="mt-6 text-lg leading-relaxed text-gray-700">
+              Every weekend, the biggest matches are live on the screens in our restaurants at both hotels. Pull up a chair with fellow guests, order a steaming bowl of pepper soup, cold drinks and bites from the menu, and enjoy the game together.
+            </p>
+            <ul className="mt-6 space-y-3 text-gray-700">
+              {[
+                "Watch together in the restaurant every weekend",
+                "Pepper soup, drinks and more while you watch",
+                "Prefer privacy? Every room's TV shows the matches too",
+              ].map((item) => (
+                <li key={item} className="flex items-start gap-3">
+                  <TvIcon className="mt-0.5 h-5 w-5 shrink-0 text-gold-dark" />
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </section>
+
       {/* Rooms & rates */}
       <section className="px-5 py-20 sm:px-8 md:py-28">
         <div className="mx-auto max-w-7xl">
@@ -257,7 +295,7 @@ export default function Home() {
               </h2>
             </div>
             <p className="max-w-sm text-gray-600">
-              Nightly rates in naira. Every room includes air-conditioning, a smart TV and free Wi-Fi.
+              Nightly rates in naira. Every room includes air-conditioning, a smart TV with sports channels, free Wi-Fi and 24/7 power.
             </p>
           </div>
 
