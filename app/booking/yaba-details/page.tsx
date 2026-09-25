@@ -32,19 +32,23 @@ function BookingDetailsContent() {
   const router = useRouter();
 
   const [currentStep, setCurrentStep] = useState(1);
+  // "Reserve" buttons on the hotel pages pass ?room=<type> to preselect a room
+  const requestedRoom = searchParams.get("room") ?? "";
+  const initialRoom = Object.hasOwn(roomPricing, requestedRoom) ? requestedRoom : "Standard";
+
   const [formData, setFormData] = useState<YabaFormData>({
     name: "",
     email: "",
     phone: "",
     checkIn: searchParams.get("check_in") || "",
     checkOut: searchParams.get("check_out") || "",
-    roomType: "Standard",
+    roomType: initialRoom,
     adults: parseInt(searchParams.get("adults") || "1"),
     children: parseInt(searchParams.get("children") || "0"),
     childAge: 0,
     nights: 1,
-    amount: 25000,
-    total: 25000,
+    amount: roomPricing[initialRoom],
+    total: roomPricing[initialRoom],
   });
 
   const totalSteps = 4;

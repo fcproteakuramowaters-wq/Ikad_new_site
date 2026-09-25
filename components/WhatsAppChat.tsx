@@ -3,9 +3,11 @@
 interface WhatsAppChatProps {
   phoneNumber: string;
   location: string;
+  /** Lift the button on phones when a sticky booking bar is shown. */
+  raised?: boolean;
 }
 
-export default function WhatsAppChat({ phoneNumber, location }: WhatsAppChatProps) {
+export default function WhatsAppChat({ phoneNumber, location, raised = false }: WhatsAppChatProps) {
   const handleWhatsAppClick = () => {
     const formattedPhone = phoneNumber.replace(/\D/g, "");
     const whatsappUrl = `https://wa.me/${formattedPhone}?text=Hello%20Ikad%20Hotels%20${location}`;
@@ -15,7 +17,7 @@ export default function WhatsAppChat({ phoneNumber, location }: WhatsAppChatProp
   return (
     <button
       onClick={handleWhatsAppClick}
-      className="fixed bottom-6 right-6 bg-green-500 hover:bg-green-600 text-white rounded-full p-4 shadow-lg transition-all duration-200 hover:scale-110 z-40"
+      className={`fixed ${raised ? "bottom-24 md:bottom-6" : "bottom-6"} right-6 bg-green-500 hover:bg-green-600 text-white rounded-full p-4 shadow-lg transition-all duration-200 hover:scale-110 z-40`}
       title={`Chat with Ikad Hotels ${location} on WhatsApp`}
       aria-label={`WhatsApp chat for ${location}`}
     >

@@ -3,6 +3,9 @@ import Link from "next/link";
 import Image from "next/image";
 import BookingPlatforms from "@/components/BookingPlatforms";
 import HeroMedia from "@/components/HeroMedia";
+import QuickBook from "@/components/QuickBook";
+import { ArrowRightIcon } from "@/components/Icons";
+import { VI_PLACES } from "@/lib/neighbourhood";
 import { FaqSchema, HotelsListSchema } from "@/components/SchemaMarkup";
 import { HOTEL_LIST, HOTELS } from "@/lib/hotels";
 
@@ -109,22 +112,12 @@ export default function Home() {
           <p className="mt-6 max-w-xl text-base text-white/80 sm:text-lg">
             Stylish suites by the Eko Hotel Roundabout in Victoria Island and smart-value rooms on Borno Way, Yaba, with 24/7 comfort and warm Nigerian hospitality.
           </p>
-          <div className="mt-10 flex flex-col gap-3 sm:flex-row">
-            <Link
-              href="/booking"
-              className="inline-flex items-center justify-center rounded-full bg-gold px-8 py-4 text-sm font-semibold uppercase tracking-wider text-navy transition-colors hover:bg-white"
-            >
-              Book Your Stay
-            </Link>
-            <a
-              href="#locations"
-              className="inline-flex items-center justify-center rounded-full border border-white/40 px-8 py-4 text-sm font-semibold uppercase tracking-wider text-white transition-colors hover:bg-white/10"
-            >
-              Explore Our Hotels
-            </a>
-          </div>
+          <QuickBook className="mt-10 max-w-5xl" />
+          <a href="#locations" className="mt-5 inline-block text-sm font-medium text-white/80 underline decoration-gold underline-offset-4 hover:text-white">
+            Explore our two hotels
+          </a>
 
-          <dl className="mt-14 grid max-w-3xl grid-cols-2 gap-6 border-t border-white/15 pt-8 sm:grid-cols-4">
+          <dl className="mt-12 grid max-w-3xl grid-cols-2 gap-6 border-t border-white/15 pt-8 sm:grid-cols-4">
             {[
               ["2", "Lagos locations"],
               [yaba.fromPrice, "Rooms from / night"],
@@ -318,6 +311,33 @@ export default function Home() {
       </section>
 
       <BookingPlatforms />
+
+      {/* Victoria Island guide teaser */}
+      <section className="bg-navy px-5 py-20 text-white sm:px-8 md:py-28">
+        <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-12">
+          <div className="lg:col-span-5">
+            <Eyebrow light>Explore Lagos</Eyebrow>
+            <h2 className="text-3xl leading-tight sm:text-4xl md:text-5xl" style={serif}>
+              Beaches, art &amp; business, all on our doorstep
+            </h2>
+            <p className="mt-6 text-white/70">
+              From Landmark Beach to Eko Atlantic and Terra Kulture, Victoria Island puts the best of Lagos within minutes of your room.
+            </p>
+            <Link href="/victoria-island/things-to-do" className="mt-8 inline-flex items-center gap-2 rounded-full bg-gold px-7 py-3.5 text-sm font-semibold text-navy transition-colors hover:bg-white">
+              Read our Victoria Island guide <ArrowRightIcon className="h-4 w-4" />
+            </Link>
+          </div>
+          <ul className="grid gap-px overflow-hidden rounded-2xl bg-white/10 sm:grid-cols-2 lg:col-span-7">
+            {VI_PLACES.slice(1, 7).map((place) => (
+              <li key={place.name} className="bg-navy p-6">
+                <p className="text-xs uppercase tracking-wider text-gold">{place.category}</p>
+                <p className="mt-2 text-lg" style={serif}>{place.name}</p>
+                <p className="mt-1 text-sm text-white/60">{place.time} from Ikad Victoria Island</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
 
       {/* FAQ */}
       <section className="px-5 py-20 sm:px-8 md:py-28" aria-labelledby="faq-heading">

@@ -1,5 +1,9 @@
 // Single source of truth for hotel facts used in page copy and structured data.
-// Keep these in sync with the Victoria Island and Yaba pages.
+// Room data lives in lib/rooms.ts.
+
+import { VI_ROOMS, YABA_ROOMS, formatNaira, type Room } from "./rooms";
+
+const summarise = (rooms: Room[]) => rooms.map((r) => ({ type: r.type, price: formatNaira(r.price), bed: r.bed }));
 
 export const SITE_URL = "https://ikadhotels.com";
 
@@ -29,6 +33,7 @@ export interface HotelInfo {
   fromPrice: string;
   image: string;
   highlights: string[];
+  petsAllowed?: boolean;
   rooms: { type: string; price: string; bed: string }[];
   areaServed: string[];
 }
@@ -58,14 +63,9 @@ export const HOTELS: Record<HotelKey, HotelInfo> = {
     priceRange: "₦35,000 – ₦70,000",
     fromPrice: "₦35,000",
     image: "/vi/irest.jpeg",
+    petsAllowed: true,
     highlights: ["Restaurant & bar", "24/7 power supply", "24-hour room service", "Free high-speed Wi-Fi"],
-    rooms: [
-      { type: "Studio", price: "₦35,000", bed: "Single bed" },
-      { type: "Elite", price: "₦45,000", bed: "Double bed" },
-      { type: "Premium", price: "₦50,000", bed: "Queen bed" },
-      { type: "Luxury", price: "₦65,000", bed: "King bed" },
-      { type: "Master", price: "₦70,000", bed: "King bed, jacuzzi" },
-    ],
+    rooms: summarise(VI_ROOMS),
     areaServed: ["Victoria Island", "Lagos Island", "Lekki", "Ikoyi", "Etim Inyang"],
   },
   yaba: {
@@ -93,10 +93,7 @@ export const HOTELS: Record<HotelKey, HotelInfo> = {
     fromPrice: "₦25,000",
     image: "/yaba/IMG_2666.jpg",
     highlights: ["Free secure parking", "Bar & restaurant", "Conference room", "Laundry service"],
-    rooms: [
-      { type: "Standard", price: "₦25,000", bed: "Double bed" },
-      { type: "Deluxe", price: "₦30,000", bed: "Double bed, work desk" },
-    ],
+    rooms: summarise(YABA_ROOMS),
     areaServed: ["Yaba", "Ebute Metta", "Surulere", "Akoka", "Lagos Mainland"],
   },
 };

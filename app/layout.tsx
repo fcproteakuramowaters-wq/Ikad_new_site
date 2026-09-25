@@ -77,10 +77,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en-NG">
-      <head>
-        <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossOrigin="" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-      </head>
       <body
         className={`${geistSans.variable} ${playfairDisplay.variable} ${geistMono.variable} bg-white text-gray-900 antialiased`}
       >
