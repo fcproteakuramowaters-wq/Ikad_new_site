@@ -105,11 +105,11 @@ export default function Home() {
       <FaqSchema items={faqs} />
 
       {/* Hero */}
-      <section className="relative isolate flex min-h-[88svh] items-end overflow-hidden text-white">
+      <section className="relative isolate flex min-h-[80svh] items-end overflow-hidden text-white">
         <HeroMedia video="/background.mp4" poster="/vi/IMG_2665.jpg" posterAlt="Reception lounge at Ikad Hotel & Suites, Victoria Island, Lagos" />
         <div className="absolute inset-0 bg-gradient-to-t from-[#0e1520] via-[#0e1520]/75 to-[#0e1520]/50" aria-hidden="true" />
 
-        <div className="relative z-10 mx-auto w-full max-w-7xl px-5 pb-16 pt-32 sm:px-8 md:pb-24">
+        <div className="relative z-10 mx-auto w-full max-w-7xl px-5 pb-10 pt-24 sm:px-8 md:pb-14">
           <Eyebrow light>Victoria Island · Yaba · Lagos</Eyebrow>
           <h1 className="max-w-3xl text-4xl font-medium leading-[1.1] sm:text-5xl md:text-6xl lg:text-7xl" style={serif}>
             Boutique hotels in the heart of <em className="text-gold">Lagos</em>
@@ -122,7 +122,7 @@ export default function Home() {
             Explore our two hotels
           </a>
 
-          <dl className="mt-12 grid max-w-3xl grid-cols-2 gap-6 border-t border-white/15 pt-8 sm:grid-cols-4">
+          <dl className="mt-10 grid max-w-3xl grid-cols-2 gap-6 border-t border-white/15 pt-6 sm:grid-cols-4">
             {[
               ["2", "Lagos locations"],
               [yaba.fromPrice, "Rooms from / night"],
@@ -139,7 +139,7 @@ export default function Home() {
       </section>
 
       {/* Introduction */}
-      <section className="bg-cream px-5 py-20 sm:px-8 md:py-28">
+      <section className="bg-cream px-5 py-14 sm:px-8 md:py-20">
         <div className="mx-auto grid max-w-7xl gap-12 md:grid-cols-12 md:gap-16">
           <div className="md:col-span-5">
             <Eyebrow>Welcome to Ikad Hotels</Eyebrow>
@@ -159,9 +159,9 @@ export default function Home() {
       </section>
 
       {/* Locations */}
-      <section id="locations" className="scroll-mt-20 px-5 py-20 sm:px-8 md:py-28">
+      <section id="locations" className="scroll-mt-20 px-5 py-14 sm:px-8 md:py-20">
         <div className="mx-auto max-w-7xl">
-          <div className="mb-14 max-w-2xl">
+          <div className="mb-10 max-w-2xl">
             <Eyebrow>Our Hotels</Eyebrow>
             <h2 className="text-3xl leading-tight text-navy sm:text-4xl md:text-5xl" style={serif}>
               Choose where you stay in Lagos
@@ -229,9 +229,9 @@ export default function Home() {
       </section>
 
       {/* Why Ikad */}
-      <section className="bg-navy px-5 py-20 text-white sm:px-8 md:py-28">
+      <section className="bg-navy px-5 py-14 text-white sm:px-8 md:py-20">
         <div className="mx-auto max-w-7xl">
-          <div className="mb-14 max-w-2xl">
+          <div className="mb-10 max-w-2xl">
             <Eyebrow light>Why guests choose us</Eyebrow>
             <h2 className="text-3xl leading-tight sm:text-4xl md:text-5xl" style={serif}>
               The essentials, done properly
@@ -252,7 +252,7 @@ export default function Home() {
       </section>
 
       {/* Weekend match days */}
-      <section className="bg-cream px-5 py-20 sm:px-8 md:py-28" aria-labelledby="matchday-heading">
+      <section className="bg-cream px-5 py-14 sm:px-8 md:py-20" aria-labelledby="matchday-heading">
         <div className="mx-auto grid max-w-7xl items-center gap-12 lg:grid-cols-2 lg:gap-16">
           <div className="relative aspect-[4/3] overflow-hidden rounded-2xl bg-gray-100">
             <Image src="/yaba/IMG_2666.jpg" alt="Restaurant with a big screen showing live sport at Ikad Hotel Yaba" fill sizes="(min-width: 1024px) 50vw, 100vw" className="object-cover" />
@@ -285,9 +285,9 @@ export default function Home() {
       </section>
 
       {/* Rooms & rates */}
-      <section className="px-5 py-20 sm:px-8 md:py-28">
+      <section className="px-5 py-14 sm:px-8 md:py-20">
         <div className="mx-auto max-w-7xl">
-          <div className="mb-14 flex flex-col justify-between gap-6 md:flex-row md:items-end">
+          <div className="mb-10 flex flex-col justify-between gap-6 md:flex-row md:items-end">
             <div className="max-w-2xl">
               <Eyebrow>Rooms &amp; Rates</Eyebrow>
               <h2 className="text-3xl leading-tight text-navy sm:text-4xl md:text-5xl" style={serif}>
@@ -330,9 +330,9 @@ export default function Home() {
       </section>
 
       {/* Gallery */}
-      <section className="bg-cream px-5 py-20 sm:px-8 md:py-28" aria-labelledby="gallery-heading">
+      <section className="bg-cream px-5 py-14 sm:px-8 md:py-20" aria-labelledby="gallery-heading">
         <div className="mx-auto max-w-7xl">
-          <div className="mb-14 max-w-2xl">
+          <div className="mb-10 max-w-2xl">
             <Eyebrow>Inside Ikad</Eyebrow>
             <h2 id="gallery-heading" className="text-3xl leading-tight text-navy sm:text-4xl md:text-5xl" style={serif}>
               A look around
@@ -351,7 +351,7 @@ export default function Home() {
       <BookingPlatforms />
 
       {/* Victoria Island guide teaser */}
-      <section className="bg-navy px-5 py-20 text-white sm:px-8 md:py-28">
+      <section className="bg-navy px-5 py-14 text-white sm:px-8 md:py-20">
         <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-12">
           <div className="lg:col-span-5">
             <Eyebrow light>Explore Lagos</Eyebrow>
@@ -378,7 +378,7 @@ export default function Home() {
       </section>
 
       {/* FAQ */}
-      <section className="px-5 py-20 sm:px-8 md:py-28" aria-labelledby="faq-heading">
+      <section className="px-5 py-14 sm:px-8 md:py-20" aria-labelledby="faq-heading">
         <div className="mx-auto grid max-w-7xl gap-12 md:grid-cols-12">
           <div className="md:col-span-4">
             <Eyebrow>Good to know</Eyebrow>
@@ -404,7 +404,7 @@ export default function Home() {
       </section>
 
       {/* Final CTA */}
-      <section className="relative isolate overflow-hidden bg-navy px-5 py-24 text-center text-white sm:px-8">
+      <section className="relative isolate overflow-hidden bg-navy px-5 py-16 text-center text-white sm:px-8 md:py-20">
         <Image src="/vi/iwalkway.jpeg" alt="" fill sizes="100vw" className="-z-10 object-cover opacity-20" />
         <div className="mx-auto max-w-3xl">
           <Eyebrow light>Book direct &amp; save</Eyebrow>

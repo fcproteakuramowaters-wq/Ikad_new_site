@@ -86,7 +86,7 @@ export default function Yaba() {
       />
 
       {/* Hero */}
-      <section className="relative isolate flex min-h-[78svh] items-end overflow-hidden text-white">
+      <section className="relative isolate flex min-h-[68svh] items-end overflow-hidden text-white">
         <Image
           src="/yaba/IMG_2666.jpg"
           alt="Restaurant and bar at Ikad Hotel Yaba"
@@ -97,7 +97,7 @@ export default function Yaba() {
         />
         <div className="absolute inset-0 -z-10 bg-gradient-to-t from-[#0e1520] via-[#0e1520]/75 to-[#0e1520]/45" aria-hidden="true" />
 
-        <div className="mx-auto w-full max-w-7xl px-5 pb-32 pt-28 sm:px-8 md:pb-36">
+        <div className="mx-auto w-full max-w-7xl px-5 pb-28 pt-20 sm:px-8 md:pb-32">
           <nav aria-label="Breadcrumb" className="mb-6 text-xs text-white/70">
             <Link href="/" className="hover:text-white">Home</Link>
             <span className="mx-2" aria-hidden="true">/</span>
@@ -128,7 +128,7 @@ export default function Yaba() {
       </div>
 
       {/* Overview */}
-      <section className="px-5 py-20 sm:px-8 md:py-28">
+      <section className="px-5 py-14 sm:px-8 md:py-20">
         <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-12 lg:gap-16">
           <div className="lg:col-span-7">
             <Eyebrow>Welcome</Eyebrow>
@@ -175,9 +175,9 @@ export default function Yaba() {
       </section>
 
       {/* Rooms */}
-      <section id="rooms" className="scroll-mt-20 bg-cream px-5 py-20 sm:px-8 md:py-28">
+      <section id="rooms" className="scroll-mt-20 bg-cream px-5 py-14 sm:px-8 md:py-20">
         <div className="mx-auto max-w-7xl">
-          <div className="mb-14 flex flex-col justify-between gap-6 md:flex-row md:items-end">
+          <div className="mb-10 flex flex-col justify-between gap-6 md:flex-row md:items-end">
             <div className="max-w-2xl">
               <Eyebrow>Rooms</Eyebrow>
               <h2 className="text-3xl leading-tight text-navy sm:text-4xl md:text-5xl" style={serif}>
@@ -193,9 +193,9 @@ export default function Yaba() {
       </section>
 
       {/* Amenities */}
-      <section className="px-5 py-20 sm:px-8 md:py-28">
+      <section className="px-5 py-14 sm:px-8 md:py-20">
         <div className="mx-auto max-w-7xl">
-          <div className="mb-14 max-w-2xl">
+          <div className="mb-10 max-w-2xl">
             <Eyebrow>Amenities &amp; Services</Eyebrow>
             <h2 className="text-3xl leading-tight text-navy sm:text-4xl md:text-5xl" style={serif}>
               The little things that make a stay easy
@@ -220,10 +220,10 @@ export default function Yaba() {
       {/* Dining & meetings */}
       <section className="bg-navy text-white">
         <div className="mx-auto grid max-w-7xl lg:grid-cols-2">
-          <div className="relative min-h-[320px] lg:min-h-[520px]">
+          <div className="relative min-h-[320px] lg:min-h-[440px]">
             <Image src="/yaba/Cbar_Rest.jpeg" alt="Bar and dining lounge at Ikad Hotel Yaba" fill sizes="(min-width: 1024px) 50vw, 100vw" className="object-cover" />
           </div>
-          <div className="flex flex-col justify-center px-5 py-16 sm:px-12 lg:py-24">
+          <div className="flex flex-col justify-center px-5 py-12 sm:px-12 lg:py-16">
             <Eyebrow light>Eat, meet &amp; unwind</Eyebrow>
             <h2 className="text-3xl leading-tight sm:text-4xl" style={serif}>
               Match days, pepper soup & good company
@@ -244,9 +244,9 @@ export default function Yaba() {
       </section>
 
       {/* Location */}
-      <section id="location" className="scroll-mt-20 px-5 py-20 sm:px-8 md:py-28">
+      <section id="location" className="scroll-mt-20 px-5 py-14 sm:px-8 md:py-20">
         <div className="mx-auto max-w-7xl">
-          <div className="mb-14 max-w-2xl">
+          <div className="mb-10 max-w-2xl">
             <Eyebrow>Location</Eyebrow>
             <h2 className="text-3xl leading-tight text-navy sm:text-4xl md:text-5xl" style={serif}>
               Connected to all of Lagos
@@ -275,7 +275,7 @@ export default function Yaba() {
       </section>
 
       {/* Sister hotel */}
-      <section className="px-5 pb-20 sm:px-8 md:pb-28">
+      <section className="px-5 pb-14 sm:px-8 md:pb-20">
         <div className="mx-auto flex max-w-7xl flex-col items-start justify-between gap-6 rounded-2xl border border-gray-200 p-8 sm:flex-row sm:items-center">
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.25em] text-gold-dark">Our sister hotel</p>
@@ -291,7 +291,7 @@ export default function Yaba() {
       <FaqSection id="yaba-faq" title="Questions about your stay" faqs={faqs} />
 
       {/* CTA */}
-      <section className="relative isolate overflow-hidden bg-navy px-5 py-24 text-center text-white sm:px-8">
+      <section className="relative isolate overflow-hidden bg-navy px-5 py-16 text-center text-white sm:px-8 md:py-20">
         <Image src="/ikad/Deluxe1.jpeg" alt="" fill sizes="100vw" className="-z-10 object-cover opacity-20" />
         <div className="mx-auto max-w-3xl">
           <Eyebrow light>Book direct &amp; save</Eyebrow>

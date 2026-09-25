@@ -15,8 +15,8 @@ export default function Footer() {
 
   return (
     <footer className="bg-[#0e1520] text-white">
-      <div className="mx-auto max-w-7xl px-5 py-16 sm:px-8">
-        <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-12">
+      <div className="mx-auto max-w-7xl px-5 py-12 sm:px-8">
+        <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-12">
           <div className="lg:col-span-4">
             <p className="text-2xl" style={{ fontFamily: "var(--font-playfair)" }}>Ikad Hotels</p>
             <p className="mt-4 max-w-xs text-sm leading-relaxed text-white/60">
@@ -65,7 +65,7 @@ export default function Footer() {
           </nav>
         </div>
 
-        <div className="mt-14 flex flex-col justify-between gap-4 border-t border-white/10 pt-8 text-xs text-white/50 sm:flex-row">
+        <div className="mt-10 flex flex-col justify-between gap-4 border-t border-white/10 pt-6 text-xs text-white/50 sm:flex-row">
           <p>&copy; {currentYear} Ikad Hotels. All rights reserved.</p>
           <p>Victoria Island · Yaba · Lagos, Nigeria</p>
         </div>

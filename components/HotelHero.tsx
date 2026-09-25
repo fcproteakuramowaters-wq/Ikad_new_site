@@ -14,7 +14,7 @@ export default function HotelHero({
   description,
 }: HotelHeroProps) {
   return (
-    <section className="h-[60vh] min-h-[420px] flex items-center justify-start text-white relative overflow-hidden">
+    <section className="h-[50vh] min-h-[360px] flex items-center justify-start text-white relative overflow-hidden">
       <Image
         src={image}
         alt={`${title}, ${location}`}
