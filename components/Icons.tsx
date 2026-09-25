@@ -64,6 +64,9 @@ export const PawIcon = (p: IconProps) => (
 export const CarIcon = (p: IconProps) => (
   <Svg {...p}><path d="M5 17h14M5 17v2M19 17v2M3 13l2-6a2 2 0 012-1.4h10a2 2 0 012 1.4l2 6v4H3v-4zM3 13h18" /><circle cx="7.5" cy="15" r="0.6" fill="currentColor" /><circle cx="16.5" cy="15" r="0.6" fill="currentColor" /></Svg>
 );
+export const TvIcon = (p: IconProps) => (
+  <Svg {...p}><rect x="2.5" y="5" width="19" height="13" rx="2" /><path d="M8 21h8M12 18v3M9 2.5l3 2.5 3-2.5" /></Svg>
+);
 export const ArrowRightIcon = (p: IconProps) => (
   <Svg {...p}><path d="M5 12h14M13 6l6 6-6 6" /></Svg>
 );

@@ -64,7 +64,7 @@ export const HOTELS: Record<HotelKey, HotelInfo> = {
     fromPrice: "₦35,000",
     image: "/vi/irest.jpeg",
     petsAllowed: true,
-    highlights: ["Restaurant & bar", "24/7 power supply", "24-hour room service", "Free high-speed Wi-Fi"],
+    highlights: ["Restaurant & bar", "24/7 power supply", "24-hour room service", "Weekend live sports"],
     rooms: summarise(VI_ROOMS),
     areaServed: ["Victoria Island", "Lagos Island", "Lekki", "Ikoyi", "Etim Inyang"],
   },
@@ -75,7 +75,7 @@ export const HOTELS: Record<HotelKey, HotelInfo> = {
     path: "/yaba",
     tagline: "Smart value in the heart of mainland Lagos",
     summary:
-      "Comfortable, well-priced rooms on Borno Way (formerly Coolio Hotel) with free secure parking, a bar & restaurant and easy access to Yaba's tech hub and the rest of mainland Lagos.",
+      "Comfortable, well-priced rooms on Borno Way (formerly Coolio Hotel) with 24/7 power, free secure parking, a bar & restaurant showing weekend matches, and easy access to Yaba's tech hub and the rest of mainland Lagos.",
     address: {
       street: "270 Borno Way, Adekunle",
       locality: "Yaba",
@@ -92,7 +92,7 @@ export const HOTELS: Record<HotelKey, HotelInfo> = {
     priceRange: "₦25,000 – ₦30,000",
     fromPrice: "₦25,000",
     image: "/yaba/IMG_2666.jpg",
-    highlights: ["Free secure parking", "Bar & restaurant", "Conference room", "Laundry service"],
+    highlights: ["Free secure parking", "24/7 power supply", "Bar & restaurant", "Weekend live sports"],
     rooms: summarise(YABA_ROOMS),
     areaServed: ["Yaba", "Ebute Metta", "Surulere", "Akoka", "Lagos Mainland"],
   },
