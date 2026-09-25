@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import HotelHero from "@/components/HotelHero";
 
 export default function Booking() {
@@ -36,7 +37,7 @@ export default function Booking() {
   ];
 
   return (
-    <main>
+    <div>
       <HotelHero
         title="Select Your Hotel"
         location="Choose Your Perfect Stay"
@@ -50,12 +51,12 @@ export default function Booking() {
           <p className="text-sm font-semibold tracking-widest gold uppercase mb-4">
             Choose Your Location
           </p>
-          <h1
+          <h2
             className="text-5xl font-light text-navy mb-6"
             style={{ fontFamily: "var(--font-playfair)" }}
           >
             Our Hotels
-          </h1>
+          </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
             Select from our carefully curated hotel locations, each offering unique
             experiences and exceptional service tailored to your needs
@@ -70,10 +71,12 @@ export default function Booking() {
             >
               {/* Hotel Image */}
               <div className="relative h-80 overflow-hidden bg-gray-200">
-                <img
+                <Image
                   src={hotel.image}
                   alt={hotel.name}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                  fill
+                  sizes="(min-width: 768px) 50vw, 100vw"
+                  className="object-cover group-hover:scale-110 transition-transform duration-700"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
 
@@ -209,6 +212,6 @@ export default function Booking() {
           </p>
         </div>
       </section>
-    </main>
+    </div>
   );
 }

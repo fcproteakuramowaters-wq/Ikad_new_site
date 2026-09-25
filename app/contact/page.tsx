@@ -40,7 +40,7 @@ export default function Contact() {
   };
 
   return (
-    <main>
+    <div>
       {/* Hero Section */}
       <section className="bg-gray-100 py-12 px-6">
         <div className="max-w-6xl mx-auto text-center">
@@ -330,6 +330,6 @@ export default function Contact() {
           </div>
         </div>
       </section>
-    </main>
+    </div>
   );
 }

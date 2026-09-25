@@ -2,10 +2,11 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import BookingSearch from "@/components/BookingSearch";
 import BookingPlatforms from "@/components/BookingPlatforms";
 import WhatsAppChat from "@/components/WhatsAppChat";
-import { HotelSchema, OrganizationSchema } from "@/components/SchemaMarkup";
+import { HotelSchema } from "@/components/SchemaMarkup";
 
 export default function VictoriaIsland() {
   const [expandedRoom, setExpandedRoom] = useState<string | null>(null);
@@ -18,7 +19,7 @@ export default function VictoriaIsland() {
   // Hotel showcase images for hero carousel
   const heroImages = [
     "/vi/ientrance.jpeg",
-    "/vi/IMG_2665.PNG",
+    "/vi/IMG_2665.jpg",
     "/vi/irest.jpeg",
     "/vi/lobby.jpeg",
   ];
@@ -75,7 +76,7 @@ export default function VictoriaIsland() {
       type: "Luxury",
       price: "₦65,000",
       features: ["King Bed", "Smart TV with Local Channels & Sports", "AC", "Premium Bathroom with Shower", "Free Wi-Fi", "Work Desk", "Living Area", "Minibar", "City View", "Premium Toiletries"],
-      images: ["/vi/IMG_2624.PNG", "/vi/IMG_2639.PNG", "/vi/IMG_2657.PNG", "/vi/IMG_2627.PNG", "/ikad/luxury.jpeg", "/ikad/Ikad31.jpeg", "/ikad/Luxury.jpeg"],
+      images: ["/vi/IMG_2624.jpg", "/vi/IMG_2639.jpg", "/vi/IMG_2657.jpg", "/vi/IMG_2627.jpg", "/ikad/luxury.jpeg", "/ikad/Ikad31.jpeg", "/ikad/Luxury.jpeg"],
     },
     {
       type: "Master",
@@ -90,7 +91,7 @@ export default function VictoriaIsland() {
   // Amenities carousel images
   const amenitiesImages = [
     "/vi/irest.jpeg",
-    "/vi/IMG_2665.PNG",
+    "/vi/IMG_2665.jpg",
     "/vi/lobby.jpeg",
   ];
 
@@ -158,26 +159,28 @@ export default function VictoriaIsland() {
   };
 
   return (
-    <main>
+    <div>
       <HotelSchema hotelName="Ikad Hotel & Suites Victoria Island" hotelType="victoria-island" />
-      <OrganizationSchema />
       {/* Hero Section with Image Carousel */}
       <section className="relative w-full h-[60vh] flex items-center justify-start text-white overflow-hidden">
         {/* Carousel Images */}
         <div className="absolute inset-0">
-          <img
+          <Image
             src={heroImages[heroImageIndex]}
-            alt="Victoria Island Hotel"
-            className="w-full h-full object-cover transition-opacity duration-500"
+            alt="Ikad Hotel & Suites, Victoria Island, Lagos"
+            fill
+            priority={heroImageIndex === 0}
+            sizes="100vw"
+            className="object-cover transition-opacity duration-500"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-transparent" aria-hidden="true" />
         </div>
 
         {/* Content */}
-        <div className="relative z-10 ml-10 px-6 py-12">
+        <div className="relative z-10 px-6 py-12 sm:ml-10">
           <div className="max-w-2xl">
-            <h1 className="text-6xl font-bold mb-4 leading-tight tracking-tight" style={{ fontFamily: "var(--font-playfair)" }}>Ikad Hotel & Suites — Victoria Island, Lagos</h1>
-            <p className="text-2xl text-gray-100 mb-6 font-light">Luxury hotel in Victoria Island, Lagos — near Lekki, Etim Inyang and Lagos Island</p>
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 leading-tight tracking-tight" style={{ fontFamily: "var(--font-playfair)" }}>Ikad Hotel & Suites — Victoria Island, Lagos</h1>
+            <p className="text-lg sm:text-2xl text-gray-100 mb-6 font-light">Luxury hotel in Victoria Island, Lagos — near Lekki, Etim Inyang and Lagos Island</p>
             <p className="text-lg text-gray-200 leading-relaxed">
               Experience world-class hospitality in the heart of Lagos&apos;s most prestigious location
             </p>
@@ -187,7 +190,7 @@ export default function VictoriaIsland() {
         {/* Previous Button */}
         <button
           onClick={prevHeroImage}
-          className="absolute left-6 top-1/2 transform -translate-y-1/2 z-20 bg-white/30 hover:bg-white/50 text-white p-2 rounded-full transition-all"
+          className="absolute left-6 top-1/2 transform -translate-y-1/2 z-20 hidden sm:block bg-white/30 hover:bg-white/50 text-white p-2 rounded-full transition-all"
           aria-label="Previous image"
         >
           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -198,7 +201,7 @@ export default function VictoriaIsland() {
         {/* Next Button */}
         <button
           onClick={nextHeroImage}
-          className="absolute right-6 top-1/2 transform -translate-y-1/2 z-20 bg-white/30 hover:bg-white/50 text-white p-2 rounded-full transition-all"
+          className="absolute right-6 top-1/2 transform -translate-y-1/2 z-20 hidden sm:block bg-white/30 hover:bg-white/50 text-white p-2 rounded-full transition-all"
           aria-label="Next image"
         >
           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -266,10 +269,12 @@ export default function VictoriaIsland() {
                 >
                   {/* Room Image with Carousel */}
                   <div className="relative h-80 overflow-hidden bg-gray-200">
-                    <img
+                    <Image
                       src={room.images[currentImageIndex]}
-                      alt={room.type}
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                      alt={`${room.type} room at Ikad Hotel & Suites Victoria Island`}
+                      fill
+                      sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+                      className="object-cover group-hover:scale-110 transition-transform duration-700"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
 
@@ -475,10 +480,12 @@ export default function VictoriaIsland() {
             {/* Images Carousel - Right Side */}
             <div>
               <div className="relative rounded-xl overflow-hidden shadow-lg h-96 bg-gray-200">
-                <img 
-                  src={amenitiesImages[amenitiesImageIndex]} 
-                  alt="Hotel Amenities" 
-                  className="w-full h-full object-cover transition-opacity duration-700"
+                <Image
+                  src={amenitiesImages[amenitiesImageIndex]}
+                  alt="Amenities at Ikad Hotel & Suites Victoria Island"
+                  fill
+                  sizes="(min-width: 768px) 50vw, 100vw"
+                  className="object-cover transition-opacity duration-700"
                 />
 
                 {/* Navigation Arrows */}
@@ -631,10 +638,12 @@ export default function VictoriaIsland() {
                     <>
                       {/* Main Image */}
                       <div className="relative h-96 rounded-lg overflow-hidden bg-gray-200 mb-4">
-                        <img
-                          src={rooms.find(r => r.type === selectedRoom)?.images[detailImageIndex]}
-                          alt={selectedRoom}
-                          className="w-full h-full object-cover"
+                        <Image
+                          src={rooms.find(r => r.type === selectedRoom)?.images[detailImageIndex] ?? ""}
+                          alt={`${selectedRoom} room at Ikad Hotel & Suites Victoria Island`}
+                          fill
+                          sizes="(min-width: 1024px) 50vw, 100vw"
+                          className="object-cover"
                         />
                         
                         {/* Navigation Arrows */}
@@ -666,12 +675,12 @@ export default function VictoriaIsland() {
                           <button
                             key={idx}
                             onClick={() => setDetailImageIndex(idx)}
-                            className={`flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border-2 transition-all ${
+                            className={`relative flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border-2 transition-all ${
                               idx === detailImageIndex ? "border-gold" : "border-gray-200"
                             }`}
                             style={{ borderColor: idx === detailImageIndex ? "var(--gold)" : undefined }}
                           >
-                            <img src={img} alt={`${selectedRoom} ${idx + 1}`} className="w-full h-full object-cover" />
+                            <Image src={img} alt={`${selectedRoom} room photo ${idx + 1}`} fill sizes="80px" className="object-cover" />
                           </button>
                         ))}
                       </div>
@@ -737,6 +746,6 @@ export default function VictoriaIsland() {
         </div>
       )}
       <WhatsAppChat phoneNumber="+234 916 373 8458" location="Victoria Island" />
-    </main>
+    </div>
   );
 }

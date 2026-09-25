@@ -1,147 +1,138 @@
-export function HotelSchema({ hotelName, hotelType }: { hotelName: string; hotelType: string }) {
-  const schema = {
-    "@context": "https://schema.org/",
-    "@type": "Hotel",
-    "name": hotelName,
-    "url": hotelType === "victoria-island" 
-      ? "https://ikadhotels.com/victoria-island" 
-      : "https://ikadhotels.com/yaba",
-    "telephone": "+234-916-373-8458",
-    "email": hotelType === "victoria-island" ? "reservations.vi@ikadhotels.com" : "reservations.bw@ikadhotels.com",
-    "address": {
-      "@type": "PostalAddress",
-      "streetAddress": hotelType === "victoria-island" 
-        ? "123 Victoria Island" 
-        : "Borno Way, Yaba",
-      "addressLocality": "Lagos",
-      "addressRegion": "Lagos",
-      "postalCode": hotelType === "victoria-island" 
-        ? "106104" 
-        : "101212",
-      "addressCountry": "NG",
-    },
-    "priceRange": hotelType === "victoria-island" ? "$$$" : "$$",
-    "image": hotelType === "victoria-island"
-      ? "https://ikadhotels.com/vi/ientrance.jpeg"
-      : "https://ikadhotels.com/yaba/cooli_entrance.jpg",
-    "aggregateRating": {
-      "@type": "AggregateRating",
-      "ratingValue": "4.5",
-      "reviewCount": "128",
-    },
-    "amenityFeature": [
-      {
-        "@type": "Text",
-        "name": "Free Wi-Fi",
-      },
-      {
-        "@type": "Text",
-        "name": "24-Hour Front Desk",
-      },
-      {
-        "@type": "Text",
-        "name": "Restaurant",
-      },
-    ],
-    "areaServed": ["Lagos", "Victoria Island", "Lagos Island", "Etim Inyang", "Lekki"],
-    "geo": {
-      "@type": "GeoCoordinates",
-      "latitude": "6.4389",
-      "longitude": "3.4276"
-    },
-  };
+import { HOTELS, HOTEL_LIST, SITE_URL, SOCIAL_LINKS, type HotelKey, type HotelInfo } from "@/lib/hotels";
 
+// Note: no aggregateRating here on purpose. Google treats self-authored review
+// markup that isn't backed by on-page reviews as spam and can issue a manual action.
+
+function JsonLd({ data }: { data: Record<string, unknown> }) {
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(data).replace(/</g, "\\u003c") }}
     />
   );
+}
+
+function hotelNode(hotel: HotelInfo) {
+  return {
+    "@type": "Hotel",
+    "@id": `${SITE_URL}${hotel.path}#hotel`,
+    name: hotel.name,
+    url: `${SITE_URL}${hotel.path}`,
+    description: hotel.summary,
+    telephone: hotel.phone,
+    email: hotel.email,
+    image: `${SITE_URL}${hotel.image}`,
+    priceRange: hotel.priceRange,
+    currenciesAccepted: "NGN",
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: hotel.address.street,
+      addressLocality: hotel.address.locality,
+      addressRegion: hotel.address.region,
+      postalCode: hotel.address.postalCode,
+      addressCountry: "NG",
+    },
+    geo: {
+      "@type": "GeoCoordinates",
+      latitude: hotel.geo.latitude,
+      longitude: hotel.geo.longitude,
+    },
+    hasMap: hotel.mapsUrl,
+    areaServed: hotel.areaServed.map((name) => ({ "@type": "Place", name })),
+    amenityFeature: ["Free Wi-Fi", "24-hour front desk", ...hotel.highlights].map((name) => ({
+      "@type": "LocationFeatureSpecification",
+      name,
+      value: true,
+    })),
+    makesOffer: hotel.rooms.map((room) => ({
+      "@type": "Offer",
+      name: `${room.type} room`,
+      price: room.price.replace(/[^\d]/g, ""),
+      priceCurrency: "NGN",
+      availability: "https://schema.org/InStock",
+    })),
+    parentOrganization: { "@id": `${SITE_URL}/#organization` },
+  };
+}
+
+export function HotelSchema({ hotelType }: { hotelName?: string; hotelType: HotelKey }) {
+  return <JsonLd data={{ "@context": "https://schema.org", ...hotelNode(HOTELS[hotelType]) }} />;
 }
 
 export function OrganizationSchema() {
-  const schema = {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "name": "Ikad Hotels",
-    "url": "https://ikadhotels.com",
-    "logo": "https://ikadhotels.com/logo.png",
-    "description": "Premium hotel accommodations in Lagos, Nigeria with locations in Victoria Island and Yaba",
-    "contactPoint": {
-      "@type": "ContactPoint",
-      "contactType": "Reservations",
-      "telephone": "+234-916-373-8458",
-      "email": "info@ikadhotels.com",
-    },
-    "sameAs": [
-      "https://www.facebook.com/ikadhotels",
-      "https://www.instagram.com/ikadhotels",
-      "https://www.twitter.com/ikadhotels",
-    ],
-    "address": {
-      "@type": "PostalAddress",
-      "addressCountry": "NG",
-      "addressLocality": "Lagos",
-    },
-  };
-
   return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+    <JsonLd
+      data={{
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "@id": `${SITE_URL}/#organization`,
+        name: "Ikad Hotels",
+        url: SITE_URL,
+        logo: `${SITE_URL}/icon-512.png`,
+        email: "info@ikadhotels.com",
+        sameAs: SOCIAL_LINKS,
+        contactPoint: HOTEL_LIST.map((hotel) => ({
+          "@type": "ContactPoint",
+          contactType: "reservations",
+          telephone: hotel.phone,
+          email: hotel.email,
+          areaServed: "NG",
+          availableLanguage: ["English"],
+        })),
+      }}
     />
   );
 }
 
-export function LocalBusinessSchema() {
-  const schema = {
-    "@context": "https://schema.org",
-    "@type": "LocalBusiness",
-    "name": "Ikad Hotels",
-    "image": "https://ikadhotels.com/vi/ientrance.jpeg",
-    "url": "https://ikadhotels.com",
-    "telephone": "+234-916-373-8458",
-    "email": "info@ikadhotels.com",
-    "address": {
-      "@type": "PostalAddress",
-      "streetAddress": "Multiple Locations",
-      "addressLocality": "Lagos",
-      "addressRegion": "Lagos",
-      "addressCountry": "NG",
-    },
-    "priceRange": "$$ - $$$",
-    "openingHoursSpecification": {
-      "@type": "OpeningHoursSpecification",
-      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
-      "opens": "00:00",
-      "closes": "23:59",
-    },
-  };
-
+export function WebsiteSchema() {
   return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+    <JsonLd
+      data={{
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "@id": `${SITE_URL}/#website`,
+        name: "Ikad Hotels",
+        url: SITE_URL,
+        publisher: { "@id": `${SITE_URL}/#organization` },
+        inLanguage: "en-NG",
+      }}
+    />
+  );
+}
+
+export function HotelsListSchema() {
+  return <JsonLd data={{ "@context": "https://schema.org", "@graph": HOTEL_LIST.map(hotelNode) }} />;
+}
+
+export function FaqSchema({ items }: { items: { question: string; answer: string }[] }) {
+  return (
+    <JsonLd
+      data={{
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        mainEntity: items.map((item) => ({
+          "@type": "Question",
+          name: item.question,
+          acceptedAnswer: { "@type": "Answer", text: item.answer },
+        })),
+      }}
     />
   );
 }
 
 export function BreadcrumbSchema({ path }: { path: { name: string; url: string }[] }) {
-  const schema = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "itemListElement": path.map((item, index) => ({
-      "@type": "ListItem",
-      "position": index + 1,
-      "name": item.name,
-      "item": item.url,
-    })),
-  };
-
   return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+    <JsonLd
+      data={{
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        itemListElement: path.map((item, index) => ({
+          "@type": "ListItem",
+          position: index + 1,
+          name: item.name,
+          item: item.url,
+        })),
+      }}
     />
   );
 }
