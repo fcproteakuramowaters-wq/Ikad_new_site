@@ -5,7 +5,7 @@ import Link from "next/link";
 import BookingSearch from "@/components/BookingSearch";
 import BookingPlatforms from "@/components/BookingPlatforms";
 import WhatsAppChat from "@/components/WhatsAppChat";
-import { HotelSchema, OrganizationSchema } from "@/components/SchemaMarkup";
+import { HotelSchema } from "@/components/SchemaMarkup";
 
 export default function VictoriaIsland() {
   const [expandedRoom, setExpandedRoom] = useState<string | null>(null);
@@ -158,9 +158,8 @@ export default function VictoriaIsland() {
   };
 
   return (
-    <main>
+    <div>
       <HotelSchema hotelName="Ikad Hotel & Suites Victoria Island" hotelType="victoria-island" />
-      <OrganizationSchema />
       {/* Hero Section with Image Carousel */}
       <section className="relative w-full h-[60vh] flex items-center justify-start text-white overflow-hidden">
         {/* Carousel Images */}
@@ -737,6 +736,6 @@ export default function VictoriaIsland() {
         </div>
       )}
       <WhatsAppChat phoneNumber="+234 916 373 8458" location="Victoria Island" />
-    </main>
+    </div>
   );
 }

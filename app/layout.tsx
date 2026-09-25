@@ -6,13 +6,15 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import DevToolsCleaner from "@/components/DevToolsCleaner";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { OrganizationSchema, WebsiteSchema } from "@/components/SchemaMarkup";
+import { SITE_URL } from "@/lib/hotels";
 
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
   userScalable: true,
-  themeColor: "#1a1a2e",
+  themeColor: "#1a2332",
 };
 
 const geistSans = Geist({
@@ -29,40 +31,43 @@ const playfairDisplay = Playfair_Display({
   variable: "--font-playfair",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
+  style: ["normal", "italic"],
 });
 
 export const metadata: Metadata = {
-  title: "Ikad Hotels - Luxury & Comfort Accommodation in Lagos",
-  description: "Discover Ikad Hotels: premium accommodation in Victoria Island and Yaba, Lagos. Experience world-class hospitality with modern amenities and excellent service.",
-  keywords: "hotels in Lagos, Victoria Island hotel, Yaba hotel, luxury accommodation, book hotel online, Lagos Nigeria",
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: "Ikad Hotels | Hotels in Victoria Island & Yaba, Lagos",
+    template: "%s | Ikad Hotels",
+  },
+  description:
+    "Book Ikad Hotels in Lagos: stylish suites in Victoria Island near Eko Hotel Roundabout and great-value rooms on Borno Way, Yaba. 24/7 power, free Wi-Fi, from ₦25,000 per night.",
+  applicationName: "Ikad Hotels",
   authors: [{ name: "Ikad Hotels" }],
+  formatDetection: { telephone: true, email: true, address: true },
   openGraph: {
-    title: "Ikad Hotels - Premium Accommodation in Lagos",
-    description: "Experience luxury and comfort at Ikad Hotels with locations in Victoria Island and Yaba",
-    url: "https://ikadhotels.com",
+    title: "Ikad Hotels | Hotels in Victoria Island & Yaba, Lagos",
+    description:
+      "Stylish suites in Victoria Island and great-value rooms in Yaba. 24/7 power, free Wi-Fi and warm Nigerian hospitality.",
+    url: "/",
     siteName: "Ikad Hotels",
-    images: [
-      {
-        url: "https://ikadhotels.com/vi/ientrance.jpeg",
-        width: 1200,
-        height: 630,
-        alt: "Ikad Hotels",
-      },
-    ],
+    locale: "en_NG",
+    images: [{ url: "/vi/IMG_2665.PNG", width: 1024, height: 1536, alt: "Reception lounge at Ikad Hotel & Suites, Victoria Island" }],
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Ikad Hotels",
-    description: "Premium accommodation in Lagos, Nigeria",
-    images: ["https://ikadhotels.com/vi/ientrance.jpeg"],
-    creator: "@ikadhotels",
+    title: "Ikad Hotels | Victoria Island & Yaba, Lagos",
+    description: "Stylish suites in Victoria Island and great-value rooms in Yaba, Lagos.",
+    images: ["/vi/IMG_2665.PNG"],
   },
-  robots: "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
-  alternates: {
-    canonical: "https://ikadhotels.com",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1, "max-video-preview": -1 },
   },
   manifest: "/manifest.json",
+  appleWebApp: { capable: true, title: "Ikad Hotels", statusBarStyle: "black-translucent" },
 };
 
 export default function RootLayout({
@@ -71,22 +76,21 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en-NG">
       <head>
-        <link rel="manifest" href="/manifest.json" />
-        <link rel="icon" href="/favicon.ico" />
-        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-        <meta name="theme-color" content="#1a1a2e" />
-        <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-        <meta name="apple-mobile-web-app-title" content="Ikad Hotels" />
+        <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossOrigin="" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
       </head>
       <body
         className={`${geistSans.variable} ${playfairDisplay.variable} ${geistMono.variable} bg-white text-gray-900 antialiased`}
       >
+        <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[100] focus:bg-white focus:px-4 focus:py-2 focus:rounded">
+          Skip to content
+        </a>
+        <OrganizationSchema />
+        <WebsiteSchema />
         <Navbar />
-        <main>{children}</main>
+        <main id="main">{children}</main>
         <Footer />
         <SpeedInsights />
         <DevToolsCleaner />

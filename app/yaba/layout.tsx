@@ -1,35 +1,26 @@
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Ikad Hotel Yaba - Affordable Comfort in Central Lagos",
-  description: "Book Ikad Hotel in Yaba for affordable luxury accommodation with easy city access. Perfect for business travelers and families seeking modern amenities and excellent service.",
-  keywords: "Yaba hotel, hotel in Yaba, affordable hotel Lagos, business hotel, budget hotel",
+  title: { absolute: "Ikad Hotel Yaba, Borno Way Lagos | Affordable Hotel with Free Parking" },
+  description:
+    "Ikad Hotel Yaba (formerly Coolio Hotel), 270 Borno Way: comfortable Standard and Deluxe rooms from ₦25,000/night with free secure parking, restaurant, conference room and free Wi-Fi.",
+  keywords: ["Yaba hotel", "hotels in Yaba Lagos", "Borno Way hotel", "Coolio Hotel Yaba", "affordable hotel Lagos mainland", "Ikad Hotel Yaba"],
+  alternates: { canonical: "/yaba" },
   openGraph: {
-    title: "Ikad Hotel Yaba - Comfort at Affordable Rates",
-    description: "Affordable luxury accommodation in Yaba, Lagos. Perfect location for business and leisure.",
-    url: "https://ikadhotels.com/yaba",
+    title: "Ikad Hotel Yaba – Borno Way, Lagos",
+    description: "Great-value rooms in Yaba with free parking and free Wi-Fi. From ₦25,000/night.",
+    url: "/yaba",
     type: "website",
-    images: [
-      {
-        url: "https://ikadhotels.com/yaba/cooli_entrance.jpg",
-        width: 1200,
-        height: 630,
-        alt: "Ikad Hotel Yaba Entrance",
-      },
-    ],
+    images: [{ url: "/yaba/IMG_2666.PNG", width: 1024, height: 1536, alt: "Restaurant at Ikad Hotel Yaba" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Ikad Hotel Yaba",
-    description: "Affordable comfort hotel in central Lagos with modern amenities",
-    images: ["https://ikadhotels.com/yaba/cooli_entrance.jpg"],
+    title: "Ikad Hotel Yaba – Borno Way, Lagos",
+    description: "Great-value rooms in Yaba with free parking. From ₦25,000/night.",
+    images: ["/yaba/IMG_2666.PNG"],
   },
 };
 
-export default function YabaLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function YabaLayout({ children }: { children: React.ReactNode }) {
   return children;
 }

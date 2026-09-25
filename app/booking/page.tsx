@@ -36,7 +36,7 @@ export default function Booking() {
   ];
 
   return (
-    <main>
+    <div>
       <HotelHero
         title="Select Your Hotel"
         location="Choose Your Perfect Stay"
@@ -50,12 +50,12 @@ export default function Booking() {
           <p className="text-sm font-semibold tracking-widest gold uppercase mb-4">
             Choose Your Location
           </p>
-          <h1
+          <h2
             className="text-5xl font-light text-navy mb-6"
             style={{ fontFamily: "var(--font-playfair)" }}
           >
             Our Hotels
-          </h1>
+          </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
             Select from our carefully curated hotel locations, each offering unique
             experiences and exceptional service tailored to your needs
@@ -209,6 +209,6 @@ export default function Booking() {
           </p>
         </div>
       </section>
-    </main>
+    </div>
   );
 }

@@ -6,7 +6,7 @@ import HotelHero from "@/components/HotelHero";
 import BookingSearch from "@/components/BookingSearch";
 import BookingPlatforms from "@/components/BookingPlatforms";
 import WhatsAppChat from "@/components/WhatsAppChat";
-import { HotelSchema, OrganizationSchema } from "@/components/SchemaMarkup";
+import { HotelSchema } from "@/components/SchemaMarkup";
 
 export default function Yaba() {
   const [expandedRoom, setExpandedRoom] = useState<string | null>(null);
@@ -132,9 +132,8 @@ export default function Yaba() {
     }));
   };
   return (
-    <main>
+    <div>
       <HotelSchema hotelName="Ikad Hotel Yaba" hotelType="yaba" />
-      <OrganizationSchema />
       <HotelHero
         title="Ikad Hotel"
         location="Borno Way, Yaba"
@@ -681,6 +680,6 @@ export default function Yaba() {
         </div>
       )}
       <WhatsAppChat phoneNumber="+234 814 731 8331" location="Yaba" />
-    </main>
+    </div>
   );
 }
