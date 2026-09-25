@@ -1,305 +1,202 @@
-"use client";
-
-import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import HotelHero from "@/components/HotelHero";
-import BookingSearch from "@/components/BookingSearch";
-import BookingPlatforms from "@/components/BookingPlatforms";
+import QuickBook from "@/components/QuickBook";
+import { Eyebrow, FaqSection, NearbyList, RoomCards, StickyBookBar, serif } from "@/components/HotelSections";
 import WhatsAppChat from "@/components/WhatsAppChat";
-import { HotelSchema } from "@/components/SchemaMarkup";
+import { BreadcrumbSchema, FaqSchema, HotelSchema } from "@/components/SchemaMarkup";
+import {
+  BedIcon,
+  BriefcaseIcon,
+  CarIcon,
+  DiningIcon,
+  MailIcon,
+  PhoneIcon,
+  PinIcon,
+  ShieldIcon,
+  WifiIcon,
+  CheckIcon,
+} from "@/components/Icons";
+import { HOTELS, SITE_URL } from "@/lib/hotels";
+import { YABA_ROOMS, formatNaira } from "@/lib/rooms";
+import { YABA_PLACES } from "@/lib/neighbourhood";
+
+const hotel = HOTELS.yaba;
+const vi = HOTELS["victoria-island"];
+
+const amenities = [
+  { icon: CarIcon, title: "Free secure parking", text: "On-site parking for every guest at no extra cost." },
+  { icon: WifiIcon, title: "Free high-speed Wi-Fi", text: "Reliable internet throughout the property." },
+  { icon: DiningIcon, title: "Restaurant & bar", text: "Hearty local dishes and cold drinks in our dining lounge." },
+  { icon: ShieldIcon, title: "24-hour front desk", text: "Friendly staff on hand day and night." },
+  { icon: BriefcaseIcon, title: "Conference room", text: "A private space for meetings, trainings and interviews." },
+  { icon: CheckIcon, title: "Laundry service", text: "Quick, efficient laundry so you can pack light." },
+];
+
+const faqs = [
+  {
+    question: "Where is Ikad Hotel Yaba?",
+    answer: `We are at ${hotel.address.display}, close to the Third Mainland Bridge and a short drive from the Yaba tech hub, Yaba College of Technology and UNILAG.`,
+  },
+  {
+    question: "Is Ikad Hotel Yaba the former Coolio Hotel?",
+    answer: "Yes. The hotel at 270 Borno Way was formerly known as Coolio Hotel & Suites and is now Ikad Hotel Yaba, part of Ikad Hotels.",
+  },
+  {
+    question: "How much does a room cost?",
+    answer: `Standard rooms are ${formatNaira(YABA_ROOMS[0].price)} per night and Deluxe rooms are ${formatNaira(YABA_ROOMS[1].price)} per night. Book direct for our best available rate.`,
+  },
+  {
+    question: "Is parking free?",
+    answer: "Yes. Ikad Hotel Yaba has free, secure on-site parking for all guests.",
+  },
+  {
+    question: "Can I host a meeting at the hotel?",
+    answer: `Yes, we have a conference room for meetings, trainings and interviews. Contact us on ${hotel.phoneDisplay} or WhatsApp to check availability.`,
+  },
+  {
+    question: "How far is the hotel from the airport and Victoria Island?",
+    answer:
+      "Murtala Muhammed International Airport is typically 40 to 60 minutes away by car, and Victoria Island about 30 to 45 minutes via the Third Mainland Bridge, depending on traffic.",
+  },
+];
 
 export default function Yaba() {
-  const [expandedRoom, setExpandedRoom] = useState<string | null>(null);
-  const [selectedRoom, setSelectedRoom] = useState<string | null>(null);
-  const [heroImageIndex, setHeroImageIndex] = useState<number>(0);
-  const [roomImageIndex, setRoomImageIndex] = useState<{ [key: string]: number }>({});
-  const [detailImageIndex, setDetailImageIndex] = useState<number>(0);
-  const [amenitiesImageIndex, setAmenitiesImageIndex] = useState<number>(0);
-  const amenities = [
-    {
-      name: "Free Parking",
-      icon: "🚗",
-      description: "Secure parking for all guests",
-    },
-    {
-      name: "Restaurant",
-      icon: "🍽️",
-      description: "Delicious meals and local cuisine",
-    },
-    {
-      name: "24-Hour Front Desk",
-      icon: "🛎️",
-      description: "Professional staff available anytime",
-    },
-    {
-      name: "High-Speed Internet",
-      icon: "📡",
-      description: "Reliable Wi-Fi throughout the property",
-    },
-    {
-      name: "Conference Rooms",
-      icon: "📋",
-      description: "Perfect for business meetings",
-    },
-    {
-      name: "Laundry Service",
-      icon: "🧺",
-      description: "Quick and efficient laundry facilities",
-    },
-  ];
-
-  const rooms = [
-    {
-      type: "Standard",
-      price: "₦25,000",
-      features: ["Double Bed", "Smart TV with Local Channels & Sports", "AC", "En-suite Bathroom", "Free Wi-Fi"],
-      images: ["/ikad/standard.jpeg", "/ikad/Ikad37.jpeg", "/ikad/standard1.jpeg"],
-    },
-    {
-      type: "Deluxe",
-      price: "₦30,000",
-      features: ["Double Bed", "Smart TV with Local Channels & Sports", "AC", "Bathroom", "Free Wi-Fi", "Work Desk", "Leather Chair & Reading Table", "Coffee/Tea Maker"],
-      images: ["/ikad/Deluxe1.jpeg", "/ikad/Deluxe2.jpeg", "/ikad/Deluxe3.jpeg", "/ikad/Deluxe4.jpeg", "/ikad/Ikad32.jpeg"],
-    },
-  ];
-
-  // Hero images for carousel
-  const heroImages = [
-    "/yaba/cooli_entrance.jpg",
-    "/yaba/crecep.jpeg",
-    "/yaba/Cbar_Rest.jpeg",
-  ];
-
-  // Amenities carousel images
-  const amenitiesImages = [
-    "/yaba/Cbar_Rest.jpeg",
-    "/yaba/crecep.jpeg",
-    "/yaba/cooli_entrance.jpg",
-    "/yaba/entrance.jpg",
-  ];
-
-  // Auto-play hero carousel every 3 seconds
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setHeroImageIndex((prev) => (prev + 1) % heroImages.length);
-    }, 3000);
-    return () => clearInterval(interval);
-  }, [heroImages.length]);
-
-  // Auto-play room carousels every 3 seconds with 1 second delay between each room
-  useEffect(() => {
-    const intervals = rooms.map((room, index) => {
-      if (room.images.length > 1) {
-        return setTimeout(() => {
-          const interval = setInterval(() => {
-            setRoomImageIndex((prev) => ({
-              ...prev,
-              [room.type]: ((prev[room.type] || 0) + 1) % room.images.length,
-            }));
-          }, 3000);
-          return interval;
-        }, index * 1000);
-      }
-      return null;
-    });
-    return () => {
-      intervals.forEach((interval) => {
-        if (interval) clearTimeout(interval);
-      });
-    };
-  }, [rooms.length]);
-
-  // Auto-play amenities carousel every 4 seconds
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setAmenitiesImageIndex((prev) => (prev + 1) % amenitiesImages.length);
-    }, 4000);
-    return () => clearInterval(interval);
-  }, [amenitiesImages.length]);
-
-  // Room image carousel navigation
-  const nextRoomImage = (roomType: string, totalImages: number) => {
-    setRoomImageIndex((prev) => ({
-      ...prev,
-      [roomType]: ((prev[roomType] || 0) + 1) % totalImages,
-    }));
-  };
-
-  const prevRoomImage = (roomType: string, totalImages: number) => {
-    setRoomImageIndex((prev) => ({
-      ...prev,
-      [roomType]: ((prev[roomType] || 0) - 1 + totalImages) % totalImages,
-    }));
-  };
   return (
     <div>
-      <HotelSchema hotelName="Ikad Hotel Yaba" hotelType="yaba" />
-      <HotelHero
-        title="Ikad Hotel Yaba"
-        location="270 Borno Way, Yaba, Lagos (formerly Coolio Hotel)"
-        image="/yaba/cooli_entrance.jpg"
-        description="Comfort, affordability, and convenience in the heart of Yaba"
+      <HotelSchema hotelType="yaba" />
+      <FaqSchema items={faqs} />
+      <BreadcrumbSchema
+        path={[
+          { name: "Home", url: SITE_URL },
+          { name: "Yaba", url: `${SITE_URL}${hotel.path}` },
+        ]}
       />
 
-      {/* Booking Search Section */}
-      <BookingSearch location="yaba" />
+      {/* Hero */}
+      <section className="relative isolate flex min-h-[78svh] items-end overflow-hidden text-white">
+        <Image
+          src="/yaba/IMG_2666.jpg"
+          alt="Restaurant and bar at Ikad Hotel Yaba"
+          fill
+          priority
+          sizes="100vw"
+          className="-z-10 object-cover"
+        />
+        <div className="absolute inset-0 -z-10 bg-gradient-to-t from-[#0e1520] via-[#0e1520]/75 to-[#0e1520]/45" aria-hidden="true" />
 
-      {/* About Section */}
-      <section className="max-w-5xl mx-auto py-40 px-6">
-        <h2 className="text-5xl font-light mb-8 text-navy" style={{ fontFamily: "var(--font-playfair)" }}>About the Hotel</h2>
-        <p className="text-lg text-gray-700 leading-relaxed mb-8">
-          Ikad Hotel Yaba is your smart choice for comfort without compromise. Strategically located on Borno Way in the vibrant heart of Yaba, we deliver exceptional value and authentic hospitality to savvy travelers who demand quality at smart prices. Our commitment is simple: provide a welcoming sanctuary where you can rest easy, work productively, and experience genuine Nigerian hospitality.
-        </p>
-        <p className="text-lg text-gray-700 leading-relaxed mb-8">
-          Perfect for business professionals, families, and leisure travelers, Ikad Hotel Yaba combines affordability with thoughtful amenities. From our friendly staff who treat you like family to our well-appointed rooms equipped with modern conveniences, every stay is designed to exceed your expectations.
-        </p>
-        <p className="text-lg text-gray-700 leading-relaxed">
-          Surrounded by bustling markets, excellent dining options, and seamless access to Lagos&apos;s key business districts, Ikad Hotel Yaba is your gateway to experiencing authentic Lagos while enjoying reliable comfort and unbeatable value.
-        </p>
+        <div className="mx-auto w-full max-w-7xl px-5 pb-32 pt-28 sm:px-8 md:pb-36">
+          <nav aria-label="Breadcrumb" className="mb-6 text-xs text-white/70">
+            <Link href="/" className="hover:text-white">Home</Link>
+            <span className="mx-2" aria-hidden="true">/</span>
+            <span aria-current="page">Yaba</span>
+          </nav>
+          <Eyebrow light>270 Borno Way · Formerly Coolio Hotel</Eyebrow>
+          <h1 className="max-w-4xl text-4xl font-medium leading-[1.1] sm:text-5xl md:text-6xl" style={serif}>
+            Ikad Hotel <em className="text-gold">Yaba</em>
+          </h1>
+          <p className="mt-6 max-w-2xl text-base text-white/80 sm:text-lg">
+            Smart, comfortable rooms at honest prices in the heart of mainland Lagos, minutes from the Third Mainland Bridge and Yaba&apos;s tech hub.
+          </p>
+          <ul className="mt-8 flex flex-wrap gap-2 text-xs font-medium sm:text-sm">
+            {["Free parking", "Free Wi-Fi", "Restaurant & bar", "Conference room", `From ${hotel.fromPrice}/night`].map((chip) => (
+              <li key={chip} className="rounded-full border border-white/25 bg-white/10 px-4 py-1.5 backdrop-blur">{chip}</li>
+            ))}
+          </ul>
+        </div>
       </section>
 
-      {/* Room Types Section - Marriott Style */}
-      <section className="py-24 px-6 bg-white">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-20">
-            <p className="text-sm font-semibold tracking-widest gold uppercase mb-4">OUR ROOMS</p>
-            <h2 className="text-5xl font-light text-navy mb-6" style={{ fontFamily: "var(--font-playfair)" }}>
-              Comfortable & Affordable Rooms
+      {/* Booking bar overlapping hero */}
+      <div id="book" className="relative z-10 mx-auto -mt-20 max-w-5xl scroll-mt-24 px-5 sm:px-8">
+        <QuickBook hotel="yaba" />
+        <p className="mt-3 text-center text-sm text-gray-500">
+          Prefer to talk? Call <a href={`tel:${hotel.phone}`} className="font-medium text-navy hover:underline">{hotel.phoneDisplay}</a> or{" "}
+          <a href={hotel.whatsapp} target="_blank" rel="noopener noreferrer" className="font-medium text-navy hover:underline">chat on WhatsApp</a>.
+        </p>
+      </div>
+
+      {/* Overview */}
+      <section className="px-5 py-20 sm:px-8 md:py-28">
+        <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-12 lg:gap-16">
+          <div className="lg:col-span-7">
+            <Eyebrow>Welcome</Eyebrow>
+            <h2 className="text-3xl leading-tight text-navy sm:text-4xl md:text-5xl" style={serif}>
+              Comfort without compromise on the mainland
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-              Experience quality accommodation designed for modern travelers seeking comfort and value in central Lagos
+            <div className="mt-8 space-y-5 text-lg leading-relaxed text-gray-700">
+              <p>
+                Ikad Hotel Yaba is the smart choice for travellers who want a clean, comfortable room, a warm welcome and a fair price. On Borno Way, close to the Third Mainland Bridge, we put the start-ups of Yaba, the campuses of YABATECH and UNILAG, and the rest of Lagos within easy reach.
+              </p>
+              <p>
+                Whether you&apos;re here for business, study, a family visit or a quick stopover, you&apos;ll find free parking, fast Wi-Fi, a relaxed restaurant and bar, and a team that treats you like family.
+              </p>
+            </div>
+          </div>
+          <aside className="rounded-2xl bg-cream p-8 lg:col-span-5">
+            <div className="relative -mx-8 -mt-8 mb-6 aspect-[16/10] overflow-hidden rounded-t-2xl">
+              <Image src="/yaba/entrance.jpg" alt="Front of Ikad Hotel Yaba at 270 Borno Way" fill sizes="(min-width: 1024px) 40vw, 100vw" className="object-cover object-top" />
+            </div>
+            <h3 className="text-xl text-navy" style={serif}>At a glance</h3>
+            <dl className="mt-6 space-y-5 text-sm">
+              <div className="flex gap-4">
+                <dt><PinIcon className="h-5 w-5 text-gold-dark" /><span className="sr-only">Address</span></dt>
+                <dd className="text-gray-700">
+                  {hotel.address.display}
+                  <a href={hotel.mapsUrl} target="_blank" rel="noopener noreferrer" className="mt-1 block font-semibold text-navy hover:underline">Get directions</a>
+                </dd>
+              </div>
+              <div className="flex gap-4">
+                <dt><BedIcon className="h-5 w-5 text-gold-dark" /><span className="sr-only">Rooms</span></dt>
+                <dd className="text-gray-700">{YABA_ROOMS.map((r) => r.type).join(" and ")} rooms</dd>
+              </div>
+              <div className="flex gap-4">
+                <dt><PhoneIcon className="h-5 w-5 text-gold-dark" /><span className="sr-only">Phone</span></dt>
+                <dd><a href={`tel:${hotel.phone}`} className="text-gray-700 hover:text-navy">{hotel.phoneDisplay}</a></dd>
+              </div>
+              <div className="flex gap-4">
+                <dt><MailIcon className="h-5 w-5 text-gold-dark" /><span className="sr-only">Email</span></dt>
+                <dd><a href={`mailto:${hotel.email}`} className="break-all text-gray-700 hover:text-navy">{hotel.email}</a></dd>
+              </div>
+            </dl>
+          </aside>
+        </div>
+      </section>
+
+      {/* Rooms */}
+      <section id="rooms" className="scroll-mt-20 bg-cream px-5 py-20 sm:px-8 md:py-28">
+        <div className="mx-auto max-w-7xl">
+          <div className="mb-14 flex flex-col justify-between gap-6 md:flex-row md:items-end">
+            <div className="max-w-2xl">
+              <Eyebrow>Rooms</Eyebrow>
+              <h2 className="text-3xl leading-tight text-navy sm:text-4xl md:text-5xl" style={serif}>
+                Rest well, spend less
+              </h2>
+            </div>
+            <p className="max-w-sm text-gray-600">
+              Every room includes air-conditioning, a smart TV with local channels and sports, and free Wi-Fi.
             </p>
           </div>
+          <RoomCards hotel={hotel} rooms={YABA_ROOMS} bookingPath="/booking/yaba-details" />
+        </div>
+      </section>
 
-          {/* Rooms Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            {rooms.map((room, index) => (
-              <div
-                key={index}
-                className="group overflow-hidden rounded-lg shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer"
-                onClick={() => {
-                  setSelectedRoom(room.type);
-                  setDetailImageIndex(0);
-                }}
-              >
-                {/* Room Image with Carousel */}
-                <div className="relative h-80 overflow-hidden bg-gray-200">
-                  <Image
-                    src={room.images[(roomImageIndex[room.type] || 0)]}
-                    alt={`${room.type} room at Ikad Hotel Yaba`}
-                    fill
-                    sizes="(min-width: 768px) 50vw, 100vw"
-                    className="object-cover group-hover:scale-110 transition-transform duration-700"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                  
-                  {/* Price Badge */}
-                  <div className="absolute top-6 right-6 text-white px-4 py-2 rounded" style={{ backgroundColor: "var(--gold)" }}>
-                    <p className="text-sm font-semibold">{room.price}</p>
-                    <p className="text-xs">per night</p>
-                  </div>
-
-                  {/* Image Navigation Buttons */}
-                  {room.images.length > 1 && (
-                    <>
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          prevRoomImage(room.type, room.images.length);
-                        }}
-                        className="absolute left-3 top-1/2 transform -translate-y-1/2 bg-white/40 hover:bg-white/70 text-white p-2 rounded-full transition-all"
-                        aria-label="Previous room image"
-                      >
-                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                        </svg>
-                      </button>
-
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          nextRoomImage(room.type, room.images.length);
-                        }}
-                        className="absolute right-3 top-1/2 transform -translate-y-1/2 bg-white/40 hover:bg-white/70 text-white p-2 rounded-full transition-all"
-                        aria-label="Next room image"
-                      >
-                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                        </svg>
-                      </button>
-
-                      {/* Image Indicators */}
-                      <div className="absolute bottom-3 left-1/2 transform -translate-x-1/2 flex gap-1">
-                        {room.images.map((_, imgIndex) => (
-                          <button
-                            key={imgIndex}
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              setRoomImageIndex((prev) => ({
-                                ...prev,
-                                [room.type]: imgIndex,
-                              }));
-                            }}
-                            className={`w-2 h-2 rounded-full transition-all ${
-                              imgIndex === (roomImageIndex[room.type] || 0) ? "bg-white" : "bg-white/50"
-                            }`}
-                            aria-label={`Go to room image ${imgIndex + 1}`}
-                          />
-                        ))}
-                      </div>
-                    </>
-                  )}
-                </div>
-
-                {/* Room Info */}
-                <div className="p-8 bg-white">
-                  <h3 className="text-2xl font-semibold text-navy mb-4" style={{ fontFamily: "var(--font-playfair)" }}>{room.type}</h3>
-                  
-                  {/* Features - Show only first 4 */}
-                  <div className="space-y-2 mb-6">
-                    {room.features.slice(0, 4).map((feature, idx) => (
-                      <div key={idx} className="flex items-center text-sm">
-                        <svg className="w-4 h-4 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" style={{ color: "var(--gold)" }}>
-                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                        </svg>
-                        <span className="text-gray-700">{feature}</span>
-                      </div>
-                    ))}
-                  </div>
-
-                  {/* View Details */}
-                  {room.features.length > 4 && (
-                    <button
-                      onClick={() => setExpandedRoom(expandedRoom === room.type ? null : room.type)}
-                      className="text-blue-600 text-sm font-semibold hover:text-blue-700 mb-4 underline"
-                    >
-                      {expandedRoom === room.type ? "Hide Details" : "View Details"}
-                    </button>
-                  )}
-
-                  {/* Expanded Features */}
-                  {expandedRoom === room.type && room.features.length > 4 && (
-                    <div className="space-y-2 mb-6 p-4 bg-blue-50 rounded border border-blue-200">
-                      <p className="text-xs font-semibold text-blue-700 uppercase mb-3">Additional Features</p>
-                      {room.features.slice(4).map((feature, idx) => (
-                        <div key={idx} className="flex items-start text-sm">
-                          <svg className="w-4 h-4 text-blue-600 mr-3 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                          </svg>
-                          <span className="text-gray-700">{feature}</span>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-
-                  {/* CTA Button */}
-                  <Link
-                    href="/booking/yaba-details"
-                    className="block w-full text-white py-3 rounded font-semibold text-center transition-colors uppercase text-sm hover:opacity-90" style={{ backgroundColor: "var(--gold)" }}
-                  >
-                    Book Now
-                  </Link>
+      {/* Amenities */}
+      <section className="px-5 py-20 sm:px-8 md:py-28">
+        <div className="mx-auto max-w-7xl">
+          <div className="mb-14 max-w-2xl">
+            <Eyebrow>Amenities &amp; Services</Eyebrow>
+            <h2 className="text-3xl leading-tight text-navy sm:text-4xl md:text-5xl" style={serif}>
+              The little things that make a stay easy
+            </h2>
+          </div>
+          <div className="grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
+            {amenities.map(({ icon: Icon, title, text }) => (
+              <div key={title} className="flex gap-4">
+                <span className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-cream text-gold-dark">
+                  <Icon className="h-6 w-6" />
+                </span>
+                <div>
+                  <h3 className="font-semibold text-navy">{title}</h3>
+                  <p className="mt-1.5 text-sm leading-relaxed text-gray-600">{text}</p>
                 </div>
               </div>
             ))}
@@ -307,386 +204,100 @@ export default function Yaba() {
         </div>
       </section>
 
-      {/* Amenities Section - Professional Style */}
-      <section className="py-40 px-6 bg-gradient-to-br from-white via-gray-50 to-white">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-20">
-            <p className="text-sm font-semibold tracking-widest uppercase mb-4" style={{ color: "var(--gold)" }}>Experience Excellence</p>
-            <h2 className="text-5xl font-light mb-4 text-navy" style={{ fontFamily: "var(--font-playfair)" }}>
-              Hotel Amenities & Services
+      {/* Dining & meetings */}
+      <section className="bg-navy text-white">
+        <div className="mx-auto grid max-w-7xl lg:grid-cols-2">
+          <div className="relative min-h-[320px] lg:min-h-[520px]">
+            <Image src="/yaba/Cbar_Rest.jpeg" alt="Bar and dining lounge at Ikad Hotel Yaba" fill sizes="(min-width: 1024px) 50vw, 100vw" className="object-cover" />
+          </div>
+          <div className="flex flex-col justify-center px-5 py-16 sm:px-12 lg:py-24">
+            <Eyebrow light>Eat, meet &amp; unwind</Eyebrow>
+            <h2 className="text-3xl leading-tight sm:text-4xl" style={serif}>
+              A relaxed lounge for meals, meetings and match nights
             </h2>
-            <p className="text-lg text-gray-600 leading-relaxed">Quality facilities for comfort and convenience</p>
-          </div>
-
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            {/* Amenities List - Left Side */}
-            <div className="space-y-8">
-              <div>
-                <h3 className="text-xl font-semibold text-navy mb-4" style={{ fontFamily: "var(--font-playfair)" }}>Hotel Services</h3>
-                <div className="grid grid-cols-2 gap-4">
-                  {amenities.map((amenity, index) => (
-                    <div key={index} className="flex items-start gap-3">
-                      <span className="text-xl font-bold flex-shrink-0 pt-0.5" style={{ color: "var(--gold)" }}>✓</span>
-                      <div>
-                        <p className="font-semibold text-sm text-gray-900">{amenity.name}</p>
-                        <p className="text-xs text-gray-600">{amenity.description}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div className="border-t border-gray-300 pt-8">
-                <h3 className="text-xl font-semibold text-navy mb-4" style={{ fontFamily: "var(--font-playfair)" }}>Room Features</h3>
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="flex items-start gap-3">
-                    <span className="text-xl font-bold flex-shrink-0 pt-0.5" style={{ color: "var(--gold)" }}>✓</span>
-                    <p className="text-sm text-gray-700">Air Conditioning</p>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <span className="text-xl font-bold flex-shrink-0 pt-0.5" style={{ color: "var(--gold)" }}>✓</span>
-                    <p className="text-sm text-gray-700">Comfortable Beds</p>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <span className="text-xl font-bold flex-shrink-0 pt-0.5" style={{ color: "var(--gold)" }}>✓</span>
-                    <p className="text-sm text-gray-700">Work Area</p>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <span className="text-xl font-bold flex-shrink-0 pt-0.5" style={{ color: "var(--gold)" }}>✓</span>
-                    <p className="text-sm text-gray-700">Smart TV</p>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <span className="text-xl font-bold flex-shrink-0 pt-0.5" style={{ color: "var(--gold)" }}>✓</span>
-                    <p className="text-sm text-gray-700">Private Bathroom</p>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <span className="text-xl font-bold flex-shrink-0 pt-0.5" style={{ color: "var(--gold)" }}>✓</span>
-                    <p className="text-sm text-gray-700">Free Wi-Fi</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Images Carousel - Right Side */}
-            <div>
-              <div className="relative rounded-xl overflow-hidden shadow-lg h-96 bg-gray-200">
-                <Image
-                  src={amenitiesImages[amenitiesImageIndex]}
-                  alt="Amenities at Ikad Hotel Yaba"
-                  fill
-                  sizes="(min-width: 768px) 50vw, 100vw"
-                  className="object-cover transition-opacity duration-700"
-                />
-
-                {/* Navigation Arrows */}
-                <button
-                  onClick={() => setAmenitiesImageIndex((prev) => (prev - 1 + amenitiesImages.length) % amenitiesImages.length)}
-                  className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white p-2 rounded-full transition-all z-10"
-                >
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                  </svg>
-                </button>
-                <button
-                  onClick={() => setAmenitiesImageIndex((prev) => (prev + 1) % amenitiesImages.length)}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white p-2 rounded-full transition-all z-10"
-                >
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
-                </button>
-
-                {/* Indicator Dots */}
-                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-10">
-                  {amenitiesImages.map((_, index) => (
-                    <button
-                      key={index}
-                      onClick={() => setAmenitiesImageIndex(index)}
-                      className={`w-2 h-2 rounded-full transition-all ${
-                        index === amenitiesImageIndex ? "bg-white w-8" : "bg-white/50"
-                      }`}
-                    />
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Location & Access Section */}
-      <section className="py-40 px-6" style={{ backgroundColor: "var(--light-gray)" }}>
-        <div className="max-w-5xl mx-auto">
-          <h3 className="text-3xl font-semibold mb-10 text-navy" style={{ fontFamily: "var(--font-playfair)" }}>Location & Accessibility</h3>
-          <div className="grid md:grid-cols-2 gap-8">
-            <div>
-              <h4 className="text-xl font-semibold mb-4 text-navy">Why Choose Yaba?</h4>
-              <ul className="space-y-3">
-                <li className="flex items-start">
-                  <span className="font-bold mr-3" style={{ color: "var(--gold)" }}>•</span>
-                  <span className="text-gray-700">Walking distance to Yaba Tech and shopping centers</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="font-bold mr-3" style={{ color: "var(--gold)" }}>•</span>
-                  <span className="text-gray-700">Easy access to major roads and transportation hubs</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="font-bold mr-3" style={{ color: "var(--gold)" }}>•</span>
-                  <span className="text-gray-700">Vibrant neighborhood with restaurants and shops</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="font-bold mr-3" style={{ color: "var(--gold)" }}>•</span>
-                  <span className="text-gray-700">Budget-friendly without compromising quality</span>
-                </li>
-              </ul>
-            </div>
-            <div className="bg-white p-6 rounded-lg shadow">
-              <h4 className="text-xl font-semibold mb-4 text-navy" style={{ fontFamily: "var(--font-playfair)" }}>Contact Information</h4>
-              <p className="text-gray-700 mb-4">
-                <strong>Address:</strong><br />
-                270 Borno Way, Adekunle, Lagos 100001, Lagos
-              </p>
-              <p className="text-gray-700 mb-4">
-                <strong>Phone:</strong><br />
-                <a href="tel:+2348147318331" className="hover:opacity-75" style={{ color: "var(--gold)" }}>
-                  +234 814 731 8331
-                </a>
-              </p>
-              <p className="text-gray-700">
-                <strong>Email:</strong><br />
-                <a href="mailto:reservations.bw@ikadhotels.com" className="hover:opacity-75" style={{ color: "var(--gold)" }}>
-                  reservations.bw@ikadhotels.com
-                </a>
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Location Section */}
-      <section className="py-40 px-6" style={{ backgroundColor: "var(--light-gray)" }}>
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-12">
-            <p className="text-sm font-semibold tracking-widest gold uppercase mb-4">OUR LOCATION</p>
-            <h2 className="text-5xl font-light text-navy mb-6" style={{ fontFamily: "var(--font-playfair)" }}>
-              Find Us in Yaba
-            </h2>
-            <p className="text-xl text-gray-600 leading-relaxed">
-              Conveniently located in the vibrant heart of Yaba, central Lagos
+            <p className="mt-6 leading-relaxed text-white/75">
+              Enjoy local favourites and cold drinks in our restaurant and bar, catch the big game on the screens, or book our conference room for a team meeting, training or interview, all without leaving the hotel.
             </p>
-          </div>
-
-          <div className="bg-white rounded-lg overflow-hidden shadow-lg">
-            <iframe
-              src="https://maps.google.com/maps?q=COOLIO+HOTEL+and+SUITES,+Borno+Way,+Yaba,+Lagos&output=embed"
-              width="100%"
-              height="500"
-              style={{ border: 0 }}
-              allowFullScreen
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              className="w-full"
-            ></iframe>
-          </div>
-
-          <div className="mt-12 grid md:grid-cols-2 gap-8">
-            <div className="bg-white p-8 rounded-lg shadow">
-              <h3 className="text-2xl font-semibold text-navy mb-4" style={{ fontFamily: "var(--font-playfair)" }}>Address</h3>
-              <p className="text-lg text-gray-700 mb-4">
-                270 Borno Way, Adekunle, Lagos 100001, Lagos<br />
-                <span className="text-sm text-gray-600">(Formerly Coolio Hotel)</span>
-              </p>
-              <a
-                href="https://www.google.com/maps/place/COOLIO+HOTEL+%26+SUITES/@6.4946465,3.3786793,20.76z/data=!4m9!3m8!1s0x103b8d719658189b:0x9e6cc660582ce82e!5m2!4m1!1i2!8m2!3d6.4946171!4d3.3788883!16s%2Fg%2F11qsqw489n?hl=en-GB&authuser=0&entry=ttu&g_ep=EgoyMDI2MDEyMS4wIKXMDSoASAFQAw%3D%3D"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-block font-semibold" style={{ color: "var(--gold)" }}
-              >
-                View on Google Maps →
-              </a>
-            </div>
-
-            <div className="bg-white p-8 rounded-lg shadow">
-              <h3 className="text-2xl font-semibold text-navy mb-4" style={{ fontFamily: "var(--font-playfair)" }}>Contact Information</h3>
-              <div className="space-y-4 text-lg text-gray-700">
-                <p>
-                  <span className="font-semibold text-gray-900">Address:</span><br />
-                  270 Borno Way, Adekunle, Lagos 100001, Lagos
-                </p>
-                <p>
-                  <span className="font-semibold text-gray-900">Phone:</span><br />
-                  <a href="tel:08147318331" className="hover:opacity-75" style={{ color: "var(--gold)" }}>+234 814 731 8331</a>
-                </p>
-                <p>
-                  <span className="font-semibold text-gray-900">Email:</span><br />
-                  <a href="mailto:reservations.bw@ikadhotels.com" className="hover:opacity-75" style={{ color: "var(--gold)" }}>reservations.bw@ikadhotels.com</a>
-                </p>
+            <div className="mt-8 grid grid-cols-2 gap-4">
+              <div className="relative aspect-[4/3] overflow-hidden rounded-xl">
+                <Image src="/yaba/crecep.jpeg" alt="Reception at Ikad Hotel Yaba" fill sizes="(min-width: 1024px) 25vw, 50vw" className="object-cover" />
+              </div>
+              <div className="relative aspect-[4/3] overflow-hidden rounded-xl">
+                <Image src="/yaba/IMG_2667.jpg" alt="Guest room at Ikad Hotel Yaba" fill sizes="(min-width: 1024px) 25vw, 50vw" className="object-cover" />
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Call to Action - Premium Design */}
-      <section className="py-40 px-6 bg-white">
-        <div className="max-w-4xl mx-auto text-center">
-          <p className="text-sm font-semibold tracking-widest gold uppercase mb-4">Ready to Book?</p>
-          <h2 className="text-5xl font-light text-navy mb-6" style={{ fontFamily: "var(--font-playfair)" }}>
-            Affordable Comfort Awaits
-          </h2>
-          <p className="text-xl text-gray-600 mb-12 leading-relaxed">
-            Reserve your stay at Ikad Hotel Yaba and enjoy quality accommodation with excellent value
-          </p>
-          <div className="flex flex-col sm:flex-row gap-6 justify-center">
-            <Link
-              href="/booking"
-              className="inline-block text-white px-12 py-4 rounded font-semibold transition-colors uppercase text-sm tracking-wide hover:opacity-90" style={{ backgroundColor: "var(--gold)" }}
-            >
-              Book Your Stay
-            </Link>
-            <Link
-              href="/contact"
-              className="inline-block text-white px-12 py-4 rounded font-semibold transition-colors uppercase text-sm tracking-wide hover:opacity-90" style={{ backgroundColor: "var(--navy)" }}
-            >
-              Get More Information
-            </Link>
+      {/* Location */}
+      <section id="location" className="scroll-mt-20 px-5 py-20 sm:px-8 md:py-28">
+        <div className="mx-auto max-w-7xl">
+          <div className="mb-14 max-w-2xl">
+            <Eyebrow>Location</Eyebrow>
+            <h2 className="text-3xl leading-tight text-navy sm:text-4xl md:text-5xl" style={serif}>
+              Connected to all of Lagos
+            </h2>
+          </div>
+          <div className="grid gap-10 lg:grid-cols-5">
+            <div className="overflow-hidden rounded-2xl bg-gray-100 lg:col-span-3">
+              <iframe
+                title="Map showing Ikad Hotel Yaba, 270 Borno Way"
+                src="https://maps.google.com/maps?q=270+Borno+Way,+Yaba,+Lagos&output=embed"
+                className="h-[360px] w-full lg:h-full lg:min-h-[480px]"
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              />
+            </div>
+            <div className="lg:col-span-2">
+              <address className="not-italic">
+                <p className="text-lg font-semibold text-navy">{hotel.name}</p>
+                <p className="mt-1 text-gray-600">{hotel.address.display}, Nigeria</p>
+                <p className="mt-1 text-sm text-gray-500">Formerly Coolio Hotel &amp; Suites</p>
+              </address>
+              <NearbyList places={YABA_PLACES.slice(0, 8)} />
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Booking Platforms Section */}
-      <BookingPlatforms />
+      {/* Sister hotel */}
+      <section className="px-5 pb-20 sm:px-8 md:pb-28">
+        <div className="mx-auto flex max-w-7xl flex-col items-start justify-between gap-6 rounded-2xl border border-gray-200 p-8 sm:flex-row sm:items-center">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.25em] text-gold-dark">Our sister hotel</p>
+            <p className="mt-2 text-2xl text-navy" style={serif}>Staying on the Island? Try {vi.name}</p>
+            <p className="mt-1 text-sm text-gray-600">Five room types by the Eko Hotel Roundabout, from {vi.fromPrice} per night.</p>
+          </div>
+          <Link href={vi.path} className="shrink-0 rounded-full border border-navy px-6 py-3 text-sm font-semibold text-navy transition-colors hover:bg-navy hover:text-white">
+            Explore Victoria Island
+          </Link>
+        </div>
+      </section>
 
-      {/* Room Detail Modal */}
-      {selectedRoom && (
-        <div className="fixed inset-0 bg-black/50 z-50 overflow-y-auto">
-          <div className="min-h-screen flex items-center justify-center p-4">
-            <div className="bg-white rounded-lg max-w-6xl w-full max-h-[90vh] overflow-y-auto">
-              {/* Close Button */}
-              <button
-                onClick={() => setSelectedRoom(null)}
-                className="absolute top-4 right-4 z-10 bg-white rounded-full p-2 shadow-lg hover:bg-gray-100"
-              >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
+      <FaqSection id="yaba-faq" title="Questions about your stay" faqs={faqs} />
 
-              <div className="grid md:grid-cols-2 gap-8 p-8">
-                {/* Left Side - Image Carousel */}
-                <div>
-                  {rooms.find(r => r.type === selectedRoom) && (
-                    <>
-                      {/* Main Image */}
-                      <div className="relative h-96 rounded-lg overflow-hidden bg-gray-200 mb-4">
-                        <Image
-                          src={rooms.find(r => r.type === selectedRoom)?.images[detailImageIndex] ?? ""}
-                          alt={`${selectedRoom} room at Ikad Hotel Yaba`}
-                          fill
-                          sizes="(min-width: 1024px) 50vw, 100vw"
-                          className="object-cover"
-                        />
-                        
-                        {/* Navigation Arrows */}
-                        {rooms.find(r => r.type === selectedRoom)!.images.length > 1 && (
-                          <>
-                            <button
-                              onClick={() => setDetailImageIndex((prev) => (prev - 1 + rooms.find(r => r.type === selectedRoom)!.images.length) % rooms.find(r => r.type === selectedRoom)!.images.length)}
-                              className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white p-2 rounded-full transition-all"
-                            >
-                              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                              </svg>
-                            </button>
-                            <button
-                              onClick={() => setDetailImageIndex((prev) => (prev + 1) % rooms.find(r => r.type === selectedRoom)!.images.length)}
-                              className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white p-2 rounded-full transition-all"
-                            >
-                              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                              </svg>
-                            </button>
-                          </>
-                        )}
-                      </div>
-
-                      {/* Thumbnail Gallery */}
-                      <div className="flex gap-2 overflow-x-auto">
-                        {rooms.find(r => r.type === selectedRoom)?.images.map((img, idx) => (
-                          <button
-                            key={idx}
-                            onClick={() => setDetailImageIndex(idx)}
-                            className={`relative flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border-2 transition-all ${
-                              idx === detailImageIndex ? "border-gold" : "border-gray-200"
-                            }`}
-                            style={{ borderColor: idx === detailImageIndex ? "var(--gold)" : undefined }}
-                          >
-                            <Image src={img} alt={`${selectedRoom} room photo ${idx + 1}`} fill sizes="80px" className="object-cover" />
-                          </button>
-                        ))}
-                      </div>
-                    </>
-                  )}
-                </div>
-
-                {/* Right Side - Room Details */}
-                <div>
-                  {rooms.find(r => r.type === selectedRoom) && (
-                    <>
-                      <h1 className="text-4xl font-bold text-navy mb-4" style={{ fontFamily: "var(--font-playfair)" }}>
-                        {selectedRoom} Room
-                      </h1>
-
-                      {/* Spec Badges */}
-                      <div className="flex flex-wrap gap-2 mb-6">
-                        <span className="px-3 py-1 border border-gray-300 rounded text-sm">🛏️ 1 room</span>
-                        <span className="px-3 py-1 border border-gray-300 rounded text-sm">📐 Spacious</span>
-                        <span className="px-3 py-1 border border-gray-300 rounded text-sm">🌟 Quality</span>
-                      </div>
-
-                      {/* Price */}
-                      <div className="mb-6">
-                        <p className="text-3xl font-bold" style={{ color: "var(--gold)" }}>
-                          {rooms.find(r => r.type === selectedRoom)?.price}
-                        </p>
-                        <p className="text-gray-600">per night</p>
-                      </div>
-
-                      {/* Description */}
-                      <p className="text-gray-700 mb-8 leading-relaxed">
-                        Experience comfort and value in our {selectedRoom} room, thoughtfully designed for modern travelers. Enjoy quality amenities and a welcoming atmosphere at Ikad Hotel Yaba.
-                      </p>
-
-                      {/* Room Features - Two Columns */}
-                      <div className="mb-8">
-                        <h3 className="text-lg font-semibold text-navy mb-4">Room Amenities</h3>
-                        <div className="grid grid-cols-2 gap-3">
-                          {rooms.find(r => r.type === selectedRoom)?.features.map((feature, idx) => (
-                            <div key={idx} className="flex items-start gap-2">
-                              <span className="text-lg" style={{ color: "var(--gold)" }}>✓</span>
-                              <span className="text-sm text-gray-700">{feature}</span>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-
-                      {/* CTA Button */}
-                      <Link
-                        href="/booking"
-                        className="block w-full text-white py-4 rounded font-semibold text-center transition-colors uppercase text-sm hover:opacity-90"
-                        style={{ backgroundColor: "var(--gold)" }}
-                      >
-                        Book This Room
-                      </Link>
-                    </>
-                  )}
-                </div>
-              </div>
-            </div>
+      {/* CTA */}
+      <section className="relative isolate overflow-hidden bg-navy px-5 py-24 text-center text-white sm:px-8">
+        <Image src="/ikad/Deluxe1.jpeg" alt="" fill sizes="100vw" className="-z-10 object-cover opacity-20" />
+        <div className="mx-auto max-w-3xl">
+          <Eyebrow light>Book direct &amp; save</Eyebrow>
+          <h2 className="text-3xl leading-tight sm:text-4xl md:text-5xl" style={serif}>Your stay in Yaba starts here</h2>
+          <p className="mx-auto mt-6 max-w-xl text-white/75">Reserve online in minutes, or speak to our team for the best available rate.</p>
+          <div className="mt-10 flex flex-col justify-center gap-3 sm:flex-row">
+            <a href="#book" className="rounded-full bg-gold px-8 py-4 text-sm font-semibold uppercase tracking-wider text-navy transition-colors hover:bg-white">
+              Check availability
+            </a>
+            <a href={`tel:${hotel.phone}`} className="rounded-full border border-white/40 px-8 py-4 text-sm font-semibold uppercase tracking-wider text-white transition-colors hover:bg-white/10">
+              Call {hotel.phoneDisplay}
+            </a>
           </div>
         </div>
-      )}
-      <WhatsAppChat phoneNumber="+234 814 731 8331" location="Yaba" />
+      </section>
+
+      <StickyBookBar fromPrice={hotel.fromPrice} />
+
+      <WhatsAppChat phoneNumber={hotel.phone} location="Yaba" raised />
     </div>
   );
 }

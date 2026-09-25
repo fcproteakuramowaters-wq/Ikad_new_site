@@ -110,3 +110,70 @@ export const VI_TIPS = [
     text: "All Ikad rooms include free high-speed Wi-Fi, and local SIM cards are easy to buy with ID if you want mobile data on the go.",
   },
 ];
+
+// Places near Ikad Hotel Yaba, 270 Borno Way (Adekunle, by the Third Mainland Bridge).
+export const YABA_PLACES: Place[] = [
+  {
+    name: "Third Mainland Bridge",
+    area: "Adekunle, Yaba",
+    time: "A few minutes",
+    category: "Getting around",
+    description: "The fastest route from the mainland to Lagos Island, Ikoyi and Victoria Island starts close to our door.",
+  },
+  {
+    name: "Yaba tech hub (Herbert Macaulay Way)",
+    area: "Yaba",
+    time: "About 5–10 minutes",
+    category: "Business",
+    description: "Nigeria's best-known tech cluster, home to start-ups, co-working spaces and innovation hubs.",
+  },
+  {
+    name: "Yaba College of Technology",
+    area: "Yaba",
+    time: "About 5–10 minutes",
+    category: "Business",
+    description: "One of Nigeria's oldest higher-education institutions, a short hop from the hotel.",
+  },
+  {
+    name: "Tejuosho & Yaba markets",
+    area: "Yaba",
+    time: "About 10 minutes",
+    category: "Shopping",
+    description: "Busy markets for fabrics, fashion, electronics and everyday essentials.",
+  },
+  {
+    name: "University of Lagos (UNILAG)",
+    area: "Akoka",
+    time: "About 15–20 minutes",
+    category: "Business",
+    description: "The main UNILAG campus, handy for visiting academics, parents and conference guests.",
+  },
+  {
+    name: "Lagos University Teaching Hospital (LUTH)",
+    area: "Idi-Araba",
+    time: "About 15–20 minutes",
+    category: "Getting around",
+    description: "A major teaching hospital, convenient for families visiting patients or attending appointments.",
+  },
+  {
+    name: "Lagos Island (Marina & CMS)",
+    area: "Lagos Island",
+    time: "About 20–30 minutes",
+    category: "Business",
+    description: "The historic commercial centre, reached via the Third Mainland Bridge.",
+  },
+  {
+    name: "Victoria Island & our sister hotel",
+    area: "Victoria Island",
+    time: "About 30–45 minutes",
+    category: "Business",
+    description: "Ikad Hotel & Suites, Victoria Island, is an easy trip across the bridge.",
+  },
+  {
+    name: "Murtala Muhammed International Airport (LOS)",
+    area: "Ikeja",
+    time: "About 40–60 minutes",
+    category: "Getting around",
+    description: "Journey times depend heavily on traffic, so allow extra time at rush hour.",
+  },
+];
