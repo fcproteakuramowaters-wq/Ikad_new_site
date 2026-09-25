@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import HotelHero from "@/components/HotelHero";
 import BookingSearch from "@/components/BookingSearch";
 import BookingPlatforms from "@/components/BookingPlatforms";
@@ -135,8 +136,8 @@ export default function Yaba() {
     <div>
       <HotelSchema hotelName="Ikad Hotel Yaba" hotelType="yaba" />
       <HotelHero
-        title="Ikad Hotel"
-        location="Borno Way, Yaba"
+        title="Ikad Hotel Yaba"
+        location="270 Borno Way, Yaba, Lagos (formerly Coolio Hotel)"
         image="/yaba/cooli_entrance.jpg"
         description="Comfort, affordability, and convenience in the heart of Yaba"
       />
@@ -184,10 +185,12 @@ export default function Yaba() {
               >
                 {/* Room Image with Carousel */}
                 <div className="relative h-80 overflow-hidden bg-gray-200">
-                  <img
+                  <Image
                     src={room.images[(roomImageIndex[room.type] || 0)]}
-                    alt={room.type}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                    alt={`${room.type} room at Ikad Hotel Yaba`}
+                    fill
+                    sizes="(min-width: 768px) 50vw, 100vw"
+                    className="object-cover group-hover:scale-110 transition-transform duration-700"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
                   
@@ -367,10 +370,12 @@ export default function Yaba() {
             {/* Images Carousel - Right Side */}
             <div>
               <div className="relative rounded-xl overflow-hidden shadow-lg h-96 bg-gray-200">
-                <img 
-                  src={amenitiesImages[amenitiesImageIndex]} 
-                  alt="Hotel Amenities" 
-                  className="w-full h-full object-cover transition-opacity duration-700"
+                <Image
+                  src={amenitiesImages[amenitiesImageIndex]}
+                  alt="Amenities at Ikad Hotel Yaba"
+                  fill
+                  sizes="(min-width: 768px) 50vw, 100vw"
+                  className="object-cover transition-opacity duration-700"
                 />
 
                 {/* Navigation Arrows */}
@@ -574,10 +579,12 @@ export default function Yaba() {
                     <>
                       {/* Main Image */}
                       <div className="relative h-96 rounded-lg overflow-hidden bg-gray-200 mb-4">
-                        <img
-                          src={rooms.find(r => r.type === selectedRoom)?.images[detailImageIndex]}
-                          alt={selectedRoom}
-                          className="w-full h-full object-cover"
+                        <Image
+                          src={rooms.find(r => r.type === selectedRoom)?.images[detailImageIndex] ?? ""}
+                          alt={`${selectedRoom} room at Ikad Hotel Yaba`}
+                          fill
+                          sizes="(min-width: 1024px) 50vw, 100vw"
+                          className="object-cover"
                         />
                         
                         {/* Navigation Arrows */}
@@ -609,12 +616,12 @@ export default function Yaba() {
                           <button
                             key={idx}
                             onClick={() => setDetailImageIndex(idx)}
-                            className={`flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border-2 transition-all ${
+                            className={`relative flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border-2 transition-all ${
                               idx === detailImageIndex ? "border-gold" : "border-gray-200"
                             }`}
                             style={{ borderColor: idx === detailImageIndex ? "var(--gold)" : undefined }}
                           >
-                            <img src={img} alt={`${selectedRoom} ${idx + 1}`} className="w-full h-full object-cover" />
+                            <Image src={img} alt={`${selectedRoom} room photo ${idx + 1}`} fill sizes="80px" className="object-cover" />
                           </button>
                         ))}
                       </div>

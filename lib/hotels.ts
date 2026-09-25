@@ -91,7 +91,7 @@ export const HOTELS: Record<HotelKey, HotelInfo> = {
     mapsUrl: "https://www.google.com/maps/search/?api=1&query=270+Borno+Way+Yaba+Lagos",
     priceRange: "₦25,000 – ₦30,000",
     fromPrice: "₦25,000",
-    image: "/yaba/IMG_2666.PNG",
+    image: "/yaba/IMG_2666.jpg",
     highlights: ["Free secure parking", "Bar & restaurant", "Conference room", "Laundry service"],
     rooms: [
       { type: "Standard", price: "₦25,000", bed: "Double bed" },

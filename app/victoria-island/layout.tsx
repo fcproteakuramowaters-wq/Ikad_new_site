@@ -11,13 +11,13 @@ export const metadata: Metadata = {
     description: "Refined suites near Eko Hotel Roundabout with 24/7 power, restaurant & bar and free Wi-Fi. From ₦35,000/night.",
     url: "/victoria-island",
     type: "website",
-    images: [{ url: "/vi/IMG_2665.PNG", width: 1024, height: 1536, alt: "Reception at Ikad Hotel & Suites, Victoria Island" }],
+    images: [{ url: "/og-victoria-island.jpg", width: 1200, height: 630, alt: "Reception at Ikad Hotel & Suites, Victoria Island" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Ikad Hotel & Suites – Victoria Island, Lagos",
     description: "Refined suites near Eko Hotel Roundabout. From ₦35,000/night.",
-    images: ["/vi/IMG_2665.PNG"],
+    images: ["/og-victoria-island.jpg"],
   },
 };
 

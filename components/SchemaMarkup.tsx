@@ -68,7 +68,7 @@ export function OrganizationSchema() {
         "@id": `${SITE_URL}/#organization`,
         name: "Ikad Hotels",
         url: SITE_URL,
-        logo: `${SITE_URL}/favicon.ico`,
+        logo: `${SITE_URL}/icon-512.png`,
         email: "info@ikadhotels.com",
         sameAs: SOCIAL_LINKS,
         contactPoint: HOTEL_LIST.map((hotel) => ({

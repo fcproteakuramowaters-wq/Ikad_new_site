@@ -68,7 +68,7 @@ const pillars = [
 
 const gallery = [
   { src: "/vi/lobby.jpeg", alt: "Lobby at Ikad Hotel & Suites, Victoria Island" },
-  { src: "/vi/IMG_2624.PNG", alt: "Luxury king room at Ikad Hotel & Suites, Victoria Island" },
+  { src: "/vi/IMG_2624.jpg", alt: "Luxury king room at Ikad Hotel & Suites, Victoria Island" },
   { src: "/yaba/Cbar_Rest.jpeg", alt: "Bar and restaurant at Ikad Hotel Yaba" },
   { src: "/vi/master4.jpg", alt: "Master suite at Ikad Hotel & Suites, Victoria Island" },
   { src: "/ikad/Deluxe1.jpeg", alt: "Deluxe room at Ikad Hotel Yaba" },
@@ -98,7 +98,7 @@ export default function Home() {
 
       {/* Hero */}
       <section className="relative isolate flex min-h-[88svh] items-end overflow-hidden text-white">
-        <HeroMedia video="/background.mp4" poster="/vi/IMG_2665.PNG" posterAlt="Reception lounge at Ikad Hotel & Suites, Victoria Island, Lagos" />
+        <HeroMedia video="/background.mp4" poster="/vi/IMG_2665.jpg" posterAlt="Reception lounge at Ikad Hotel & Suites, Victoria Island, Lagos" />
         <div className="absolute inset-0 bg-gradient-to-t from-[#0e1520] via-[#0e1520]/75 to-[#0e1520]/50" aria-hidden="true" />
 
         <div className="relative z-10 mx-auto w-full max-w-7xl px-5 pb-16 pt-32 sm:px-8 md:pb-24">

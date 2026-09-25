@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import HotelHero from "@/components/HotelHero";
 
 export default function Booking() {
@@ -70,10 +71,12 @@ export default function Booking() {
             >
               {/* Hotel Image */}
               <div className="relative h-80 overflow-hidden bg-gray-200">
-                <img
+                <Image
                   src={hotel.image}
                   alt={hotel.name}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                  fill
+                  sizes="(min-width: 768px) 50vw, 100vw"
+                  className="object-cover group-hover:scale-110 transition-transform duration-700"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
 

@@ -52,14 +52,14 @@ export const metadata: Metadata = {
     url: "/",
     siteName: "Ikad Hotels",
     locale: "en_NG",
-    images: [{ url: "/vi/IMG_2665.PNG", width: 1024, height: 1536, alt: "Reception lounge at Ikad Hotel & Suites, Victoria Island" }],
+    images: [{ url: "/og-image.jpg", width: 1200, height: 630, alt: "Ikad Hotels – boutique hotels in Victoria Island and Yaba, Lagos" }],
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
     title: "Ikad Hotels | Victoria Island & Yaba, Lagos",
     description: "Stylish suites in Victoria Island and great-value rooms in Yaba, Lagos.",
-    images: ["/vi/IMG_2665.PNG"],
+    images: ["/og-image.jpg"],
   },
   robots: {
     index: true,
