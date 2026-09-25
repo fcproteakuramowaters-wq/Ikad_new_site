@@ -38,6 +38,7 @@ function hotelNode(hotel: HotelInfo) {
       longitude: hotel.geo.longitude,
     },
     hasMap: hotel.mapsUrl,
+    ...(hotel.petsAllowed !== undefined && { petsAllowed: hotel.petsAllowed }),
     areaServed: hotel.areaServed.map((name) => ({ "@type": "Place", name })),
     amenityFeature: ["Free Wi-Fi", "24-hour front desk", ...hotel.highlights].map((name) => ({
       "@type": "LocationFeatureSpecification",

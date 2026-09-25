@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { HOTEL_LIST } from "@/lib/hotels";
+import { FacebookIcon, InstagramIcon, PinIcon, WhatsAppIcon } from "@/components/Icons";
 
 const quickLinks = [
   { href: "/", label: "Home" },
@@ -23,10 +24,10 @@ export default function Footer() {
             </p>
             <div className="mt-6 flex gap-3">
               <a href="https://www.facebook.com/profile.php?id=61558804720679" target="_blank" rel="noopener noreferrer" aria-label="Ikad Hotels on Facebook" className="flex h-10 w-10 items-center justify-center rounded-full border border-white/15 text-white/80 transition-colors hover:border-gold hover:text-gold">
-                <i className="fa-brands fa-facebook-f" aria-hidden="true"></i>
+                <FacebookIcon className="h-4 w-4" />
               </a>
               <a href="https://www.instagram.com/ikadhotels" target="_blank" rel="noopener noreferrer" aria-label="Ikad Hotels on Instagram" className="flex h-10 w-10 items-center justify-center rounded-full border border-white/15 text-white/80 transition-colors hover:border-gold hover:text-gold">
-                <i className="fa-brands fa-instagram" aria-hidden="true"></i>
+                <InstagramIcon className="h-4 w-4" />
               </a>
             </div>
           </div>
@@ -43,10 +44,10 @@ export default function Footer() {
                 <p><a href={`mailto:${hotel.email}`} className="break-all hover:text-white">{hotel.email}</a></p>
                 <p className="flex gap-4 pt-1">
                   <a href={hotel.whatsapp} target="_blank" rel="noopener noreferrer" className="hover:text-white">
-                    <i className="fa-brands fa-whatsapp" aria-hidden="true"></i> WhatsApp
+                    <WhatsAppIcon className="inline h-4 w-4 align-[-3px]" /> WhatsApp
                   </a>
                   <a href={hotel.mapsUrl} target="_blank" rel="noopener noreferrer" className="hover:text-white">
-                    <i className="fa-solid fa-location-dot" aria-hidden="true"></i> Directions
+                    <PinIcon className="inline h-4 w-4 align-[-3px]" /> Directions
                   </a>
                 </p>
               </address>

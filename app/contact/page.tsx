@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent, useState } from "react";
+import { MailIcon, PhoneIcon } from "@/components/Icons";
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -75,7 +76,7 @@ export default function Contact() {
                   href="tel:09163738458"
                   className="text-blue-600 hover:underline font-medium"
                 >
-                  <i className="fa-solid fa-phone"></i> +234 916 373 8458
+                  <PhoneIcon className="inline h-4 w-4 align-[-2px]" /> +234 916 373 8458
                 </a>
               </p>
               <p className="text-gray-700">
@@ -84,7 +85,7 @@ export default function Contact() {
                   href="mailto:reservations.vi@ikadhotels.com"
                   className="text-blue-600 hover:underline font-medium"
                 >
-                  <i className="fa-solid fa-at"></i> reservations.vi@ikadhotels.com
+                  <MailIcon className="inline h-4 w-4 align-[-2px]" /> reservations.vi@ikadhotels.com
                 </a>
               </p>
             </article>
@@ -105,7 +106,7 @@ export default function Contact() {
                   href="tel:08147318331"
                   className="text-blue-600 hover:underline font-medium"
                 >
-                  <i className="fa-solid fa-phone"></i> +234 814 731 8331
+                  <PhoneIcon className="inline h-4 w-4 align-[-2px]" /> +234 814 731 8331
                 </a>
               </p>
               <p className="text-gray-700">
@@ -114,7 +115,7 @@ export default function Contact() {
                   href="mailto:reservations.bw@ikadhotels.com"
                   className="text-blue-600 hover:underline font-medium"
                 >
-                  <i className="fa-solid fa-at"></i> reservations.bw@ikadhotels.com
+                  <MailIcon className="inline h-4 w-4 align-[-2px]" /> reservations.bw@ikadhotels.com
                 </a>
               </p>
             </article>
@@ -130,7 +131,7 @@ export default function Contact() {
                   href="tel:09163738458"
                   className="text-blue-600 hover:underline font-medium"
                 >
-                  <i className="fa-solid fa-phone"></i> +234 916 373 8458
+                  <PhoneIcon className="inline h-4 w-4 align-[-2px]" /> +234 916 373 8458
                 </a>
               </p>
               <p className="text-gray-700">
@@ -139,7 +140,7 @@ export default function Contact() {
                   href="mailto:reservations.vi@ikadhotels.com"
                   className="text-blue-600 hover:underline font-medium"
                 >
-                  <i className="fa-solid fa-at"></i> reservations.vi@ikadhotels.com
+                  <MailIcon className="inline h-4 w-4 align-[-2px]" /> reservations.vi@ikadhotels.com
                 </a>
               </p>
             </article>

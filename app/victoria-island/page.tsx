@@ -1,751 +1,397 @@
-"use client";
-
-import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import BookingSearch from "@/components/BookingSearch";
+import QuickBook from "@/components/QuickBook";
+import RoomGallery from "@/components/RoomGallery";
 import BookingPlatforms from "@/components/BookingPlatforms";
 import WhatsAppChat from "@/components/WhatsAppChat";
-import { HotelSchema } from "@/components/SchemaMarkup";
+import { BreadcrumbSchema, FaqSchema, HotelSchema } from "@/components/SchemaMarkup";
+import {
+  ArrowRightIcon,
+  BedIcon,
+  BellIcon,
+  BoltIcon,
+  BriefcaseIcon,
+  CheckIcon,
+  DiningIcon,
+  MailIcon,
+  PawIcon,
+  PhoneIcon,
+  PinIcon,
+  ShieldIcon,
+  UsersIcon,
+  WhatsAppIcon,
+  WifiIcon,
+} from "@/components/Icons";
+import { HOTELS, SITE_URL } from "@/lib/hotels";
+import { VI_ROOMS, formatNaira } from "@/lib/rooms";
+import { VI_PLACES } from "@/lib/neighbourhood";
+
+const hotel = HOTELS["victoria-island"];
+const serif = { fontFamily: "var(--font-playfair)" };
+
+const amenities = [
+  { icon: WifiIcon, title: "Free high-speed Wi-Fi", text: "Fast internet in every room and public area." },
+  { icon: BoltIcon, title: "24/7 power supply", text: "Reliable backup power, so work and rest never stop." },
+  { icon: DiningIcon, title: "Restaurant & bar", text: "Nigerian and international dishes, cocktails and cold drinks." },
+  { icon: BellIcon, title: "24-hour room service", text: "Order in at any hour, straight to your door." },
+  { icon: ShieldIcon, title: "24-hour front desk", text: "A team on hand day and night to help with anything you need." },
+  { icon: BriefcaseIcon, title: "Business-ready rooms", text: "Work desks in most rooms and a central Victoria Island address." },
+  { icon: PawIcon, title: "Pet-friendly", text: "Pets are welcome (additional charges apply)." },
+  { icon: CheckIcon, title: "Smoking corridor", text: "A designated smoking area keeps rooms fresh." },
+];
+
+const faqs = [
+  {
+    question: "Where exactly is Ikad Hotel & Suites Victoria Island?",
+    answer: `We are at ${hotel.address.display}, right by the Eko Hotel Roundabout, a short walk from Adetokunbo Ademola Street and about 10 minutes by car from Landmark Beach and Eko Atlantic.`,
+  },
+  {
+    question: "How far is the hotel from Lagos airport?",
+    answer:
+      "Murtala Muhammed International Airport is typically 45 to 90 minutes away by car, depending on Lagos traffic. Contact our front desk before arrival if you need help arranging transport.",
+  },
+  {
+    question: "Which room has a jacuzzi?",
+    answer: `Our Master suite (${formatNaira(VI_ROOMS[VI_ROOMS.length - 1].price)} per night) has a luxury bathroom with a jacuzzi, a king bed, a separate living space and concierge service.`,
+  },
+  {
+    question: "Are pets allowed?",
+    answer: "Yes, pets are welcome at our Victoria Island hotel. Additional charges apply, so please let us know when you book.",
+  },
+  {
+    question: "Is the hotel good for business travellers?",
+    answer:
+      "Yes. We are in the heart of Victoria Island's business district, with free high-speed Wi-Fi, work desks in most rooms, 24/7 power and a 24-hour front desk.",
+  },
+  {
+    question: "How do I get the best rate?",
+    answer: `Book directly on this website or contact us on ${hotel.phoneDisplay} or WhatsApp. Direct bookings get our best available rate with no third-party fees.`,
+  },
+];
+
+function Eyebrow({ children, light = false }: { children: React.ReactNode; light?: boolean }) {
+  return <p className={`mb-4 text-xs font-semibold uppercase tracking-[0.3em] ${light ? "text-gold" : "text-gold-dark"}`}>{children}</p>;
+}
 
 export default function VictoriaIsland() {
-  const [expandedRoom, setExpandedRoom] = useState<string | null>(null);
-  const [selectedRoom, setSelectedRoom] = useState<string | null>(null);
-  const [heroImageIndex, setHeroImageIndex] = useState<number>(0);
-  const [roomImageIndex, setRoomImageIndex] = useState<{ [key: string]: number }>({});
-  const [detailImageIndex, setDetailImageIndex] = useState<number>(0);
-  const [amenitiesImageIndex, setAmenitiesImageIndex] = useState<number>(0);
-
-  // Hotel showcase images for hero carousel
-  const heroImages = [
-    "/vi/ientrance.jpeg",
-    "/vi/IMG_2665.jpg",
-    "/vi/irest.jpeg",
-    "/vi/lobby.jpeg",
-  ];
-
-  const amenities = [
-    {
-      name: "Free Wi-Fi",
-      icon: "📡",
-      description: "High-speed internet throughout the hotel",
-    },
-    {
-      name: "Restaurant & Bar",
-      icon: "🍽️",
-      description: "World-class dining with international cuisine",
-    },
-    {
-      name: "24/7 Power Supply",
-      icon: "⚡",
-      description: "Reliable backup power systems",
-    },
-    {
-      name: "Room Service",
-      icon: "🛎️",
-      description: "Available 24 hours for your convenience",
-    },
-  ];
-
-  const rooms = [
-    {
-      type: "Studio",
-      price: "₦35,000",
-      features: ["Single Bed", "Smart TV with Local Channels & Sports", "AC", "En-suite Bathroom", "Free Wi-Fi", "Work Desk", "Wardrobe"],
-      images: [
-        "/vi/IMG_6958.jpg",
-        "/vi/IMG_6959.jpg",
-        "/vi/IMG_6960.jpg",
-        "/vi/IMG_6961.jpg",
-        "/vi/IMG_6962.jpg",
-      ],
-    },
-    {
-      type: "Elite",
-      price: "₦45,000",
-      features: ["Double Bed", "Smart TV with Local Channels & Sports", "AC", "En-suite Bathroom", "Free Wi-Fi", "Work Desk", "Mini Bar", "Safe"],
-      images: ["/ikad/Elite.jpeg", "/ikad/Elite1.jpeg"],
-    },
-    {
-      type: "Premium",
-      price: "₦50,000",
-      features: ["Queen Bed", "Smart TV with Local Channels & Sports", "AC", "Luxury Bathroom", "Free Wi-Fi", "Work Desk", "Mini Fridge", "Coffee/Tea Maker", "Robes & Slippers"],
-      images: ["/ikad/premium.jpeg", "/ikad/Ikad27.jpeg", "/ikad/Ikad3.jpeg"],
-    },
-    {
-      type: "Luxury",
-      price: "₦65,000",
-      features: ["King Bed", "Smart TV with Local Channels & Sports", "AC", "Premium Bathroom with Shower", "Free Wi-Fi", "Work Desk", "Living Area", "Minibar", "City View", "Premium Toiletries"],
-      images: ["/vi/IMG_2624.jpg", "/vi/IMG_2639.jpg", "/vi/IMG_2657.jpg", "/vi/IMG_2627.jpg", "/ikad/luxury.jpeg", "/ikad/Ikad31.jpeg", "/ikad/Luxury.jpeg"],
-    },
-    {
-      type: "Master",
-      price: "₦70,000",
-      features: ["King Bed", "Smart TV with Local Channels & Sports", "AC", "Luxury Bathroom with Jacuzzi", "Free Wi-Fi", "Work/Dining Area", "Living Space", "Premium Minibar", "City View", "Concierge Service", "Premium Amenities"],
-      images: ["/vi/Master room.jpeg", "/vi/master4.jpg", "/vi/master5.jpg", "/vi/MasterB.jpeg"],
-    },
-  ];
-
-  const hotelFeatures = ["Smoking Corridor Available", "Pets Allowed (Additional Charges Apply)"];
-
-  // Amenities carousel images
-  const amenitiesImages = [
-    "/vi/irest.jpeg",
-    "/vi/IMG_2665.jpg",
-    "/vi/lobby.jpeg",
-  ];
-
-  // Auto-play hero carousel every 3 seconds
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setHeroImageIndex((prev) => (prev + 1) % heroImages.length);
-    }, 3000);
-    return () => clearInterval(interval);
-  }, [heroImages.length]);
-
-  // Auto-play room carousels every 3 seconds with 1 second delay between each room
-  useEffect(() => {
-    const intervals = rooms.map((room, index) => {
-      if (room.images.length > 1) {
-        return setTimeout(() => {
-          const interval = setInterval(() => {
-            setRoomImageIndex((prev) => ({
-              ...prev,
-              [room.type]: ((prev[room.type] || 0) + 1) % room.images.length,
-            }));
-          }, 3000);
-          return interval;
-        }, index * 1000);
-      }
-      return null;
-    });
-    return () => {
-      intervals.forEach((interval) => {
-        if (interval) clearTimeout(interval);
-      });
-    };
-  }, [rooms.length]);
-
-  // Auto-play amenities carousel every 4 seconds
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setAmenitiesImageIndex((prev) => (prev + 1) % amenitiesImages.length);
-    }, 4000);
-    return () => clearInterval(interval);
-  }, [amenitiesImages.length]);
-
-  // Hero carousel navigation
-  const nextHeroImage = () => {
-    setHeroImageIndex((prev) => (prev + 1) % heroImages.length);
-  };
-
-  const prevHeroImage = () => {
-    setHeroImageIndex((prev) => (prev - 1 + heroImages.length) % heroImages.length);
-  };
-
-  // Room image carousel navigation
-  const nextRoomImage = (roomType: string, totalImages: number) => {
-    setRoomImageIndex((prev) => ({
-      ...prev,
-      [roomType]: ((prev[roomType] || 0) + 1) % totalImages,
-    }));
-  };
-
-  const prevRoomImage = (roomType: string, totalImages: number) => {
-    setRoomImageIndex((prev) => ({
-      ...prev,
-      [roomType]: ((prev[roomType] || 0) - 1 + totalImages) % totalImages,
-    }));
-  };
-
   return (
     <div>
-      <HotelSchema hotelName="Ikad Hotel & Suites Victoria Island" hotelType="victoria-island" />
-      {/* Hero Section with Image Carousel */}
-      <section className="relative w-full h-[60vh] flex items-center justify-start text-white overflow-hidden">
-        {/* Carousel Images */}
-        <div className="absolute inset-0">
-          <Image
-            src={heroImages[heroImageIndex]}
-            alt="Ikad Hotel & Suites, Victoria Island, Lagos"
-            fill
-            priority={heroImageIndex === 0}
-            sizes="100vw"
-            className="object-cover transition-opacity duration-500"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-transparent" aria-hidden="true" />
-        </div>
+      <HotelSchema hotelType="victoria-island" />
+      <FaqSchema items={faqs} />
+      <BreadcrumbSchema
+        path={[
+          { name: "Home", url: SITE_URL },
+          { name: "Victoria Island", url: `${SITE_URL}${hotel.path}` },
+        ]}
+      />
 
-        {/* Content */}
-        <div className="relative z-10 px-6 py-12 sm:ml-10">
-          <div className="max-w-2xl">
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 leading-tight tracking-tight" style={{ fontFamily: "var(--font-playfair)" }}>Ikad Hotel & Suites — Victoria Island, Lagos</h1>
-            <p className="text-lg sm:text-2xl text-gray-100 mb-6 font-light">Luxury hotel in Victoria Island, Lagos — near Lekki, Etim Inyang and Lagos Island</p>
-            <p className="text-lg text-gray-200 leading-relaxed">
-              Experience world-class hospitality in the heart of Lagos&apos;s most prestigious location
-            </p>
-          </div>
-        </div>
+      {/* Hero */}
+      <section className="relative isolate flex min-h-[78svh] items-end overflow-hidden text-white">
+        <Image
+          src="/vi/master4.jpg"
+          alt="Master suite with a king bed at Ikad Hotel & Suites, Victoria Island"
+          fill
+          priority
+          sizes="100vw"
+          className="-z-10 object-cover"
+        />
+        <div className="absolute inset-0 -z-10 bg-gradient-to-t from-[#0e1520] via-[#0e1520]/70 to-[#0e1520]/40" aria-hidden="true" />
 
-        {/* Previous Button */}
-        <button
-          onClick={prevHeroImage}
-          className="absolute left-6 top-1/2 transform -translate-y-1/2 z-20 hidden sm:block bg-white/30 hover:bg-white/50 text-white p-2 rounded-full transition-all"
-          aria-label="Previous image"
-        >
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-          </svg>
-        </button>
-
-        {/* Next Button */}
-        <button
-          onClick={nextHeroImage}
-          className="absolute right-6 top-1/2 transform -translate-y-1/2 z-20 hidden sm:block bg-white/30 hover:bg-white/50 text-white p-2 rounded-full transition-all"
-          aria-label="Next image"
-        >
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-          </svg>
-        </button>
-
-        {/* Image Indicators */}
-        <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 z-20 flex gap-2">
-          {heroImages.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => setHeroImageIndex(index)}
-              className={`w-3 h-3 rounded-full transition-all ${
-                index === heroImageIndex ? "bg-white" : "bg-white/50"
-              }`}
-              aria-label={`Go to image ${index + 1}`}
-            />
-          ))}
+        <div className="mx-auto w-full max-w-7xl px-5 pb-32 pt-28 sm:px-8 md:pb-36">
+          <nav aria-label="Breadcrumb" className="mb-6 text-xs text-white/70">
+            <Link href="/" className="hover:text-white">Home</Link>
+            <span className="mx-2" aria-hidden="true">/</span>
+            <span aria-current="page">Victoria Island</span>
+          </nav>
+          <Eyebrow light>Etim Inyang Crescent · By Eko Hotel Roundabout</Eyebrow>
+          <h1 className="max-w-4xl text-4xl font-medium leading-[1.1] sm:text-5xl md:text-6xl" style={serif}>
+            Ikad Hotel &amp; Suites, <em className="text-gold">Victoria Island</em>
+          </h1>
+          <p className="mt-6 max-w-2xl text-base text-white/80 sm:text-lg">
+            Refined rooms and suites in the heart of Lagos&apos; business and leisure district, minutes from Eko Atlantic, Landmark Beach and the Lekki corridor.
+          </p>
+          <ul className="mt-8 flex flex-wrap gap-2 text-xs font-medium sm:text-sm">
+            {["24/7 power", "Free Wi-Fi", "Restaurant & bar", "Pet-friendly", `From ${hotel.fromPrice}/night`].map((chip) => (
+              <li key={chip} className="rounded-full border border-white/25 bg-white/10 px-4 py-1.5 backdrop-blur">{chip}</li>
+            ))}
+          </ul>
         </div>
       </section>
 
-      {/* Booking Search Section */}
-      <BookingSearch location="victoria-island" />
+      {/* Booking bar overlapping hero */}
+      <div id="book" className="relative z-10 mx-auto -mt-20 max-w-5xl scroll-mt-24 px-5 sm:px-8">
+        <QuickBook hotel="victoria-island" />
+        <p className="mt-3 text-center text-sm text-gray-500">
+          Prefer to talk? Call <a href={`tel:${hotel.phone}`} className="font-medium text-navy hover:underline">{hotel.phoneDisplay}</a> or{" "}
+          <a href={hotel.whatsapp} target="_blank" rel="noopener noreferrer" className="font-medium text-navy hover:underline">chat on WhatsApp</a>.
+        </p>
+      </div>
 
-      {/* About Section */}
-      <section className="max-w-5xl mx-auto py-40 px-6">
-        <h2 className="text-5xl font-light mb-8 text-navy" style={{ fontFamily: "var(--font-playfair)" }}>About Ikad Hotel & Suites — Victoria Island</h2>
-        <p className="text-lg text-gray-700 leading-relaxed mb-8">
-          Ikad Hotel & Suites Victoria Island represents the pinnacle of luxury hospitality in Lagos. Nestled in the heart of Victoria Island, our hotel is minutes from the financial district, popular shopping destinations and the Lekki corridor. We offer world-class accommodations, fine dining and exceptional service — ideal for business travelers and leisure guests visiting Lagos Island, Etim Inyang and Lekki.
-        </p>
-        <p className="text-lg text-gray-700 leading-relaxed mb-8">
-          Our commitment to excellence is evident in every aspect—from our exquisitely appointed suites to our award-winning culinary offerings. Whether you&apos;re in Victoria Island for a high-stakes business meeting or a romantic getaway, Ikad Hotel & Suites provides the perfect sanctuary for luxury seekers.
-        </p>
-        <p className="text-lg text-gray-700 leading-relaxed">
-          With strategically convenient access to Lagos&apos;s financial hub, upscale shopping destinations, and vibrant entertainment venues, our hotel puts you at the center of sophistication and culture. Experience Victoria Island&apos;s finest hospitality experience at Ikad Hotel & Suites.
-        </p>
-      </section>
-
-      {/* Room Types Section - Luxury Design */}
-      <section className="py-24 px-6 bg-white">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-20">
-            <p className="text-sm font-semibold tracking-widest gold uppercase mb-4">OUR ROOMS</p>
-            <h2 className="text-5xl font-light text-navy mb-6" style={{ fontFamily: "var(--font-playfair)" }}>
-              Exquisite Suites & Rooms
+      {/* Overview */}
+      <section className="px-5 py-20 sm:px-8 md:py-28">
+        <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-12 lg:gap-16">
+          <div className="lg:col-span-7">
+            <Eyebrow>Welcome</Eyebrow>
+            <h2 className="text-3xl leading-tight text-navy sm:text-4xl md:text-5xl" style={serif}>
+              Your calm address in the heart of Victoria Island
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-              Each room is a sanctuary of comfort and elegance, meticulously designed with premium furnishings and world-class amenities for an unforgettable stay in Victoria Island, Lagos.
+            <div className="mt-8 space-y-5 text-lg leading-relaxed text-gray-700">
+              <p>
+                Step off Etim Inyang Crescent into a bright, welcoming lobby, and leave the energy of Lagos at the door. Ikad Hotel &amp; Suites puts you steps from the Eko Hotel Roundabout, with the banks, offices, restaurants and nightlife of Victoria Island all around you.
+              </p>
+              <p>
+                Choose from five room categories, from smart studios for solo business trips to our Master suite with its own jacuzzi. Every stay comes with round-the-clock power, fast Wi-Fi and a team that genuinely cares about getting the details right.
+              </p>
+            </div>
+          </div>
+          <aside className="rounded-2xl bg-cream p-8 lg:col-span-5">
+            <h3 className="text-xl text-navy" style={serif}>At a glance</h3>
+            <dl className="mt-6 space-y-5 text-sm">
+              <div className="flex gap-4">
+                <dt><PinIcon className="h-5 w-5 text-gold-dark" /><span className="sr-only">Address</span></dt>
+                <dd className="text-gray-700">
+                  {hotel.address.street}, {hotel.address.locality}, {hotel.address.region}
+                  <a href={hotel.mapsUrl} target="_blank" rel="noopener noreferrer" className="mt-1 block font-semibold text-navy hover:underline">Get directions</a>
+                </dd>
+              </div>
+              <div className="flex gap-4">
+                <dt><BedIcon className="h-5 w-5 text-gold-dark" /><span className="sr-only">Rooms</span></dt>
+                <dd className="text-gray-700">5 room types: {VI_ROOMS.map((r) => r.type).join(", ")}</dd>
+              </div>
+              <div className="flex gap-4">
+                <dt><PhoneIcon className="h-5 w-5 text-gold-dark" /><span className="sr-only">Phone</span></dt>
+                <dd><a href={`tel:${hotel.phone}`} className="text-gray-700 hover:text-navy">{hotel.phoneDisplay}</a></dd>
+              </div>
+              <div className="flex gap-4">
+                <dt><MailIcon className="h-5 w-5 text-gold-dark" /><span className="sr-only">Email</span></dt>
+                <dd><a href={`mailto:${hotel.email}`} className="break-all text-gray-700 hover:text-navy">{hotel.email}</a></dd>
+              </div>
+            </dl>
+          </aside>
+        </div>
+      </section>
+
+      {/* Rooms */}
+      <section id="rooms" className="scroll-mt-20 bg-cream px-5 py-20 sm:px-8 md:py-28">
+        <div className="mx-auto max-w-7xl">
+          <div className="mb-14 flex flex-col justify-between gap-6 md:flex-row md:items-end">
+            <div className="max-w-2xl">
+              <Eyebrow>Rooms &amp; Suites</Eyebrow>
+              <h2 className="text-3xl leading-tight text-navy sm:text-4xl md:text-5xl" style={serif}>
+                Five ways to stay in Victoria Island
+              </h2>
+            </div>
+            <p className="max-w-sm text-gray-600">
+              All rooms include air-conditioning, a smart TV with local channels and sports, free Wi-Fi and 24/7 power.
             </p>
           </div>
 
-          {/* Rooms Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {rooms.map((room, index) => {
-              const currentImageIndex = roomImageIndex[room.type] || 0;
-              return (
-                <div
-                  key={index}
-                  className="group overflow-hidden rounded-lg shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer"
-                  onClick={() => {
-                    setSelectedRoom(room.type);
-                    setDetailImageIndex(0);
-                  }}
-                >
-                  {/* Room Image with Carousel */}
-                  <div className="relative h-80 overflow-hidden bg-gray-200">
-                    <Image
-                      src={room.images[currentImageIndex]}
-                      alt={`${room.type} room at Ikad Hotel & Suites Victoria Island`}
-                      fill
-                      sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
-                      className="object-cover group-hover:scale-110 transition-transform duration-700"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+            {VI_ROOMS.map((room) => (
+              <article key={room.type} className="flex flex-col overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-black/5">
+                <RoomGallery images={room.images} alt={`${room.type} room at ${hotel.name}`} sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw" />
+                <div className="flex flex-1 flex-col p-6">
+                  <h3 className="text-2xl text-navy" style={serif}>{room.type}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-gray-600">{room.tagline}</p>
 
-                    {/* Price Badge */}
-                    <div className="absolute top-6 right-6 text-white px-4 py-2 rounded" style={{ backgroundColor: "var(--gold)" }}>
-                      <p className="text-sm font-semibold">{room.price}</p>
-                      <p className="text-xs">per night</p>
-                    </div>
-
-                    {/* Image Navigation Buttons */}
-                    {room.images.length > 1 && (
-                      <>
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            prevRoomImage(room.type, room.images.length);
-                          }}
-                          className="absolute left-3 top-1/2 transform -translate-y-1/2 bg-white/40 hover:bg-white/70 text-white p-2 rounded-full transition-all"
-                          aria-label="Previous room image"
-                        >
-                          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                          </svg>
-                        </button>
-
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            nextRoomImage(room.type, room.images.length);
-                          }}
-                          className="absolute right-3 top-1/2 transform -translate-y-1/2 bg-white/40 hover:bg-white/70 text-white p-2 rounded-full transition-all"
-                          aria-label="Next room image"
-                        >
-                          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                          </svg>
-                        </button>
-
-                        {/* Image Indicators */}
-                        <div className="absolute bottom-3 left-1/2 transform -translate-x-1/2 flex gap-1">
-                          {room.images.map((_, imgIndex) => (
-                            <button
-                              key={imgIndex}
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                setRoomImageIndex((prev) => ({
-                                  ...prev,
-                                  [room.type]: imgIndex,
-                                }));
-                              }}
-                              className={`w-2 h-2 rounded-full transition-all ${
-                                imgIndex === currentImageIndex ? "bg-white" : "bg-white/50"
-                              }`}
-                              aria-label={`Go to room image ${imgIndex + 1}`}
-                            />
-                          ))}
-                        </div>
-                      </>
-                    )}
+                  <div className="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-sm text-gray-700">
+                    <span className="flex items-center gap-1.5"><BedIcon className="h-4 w-4 text-gold-dark" />{room.bed}</span>
+                    <span className="flex items-center gap-1.5"><UsersIcon className="h-4 w-4 text-gold-dark" />{room.occupancy}</span>
                   </div>
 
-                  {/* Room Info */}
-                  <div className="p-8 bg-white">
-                    <h3 className="text-2xl font-semibold text-navy mb-4" style={{ fontFamily: "var(--font-playfair)" }}>{room.type}</h3>
+                  <ul className="mt-4 space-y-1.5 text-sm text-gray-700">
+                    {room.highlights.map((h) => (
+                      <li key={h} className="flex items-center gap-2"><CheckIcon className="h-4 w-4 text-green-700" />{h}</li>
+                    ))}
+                  </ul>
 
-                    {/* Features - Show only first 4 */}
-                    <div className="space-y-2 mb-6">
-                      {room.features.slice(0, 4).map((feature, idx) => (
-                        <div key={idx} className="flex items-center text-sm">
-                          <svg className="w-4 h-4 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" style={{ color: "var(--gold)" }}>
-                            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                          </svg>
-                          <span className="text-gray-700">{feature}</span>
-                        </div>
-                      ))}
-                    </div>
+                  <details className="group mt-4 text-sm">
+                    <summary className="cursor-pointer list-none font-semibold text-navy hover:underline [&::-webkit-details-marker]:hidden">
+                      <span className="group-open:hidden">All room features</span>
+                      <span className="hidden group-open:inline">Hide features</span>
+                    </summary>
+                    <ul className="mt-3 grid grid-cols-1 gap-1.5 text-gray-600">
+                      {room.features.map((f) => <li key={f}>· {f}</li>)}
+                    </ul>
+                  </details>
 
-                    {/* View Details */}
-                    {room.features.length > 4 && (
-                      <button
-                        onClick={() => setExpandedRoom(expandedRoom === room.type ? null : room.type)}
-                        className="text-sm font-semibold mb-4 underline" style={{ color: "var(--gold)" }}
-                      >
-                        {expandedRoom === room.type ? "Hide Details" : "View Details"}
-                      </button>
-                    )}
-
-                    {/* Expanded Features */}
-                    {expandedRoom === room.type && room.features.length > 4 && (
-                      <div className="space-y-2 mb-6 p-4 rounded border" style={{ backgroundColor: "var(--light-gray)", borderColor: "var(--gold)" }}>
-                        <p className="text-xs font-semibold uppercase mb-3" style={{ color: "var(--gold)" }}>Additional Features</p>
-                        {room.features.slice(4).map((feature, idx) => (
-                          <div key={idx} className="flex items-start text-sm">
-                            <svg className="w-4 h-4 mr-3 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" style={{ color: "var(--gold)" }}>
-                              <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                            </svg>
-                            <span className="text-gray-700">{feature}</span>
-                          </div>
-                        ))}
-                      </div>
-                    )}
-
-                    {/* CTA Button */}
+                  <div className="mt-auto flex items-end justify-between gap-4 border-t border-gray-100 pt-5">
+                    <p className="text-xs text-gray-500">
+                      <span className="block text-2xl font-medium text-navy" style={serif}>{formatNaira(room.price)}</span>
+                      per night
+                    </p>
                     <Link
-                      href="/booking/details"
-                      className="block w-full text-white py-3 rounded font-semibold text-center transition-colors uppercase text-sm hover:opacity-90" style={{ backgroundColor: "var(--gold)" }}
+                      href={`/booking/details?room=${encodeURIComponent(room.type)}`}
+                      className="rounded-full bg-navy px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-gold hover:text-navy"
                     >
-                      Book Now
+                      Reserve
                     </Link>
                   </div>
                 </div>
-              );
-            })}
+              </article>
+            ))}
+
+            <div className="flex flex-col justify-center rounded-2xl border border-dashed border-gold/60 p-8 text-center">
+              <h3 className="text-2xl text-navy" style={serif}>Not sure which room?</h3>
+              <p className="mt-3 text-sm text-gray-600">Tell us about your trip and we&apos;ll recommend the right room and the best rate.</p>
+              <a
+                href={hotel.whatsapp}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mx-auto mt-6 inline-flex items-center gap-2 rounded-full bg-[#25D366] px-6 py-3 text-sm font-semibold text-white transition-opacity hover:opacity-90"
+              >
+                <WhatsAppIcon className="h-4 w-4" /> Ask us on WhatsApp
+              </a>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Hotel Features Section */}
-      <section className="py-24 px-6" style={{ backgroundColor: "var(--light-gray)" }}>
-        <div className="max-w-5xl mx-auto">
-          <h3 className="text-3xl font-semibold mb-10 text-navy" style={{ fontFamily: "var(--font-playfair)" }}>Hotel Policies & Amenities</h3>
-          <div className="grid md:grid-cols-2 gap-6">
-            {hotelFeatures.map((feature, index) => (
-              <div key={index} className="flex items-start p-4 bg-white rounded-lg shadow-sm">
-                <svg
-                  className="w-5 h-5 mr-4 mt-0.5 flex-shrink-0" style={{ color: "var(--gold)" }}
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-                <span className="text-gray-700 font-medium">{feature}</span>
+      {/* Amenities */}
+      <section className="px-5 py-20 sm:px-8 md:py-28">
+        <div className="mx-auto max-w-7xl">
+          <div className="mb-14 max-w-2xl">
+            <Eyebrow>Amenities &amp; Services</Eyebrow>
+            <h2 className="text-3xl leading-tight text-navy sm:text-4xl md:text-5xl" style={serif}>
+              Everything taken care of
+            </h2>
+          </div>
+          <div className="grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
+            {amenities.map(({ icon: Icon, title, text }) => (
+              <div key={title}>
+                <span className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-cream text-gold-dark">
+                  <Icon className="h-6 w-6" />
+                </span>
+                <h3 className="mt-4 font-semibold text-navy">{title}</h3>
+                <p className="mt-1.5 text-sm leading-relaxed text-gray-600">{text}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Amenities Section - Professional Style */}
-      <section className="py-40 px-6 bg-gradient-to-br from-white via-gray-50 to-white">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-20">
-            <p className="text-sm font-semibold tracking-widest uppercase mb-4" style={{ color: "var(--gold)" }}>Experience Excellence</p>
-            <h2 className="text-5xl font-light mb-4 text-navy" style={{ fontFamily: "var(--font-playfair)" }}>
-              Hotel Amenities & Services
-            </h2>
-            <p className="text-lg text-gray-600 leading-relaxed">Discover world-class facilities designed for your comfort and convenience</p>
+      {/* Dining */}
+      <section className="bg-navy text-white">
+        <div className="mx-auto grid max-w-7xl lg:grid-cols-2">
+          <div className="relative min-h-[320px] lg:min-h-[560px]">
+            <Image src="/vi/irest.jpeg" alt="Restaurant at Ikad Hotel & Suites, Victoria Island" fill sizes="(min-width: 1024px) 50vw, 100vw" className="object-cover" />
           </div>
-
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            {/* Amenities List - Left Side */}
-            <div className="space-y-8">
-              <div>
-                <h3 className="text-xl font-semibold text-navy mb-4" style={{ fontFamily: "var(--font-playfair)" }}>Hotel Services</h3>
-                <div className="grid grid-cols-2 gap-4">
-                  {amenities.map((amenity, index) => (
-                    <div key={index} className="flex items-start gap-3">
-                      <span className="text-xl font-bold flex-shrink-0 pt-0.5" style={{ color: "var(--gold)" }}>✓</span>
-                      <div>
-                        <p className="font-semibold text-sm text-gray-900">{amenity.name}</p>
-                        <p className="text-xs text-gray-600">{amenity.description}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div className="border-t border-gray-300 pt-8">
-                <h3 className="text-xl font-semibold text-navy mb-4" style={{ fontFamily: "var(--font-playfair)" }}>Room Features</h3>
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="flex items-start gap-3">
-                    <span className="text-xl font-bold flex-shrink-0 pt-0.5" style={{ color: "var(--gold)" }}>✓</span>
-                    <p className="text-sm text-gray-700">Air Conditioning</p>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <span className="text-xl font-bold flex-shrink-0 pt-0.5" style={{ color: "var(--gold)" }}>✓</span>
-                    <p className="text-sm text-gray-700">Premium Bedding</p>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <span className="text-xl font-bold flex-shrink-0 pt-0.5" style={{ color: "var(--gold)" }}>✓</span>
-                    <p className="text-sm text-gray-700">Work Desk</p>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <span className="text-xl font-bold flex-shrink-0 pt-0.5" style={{ color: "var(--gold)" }}>✓</span>
-                    <p className="text-sm text-gray-700">Flat-screen TV</p>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <span className="text-xl font-bold flex-shrink-0 pt-0.5" style={{ color: "var(--gold)" }}>✓</span>
-                    <p className="text-sm text-gray-700">Luxury Bathroom</p>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <span className="text-xl font-bold flex-shrink-0 pt-0.5" style={{ color: "var(--gold)" }}>✓</span>
-                    <p className="text-sm text-gray-700">Free Wi-Fi</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Images Carousel - Right Side */}
-            <div>
-              <div className="relative rounded-xl overflow-hidden shadow-lg h-96 bg-gray-200">
-                <Image
-                  src={amenitiesImages[amenitiesImageIndex]}
-                  alt="Amenities at Ikad Hotel & Suites Victoria Island"
-                  fill
-                  sizes="(min-width: 768px) 50vw, 100vw"
-                  className="object-cover transition-opacity duration-700"
-                />
-
-                {/* Navigation Arrows */}
-                <button
-                  onClick={() => setAmenitiesImageIndex((prev) => (prev - 1 + amenitiesImages.length) % amenitiesImages.length)}
-                  className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white p-2 rounded-full transition-all z-10"
-                >
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                  </svg>
-                </button>
-                <button
-                  onClick={() => setAmenitiesImageIndex((prev) => (prev + 1) % amenitiesImages.length)}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white p-2 rounded-full transition-all z-10"
-                >
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
-                </button>
-
-                {/* Indicator Dots */}
-                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-10">
-                  {amenitiesImages.map((_, index) => (
-                    <button
-                      key={index}
-                      onClick={() => setAmenitiesImageIndex(index)}
-                      className={`w-2 h-2 rounded-full transition-all ${
-                        index === amenitiesImageIndex ? "bg-white w-8" : "bg-white/50"
-                      }`}
-                    />
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Location Section */}
-      <section className="py-40 px-6" style={{ backgroundColor: "var(--light-gray)" }}>
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-12">
-            <p className="text-sm font-semibold tracking-widest gold uppercase mb-4">OUR LOCATION</p>
-            <h2 className="text-5xl font-light text-navy mb-6" style={{ fontFamily: "var(--font-playfair)" }}>
-              Find Us in Victoria Island
+          <div className="flex flex-col justify-center px-5 py-16 sm:px-12 lg:py-24">
+            <Eyebrow light>Restaurant &amp; Bar</Eyebrow>
+            <h2 className="text-3xl leading-tight sm:text-4xl" style={serif}>
+              Dine in, unwind, stay a little longer
             </h2>
-            <p className="text-xl text-gray-600 leading-relaxed">
-              Strategically located in Lagos&apos;s most prestigious business and leisure district
+            <p className="mt-6 leading-relaxed text-white/75">
+              Grab a bite before your meetings, host a working lunch or end the evening with a drink at the bar. Our restaurant serves international cuisine alongside local favourites, and room service is available around the clock.
             </p>
-          </div>
-
-          <div className="bg-white rounded-lg overflow-hidden shadow-lg">
-            <iframe
-              src="https://maps.google.com/maps?q=Ikad+Hotel+and+Suite,+Victoria+Island,+Lagos&output=embed"
-              width="100%"
-              height="500"
-              style={{ border: 0 }}
-              allowFullScreen
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              className="w-full"
-            ></iframe>
-          </div>
-
-          <div className="mt-12 grid md:grid-cols-2 gap-8">
-            <div className="bg-white p-8 rounded-lg shadow">
-              <h3 className="text-2xl font-semibold text-navy mb-4" style={{ fontFamily: "var(--font-playfair)" }}>Address</h3>
-              <p className="text-lg text-gray-700 mb-4">
-                204B, Etim Inyang Crescent<br />
-                Eko Hotel Roundabout<br />
-                Victoria Island, Lagos<br />
-                Nigeria
-              </p>
-              <a
-                href="https://www.google.com/maps/search/Ikad+Hotel+and+Suite/@6.4330646,3.4361889,21z?hl=en-GB&authuser=0&entry=ttu&g_ep=EgoyMDI2MDEyMS4wIKXMDSoASAFQAw%3D%3D"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-block font-semibold" style={{ color: "var(--gold)" }}
-              >
-                View on Google Maps →
-              </a>
-            </div>
-
-            <div className="bg-white p-8 rounded-lg shadow">
-              <h3 className="text-2xl font-semibold text-navy mb-4" style={{ fontFamily: "var(--font-playfair)" }}>Contact Information</h3>
-              <div className="space-y-4 text-lg text-gray-700">
-                <p>
-                  <span className="font-semibold text-gray-900">Phone:</span><br />
-                  <a href="tel:09163738458" className="hover:opacity-75" style={{ color: "var(--gold)" }}>+234 916 373 8458</a>
-                </p>
-                <p>
-                  <span className="font-semibold text-gray-900">Email:</span><br />
-                  <a href="mailto:reservations.vi@ikadhotels.com" className="hover:opacity-75" style={{ color: "var(--gold)" }}>reservations.vi@ikadhotels.com</a>
-                </p>
+            <div className="mt-8 grid grid-cols-2 gap-4">
+              <div className="relative aspect-[4/3] overflow-hidden rounded-xl">
+                <Image src="/vi/ibar.jpeg" alt="Bar lounge at Ikad Hotel & Suites" fill sizes="(min-width: 1024px) 25vw, 50vw" className="object-cover" />
+              </div>
+              <div className="relative aspect-[4/3] overflow-hidden rounded-xl">
+                <Image src="/vi/IMG_2665.jpg" alt="Reception lounge at Ikad Hotel & Suites" fill sizes="(min-width: 1024px) 25vw, 50vw" className="object-cover" />
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* CTA Section - Premium Design */}
-      <section className="py-40 px-6 bg-white">
-        <div className="max-w-4xl mx-auto text-center">
-          <p className="text-sm font-semibold tracking-widest gold uppercase mb-4">Ready to Book?</p>
-          <h2 className="text-5xl font-light text-navy mb-6" style={{ fontFamily: "var(--font-playfair)" }}>
-            Experience Luxury Redefined
-          </h2>
-          <p className="text-xl text-gray-600 mb-12 leading-relaxed">
-            Reserve your perfect stay at Ikad Hotel & Suites Victoria Island and indulge in world-class hospitality
-          </p>
-          <div className="flex flex-col sm:flex-row gap-6 justify-center">
-            <Link
-              href="/booking"
-              className="inline-block text-white px-12 py-4 rounded font-semibold transition-colors uppercase text-sm tracking-wide hover:opacity-90" style={{ backgroundColor: "var(--gold)" }}
-            >
-              Book Your Stay
+      {/* Location */}
+      <section id="location" className="scroll-mt-20 px-5 py-20 sm:px-8 md:py-28">
+        <div className="mx-auto max-w-7xl">
+          <div className="mb-14 flex flex-col justify-between gap-6 md:flex-row md:items-end">
+            <div className="max-w-2xl">
+              <Eyebrow>Location</Eyebrow>
+              <h2 className="text-3xl leading-tight text-navy sm:text-4xl md:text-5xl" style={serif}>
+                Where business and the beach meet
+              </h2>
+            </div>
+            <Link href="/victoria-island/things-to-do" className="inline-flex items-center gap-2 font-semibold text-gold-dark hover:underline">
+              Our Victoria Island guide <ArrowRightIcon className="h-4 w-4" />
             </Link>
-            <Link
-              href="/contact"
-              className="inline-block text-white px-12 py-4 rounded font-semibold transition-colors uppercase text-sm tracking-wide hover:opacity-90" style={{ backgroundColor: "var(--navy)" }}
-            >
-              Get More Information
-            </Link>
+          </div>
+
+          <div className="grid gap-10 lg:grid-cols-5">
+            <div className="overflow-hidden rounded-2xl bg-gray-100 lg:col-span-3">
+              <iframe
+                title="Map showing Ikad Hotel & Suites, Victoria Island"
+                src="https://maps.google.com/maps?q=Ikad+Hotel+and+Suite,+Victoria+Island,+Lagos&output=embed"
+                className="h-[360px] w-full lg:h-full lg:min-h-[480px]"
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              />
+            </div>
+            <div className="lg:col-span-2">
+              <address className="not-italic">
+                <p className="text-lg font-semibold text-navy">{hotel.name}</p>
+                <p className="mt-1 text-gray-600">{hotel.address.street}, {hotel.address.locality}, {hotel.address.region}, Nigeria</p>
+              </address>
+              <h3 className="mt-8 text-xs font-semibold uppercase tracking-[0.2em] text-gray-500">Nearby (approx. by car)</h3>
+              <ul className="mt-4 divide-y divide-gray-100">
+                {VI_PLACES.slice(0, 7).map((place) => (
+                  <li key={place.name} className="flex items-baseline justify-between gap-4 py-3 text-sm">
+                    <span className="text-gray-800">{place.name.split(" (")[0]}</span>
+                    <span className="shrink-0 text-gray-500">{place.time}</span>
+                  </li>
+                ))}
+              </ul>
+              <p className="mt-3 text-xs text-gray-400">Times are typical estimates; Lagos traffic varies.</p>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Booking Platforms Section */}
       <BookingPlatforms />
 
-      {/* Room Detail Modal */}
-      {selectedRoom && (
-        <div className="fixed inset-0 bg-black/50 z-50 overflow-y-auto">
-          <div className="min-h-screen flex items-center justify-center p-4">
-            <div className="bg-white rounded-lg max-w-6xl w-full max-h-[90vh] overflow-y-auto">
-              {/* Close Button */}
-              <button
-                onClick={() => setSelectedRoom(null)}
-                className="absolute top-4 right-4 z-10 bg-white rounded-full p-2 shadow-lg hover:bg-gray-100"
-              >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
-
-              <div className="grid md:grid-cols-2 gap-8 p-8">
-                {/* Left Side - Image Carousel */}
-                <div>
-                  {rooms.find(r => r.type === selectedRoom) && (
-                    <>
-                      {/* Main Image */}
-                      <div className="relative h-96 rounded-lg overflow-hidden bg-gray-200 mb-4">
-                        <Image
-                          src={rooms.find(r => r.type === selectedRoom)?.images[detailImageIndex] ?? ""}
-                          alt={`${selectedRoom} room at Ikad Hotel & Suites Victoria Island`}
-                          fill
-                          sizes="(min-width: 1024px) 50vw, 100vw"
-                          className="object-cover"
-                        />
-                        
-                        {/* Navigation Arrows */}
-                        {rooms.find(r => r.type === selectedRoom)!.images.length > 1 && (
-                          <>
-                            <button
-                              onClick={() => setDetailImageIndex((prev) => (prev - 1 + rooms.find(r => r.type === selectedRoom)!.images.length) % rooms.find(r => r.type === selectedRoom)!.images.length)}
-                              className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white p-2 rounded-full transition-all"
-                            >
-                              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                              </svg>
-                            </button>
-                            <button
-                              onClick={() => setDetailImageIndex((prev) => (prev + 1) % rooms.find(r => r.type === selectedRoom)!.images.length)}
-                              className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white p-2 rounded-full transition-all"
-                            >
-                              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                              </svg>
-                            </button>
-                          </>
-                        )}
-                      </div>
-
-                      {/* Thumbnail Gallery */}
-                      <div className="flex gap-2 overflow-x-auto">
-                        {rooms.find(r => r.type === selectedRoom)?.images.map((img, idx) => (
-                          <button
-                            key={idx}
-                            onClick={() => setDetailImageIndex(idx)}
-                            className={`relative flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border-2 transition-all ${
-                              idx === detailImageIndex ? "border-gold" : "border-gray-200"
-                            }`}
-                            style={{ borderColor: idx === detailImageIndex ? "var(--gold)" : undefined }}
-                          >
-                            <Image src={img} alt={`${selectedRoom} room photo ${idx + 1}`} fill sizes="80px" className="object-cover" />
-                          </button>
-                        ))}
-                      </div>
-                    </>
-                  )}
-                </div>
-
-                {/* Right Side - Room Details */}
-                <div>
-                  {rooms.find(r => r.type === selectedRoom) && (
-                    <>
-                      <h1 className="text-4xl font-bold text-navy mb-4" style={{ fontFamily: "var(--font-playfair)" }}>
-                        {selectedRoom} Room
-                      </h1>
-
-                      {/* Spec Badges */}
-                      <div className="flex flex-wrap gap-2 mb-6">
-                        <span className="px-3 py-1 border border-gray-300 rounded text-sm">🛏️ 1 room</span>
-                        <span className="px-3 py-1 border border-gray-300 rounded text-sm">📐 {rooms.find(r => r.type === selectedRoom)?.features.find(f => f.includes('Bed')) ? 'Luxury' : 'Spacious'}</span>
-                        <span className="px-3 py-1 border border-gray-300 rounded text-sm">🌟 Premium</span>
-                      </div>
-
-                      {/* Price */}
-                      <div className="mb-6">
-                        <p className="text-3xl font-bold" style={{ color: "var(--gold)" }}>
-                          {rooms.find(r => r.type === selectedRoom)?.price}
-                        </p>
-                        <p className="text-gray-600">per night</p>
-                      </div>
-
-                      {/* Description */}
-                      <p className="text-gray-700 mb-8 leading-relaxed">
-                        Experience luxury and comfort in our {selectedRoom} room, meticulously designed with premium furnishings and world-class amenities. Perfect for discerning travelers seeking the finest hospitality at Ikad Hotel & Suites Victoria Island.
-                      </p>
-
-                      {/* Room Features - Two Columns */}
-                      <div className="mb-8">
-                        <h3 className="text-lg font-semibold text-navy mb-4">Room Amenities</h3>
-                        <div className="grid grid-cols-2 gap-3">
-                          {rooms.find(r => r.type === selectedRoom)?.features.map((feature, idx) => (
-                            <div key={idx} className="flex items-start gap-2">
-                              <span className="text-lg" style={{ color: "var(--gold)" }}>✓</span>
-                              <span className="text-sm text-gray-700">{feature}</span>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-
-                      {/* CTA Button */}
-                      <Link
-                        href="/booking"
-                        className="block w-full text-white py-4 rounded font-semibold text-center transition-colors uppercase text-sm hover:opacity-90"
-                        style={{ backgroundColor: "var(--gold)" }}
-                      >
-                        Book This Room
-                      </Link>
-                    </>
-                  )}
-                </div>
-              </div>
-            </div>
+      {/* FAQ */}
+      <section className="bg-cream px-5 py-20 sm:px-8 md:py-28" aria-labelledby="vi-faq">
+        <div className="mx-auto grid max-w-7xl gap-12 md:grid-cols-12">
+          <div className="md:col-span-4">
+            <Eyebrow>Good to know</Eyebrow>
+            <h2 id="vi-faq" className="text-3xl leading-tight text-navy sm:text-4xl" style={serif}>Questions about your stay</h2>
+          </div>
+          <div className="divide-y divide-gray-200 border-y border-gray-200 md:col-span-8">
+            {faqs.map((faq) => (
+              <details key={faq.question} className="group py-6">
+                <summary className="flex cursor-pointer list-none items-center justify-between gap-6 text-lg font-medium text-navy [&::-webkit-details-marker]:hidden">
+                  {faq.question}
+                  <span className="text-2xl font-light text-gold-dark transition-transform group-open:rotate-45" aria-hidden="true">+</span>
+                </summary>
+                <p className="mt-4 leading-relaxed text-gray-600">{faq.answer}</p>
+              </details>
+            ))}
           </div>
         </div>
-      )}
-      <WhatsAppChat phoneNumber="+234 916 373 8458" location="Victoria Island" />
+      </section>
+
+      {/* CTA */}
+      <section className="relative isolate overflow-hidden bg-navy px-5 py-24 text-center text-white sm:px-8">
+        <Image src="/vi/IMG_2624.jpg" alt="" fill sizes="100vw" className="-z-10 object-cover opacity-20" />
+        <div className="mx-auto max-w-3xl">
+          <Eyebrow light>Book direct &amp; save</Eyebrow>
+          <h2 className="text-3xl leading-tight sm:text-4xl md:text-5xl" style={serif}>Your Victoria Island stay awaits</h2>
+          <p className="mx-auto mt-6 max-w-xl text-white/75">Reserve online in minutes, or speak to our team for the best available rate.</p>
+          <div className="mt-10 flex flex-col justify-center gap-3 sm:flex-row">
+            <a href="#book" className="rounded-full bg-gold px-8 py-4 text-sm font-semibold uppercase tracking-wider text-navy transition-colors hover:bg-white">
+              Check availability
+            </a>
+            <a href={`tel:${hotel.phone}`} className="rounded-full border border-white/40 px-8 py-4 text-sm font-semibold uppercase tracking-wider text-white transition-colors hover:bg-white/10">
+              Call {hotel.phoneDisplay}
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* Sticky mobile booking bar */}
+      <div className="fixed inset-x-0 bottom-0 z-40 flex items-center justify-between gap-4 border-t border-gray-200 bg-white/95 px-5 py-3 backdrop-blur md:hidden">
+        <p className="text-xs text-gray-500">
+          From <span className="text-lg font-semibold text-navy">{hotel.fromPrice}</span> / night
+        </p>
+        <a href="#book" className="rounded-full bg-navy px-6 py-3 text-sm font-semibold text-white">Check availability</a>
+      </div>
+      <div className="h-16 md:hidden" aria-hidden="true" />
+
+      <WhatsAppChat phoneNumber={hotel.phone} location="Victoria Island" raised />
     </div>
   );
 }

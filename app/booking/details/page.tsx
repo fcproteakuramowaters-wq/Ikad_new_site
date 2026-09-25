@@ -20,19 +20,23 @@ function BookingDetailsContent() {
   const router = useRouter();
 
   const [currentStep, setCurrentStep] = useState(1);
+  // "Reserve" buttons on the hotel pages pass ?room=<type> to preselect a room
+  const requestedRoom = searchParams.get("room") ?? "";
+  const initialRoom = Object.hasOwn(roomPricing, requestedRoom) ? requestedRoom : "Studio";
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     phone: "",
     checkIn: searchParams.get("check_in") || "",
     checkOut: searchParams.get("check_out") || "",
-    roomType: "Studio",
+    roomType: initialRoom,
     adults: parseInt(searchParams.get("adults") || "1"),
     children: parseInt(searchParams.get("children") || "0"),
     childAge: parseInt(searchParams.get("child_age") || "0"),
     nights: 1,
-    amount: 35000,
-    total: 35000,
+    amount: roomPricing[initialRoom],
+    total: roomPricing[initialRoom],
   });
 
   const totalSteps = 4;
