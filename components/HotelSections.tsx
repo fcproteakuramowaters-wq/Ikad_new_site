@@ -95,7 +95,7 @@ export function NearbyList({ places }: { places: Place[] }) {
 
 export function FaqSection({ id, title, faqs }: { id: string; title: string; faqs: { question: string; answer: string }[] }) {
   return (
-    <section className="bg-cream px-5 py-20 sm:px-8 md:py-28" aria-labelledby={id}>
+    <section className="bg-cream px-5 py-14 sm:px-8 md:py-20" aria-labelledby={id}>
       <div className="mx-auto grid max-w-7xl gap-12 md:grid-cols-12">
         <div className="md:col-span-4">
           <Eyebrow>Good to know</Eyebrow>

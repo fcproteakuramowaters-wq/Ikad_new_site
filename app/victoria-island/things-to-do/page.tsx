@@ -49,7 +49,7 @@ export default function ThingsToDo() {
         ]}
       />
 
-      <header className="bg-navy px-5 pb-20 pt-16 text-white sm:px-8 md:pb-28 md:pt-24">
+      <header className="bg-navy px-5 pb-14 pt-12 text-white sm:px-8 md:pb-20 md:pt-16">
         <div className="mx-auto max-w-4xl">
           <nav aria-label="Breadcrumb" className="mb-8 text-xs text-white/60">
             <Link href="/" className="hover:text-white">Home</Link>
@@ -68,8 +68,8 @@ export default function ThingsToDo() {
         </div>
       </header>
 
-      <div className="px-5 py-16 sm:px-8 md:py-24">
-        <div className="mx-auto max-w-4xl space-y-20">
+      <div className="px-5 py-12 sm:px-8 md:py-16">
+        <div className="mx-auto max-w-4xl space-y-14">
           {categories.map((cat) => {
             const places = VI_PLACES.filter((p) => p.category === cat);
             if (!places.length) return null;

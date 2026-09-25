@@ -20,7 +20,7 @@ const platforms = [
 
 export default function BookingPlatforms() {
   return (
-    <section className="px-5 py-20 sm:px-8 md:py-28" aria-labelledby="platforms-heading">
+    <section className="px-5 py-14 sm:px-8 md:py-20" aria-labelledby="platforms-heading">
       <div className="mx-auto max-w-7xl">
         <div className="mb-12 max-w-2xl">
           <p className="mb-4 text-xs font-semibold uppercase tracking-[0.3em] text-gold-dark">Book your way</p>

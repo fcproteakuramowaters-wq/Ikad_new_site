@@ -46,8 +46,8 @@ export default function Booking() {
       />
 
       {/* Hotels Selection Section */}
-      <section className="max-w-6xl mx-auto py-32 px-6">
-        <div className="text-center mb-16">
+      <section className="max-w-6xl mx-auto py-14 md:py-20 px-6">
+        <div className="text-center mb-10">
           <p className="text-sm font-semibold tracking-widest gold uppercase mb-4">
             Choose Your Location
           </p>
@@ -138,7 +138,7 @@ export default function Booking() {
       </section>
 
       {/* Additional Info Section */}
-      <section className="py-24 px-6" style={{ backgroundColor: "var(--light-gray)" }}>
+      <section className="py-14 md:py-20 px-6" style={{ backgroundColor: "var(--light-gray)" }}>
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
             <h2
@@ -199,7 +199,7 @@ export default function Booking() {
       </section>
 
       {/* Call to Action */}
-      <section className="py-24 px-6 bg-navy text-white">
+      <section className="py-14 md:py-20 px-6 bg-navy text-white">
         <div className="max-w-4xl mx-auto text-center">
           <h2
             className="text-4xl font-light mb-6"

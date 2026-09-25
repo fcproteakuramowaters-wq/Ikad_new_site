@@ -86,7 +86,7 @@ export default function VictoriaIsland() {
       />
 
       {/* Hero */}
-      <section className="relative isolate flex min-h-[78svh] items-end overflow-hidden text-white">
+      <section className="relative isolate flex min-h-[68svh] items-end overflow-hidden text-white">
         <Image
           src="/vi/master4.jpg"
           alt="Master suite with a king bed at Ikad Hotel & Suites, Victoria Island"
@@ -97,7 +97,7 @@ export default function VictoriaIsland() {
         />
         <div className="absolute inset-0 -z-10 bg-gradient-to-t from-[#0e1520] via-[#0e1520]/70 to-[#0e1520]/40" aria-hidden="true" />
 
-        <div className="mx-auto w-full max-w-7xl px-5 pb-32 pt-28 sm:px-8 md:pb-36">
+        <div className="mx-auto w-full max-w-7xl px-5 pb-28 pt-20 sm:px-8 md:pb-32">
           <nav aria-label="Breadcrumb" className="mb-6 text-xs text-white/70">
             <Link href="/" className="hover:text-white">Home</Link>
             <span className="mx-2" aria-hidden="true">/</span>
@@ -128,7 +128,7 @@ export default function VictoriaIsland() {
       </div>
 
       {/* Overview */}
-      <section className="px-5 py-20 sm:px-8 md:py-28">
+      <section className="px-5 py-14 sm:px-8 md:py-20">
         <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-12 lg:gap-16">
           <div className="lg:col-span-7">
             <Eyebrow>Welcome</Eyebrow>
@@ -172,9 +172,9 @@ export default function VictoriaIsland() {
       </section>
 
       {/* Rooms */}
-      <section id="rooms" className="scroll-mt-20 bg-cream px-5 py-20 sm:px-8 md:py-28">
+      <section id="rooms" className="scroll-mt-20 bg-cream px-5 py-14 sm:px-8 md:py-20">
         <div className="mx-auto max-w-7xl">
-          <div className="mb-14 flex flex-col justify-between gap-6 md:flex-row md:items-end">
+          <div className="mb-10 flex flex-col justify-between gap-6 md:flex-row md:items-end">
             <div className="max-w-2xl">
               <Eyebrow>Rooms &amp; Suites</Eyebrow>
               <h2 className="text-3xl leading-tight text-navy sm:text-4xl md:text-5xl" style={serif}>
@@ -191,9 +191,9 @@ export default function VictoriaIsland() {
       </section>
 
       {/* Amenities */}
-      <section className="px-5 py-20 sm:px-8 md:py-28">
+      <section className="px-5 py-14 sm:px-8 md:py-20">
         <div className="mx-auto max-w-7xl">
-          <div className="mb-14 max-w-2xl">
+          <div className="mb-10 max-w-2xl">
             <Eyebrow>Amenities &amp; Services</Eyebrow>
             <h2 className="text-3xl leading-tight text-navy sm:text-4xl md:text-5xl" style={serif}>
               Everything taken care of
@@ -216,10 +216,10 @@ export default function VictoriaIsland() {
       {/* Dining */}
       <section className="bg-navy text-white">
         <div className="mx-auto grid max-w-7xl lg:grid-cols-2">
-          <div className="relative min-h-[320px] lg:min-h-[560px]">
+          <div className="relative min-h-[320px] lg:min-h-[460px]">
             <Image src="/vi/irest.jpeg" alt="Restaurant at Ikad Hotel & Suites, Victoria Island" fill sizes="(min-width: 1024px) 50vw, 100vw" className="object-cover" />
           </div>
-          <div className="flex flex-col justify-center px-5 py-16 sm:px-12 lg:py-24">
+          <div className="flex flex-col justify-center px-5 py-12 sm:px-12 lg:py-16">
             <Eyebrow light>Restaurant &amp; Bar</Eyebrow>
             <h2 className="text-3xl leading-tight sm:text-4xl" style={serif}>
               Dine in, catch the game, stay a little longer
@@ -248,9 +248,9 @@ export default function VictoriaIsland() {
       </section>
 
       {/* Location */}
-      <section id="location" className="scroll-mt-20 px-5 py-20 sm:px-8 md:py-28">
+      <section id="location" className="scroll-mt-20 px-5 py-14 sm:px-8 md:py-20">
         <div className="mx-auto max-w-7xl">
-          <div className="mb-14 flex flex-col justify-between gap-6 md:flex-row md:items-end">
+          <div className="mb-10 flex flex-col justify-between gap-6 md:flex-row md:items-end">
             <div className="max-w-2xl">
               <Eyebrow>Location</Eyebrow>
               <h2 className="text-3xl leading-tight text-navy sm:text-4xl md:text-5xl" style={serif}>
@@ -288,7 +288,7 @@ export default function VictoriaIsland() {
       <FaqSection id="vi-faq" title="Questions about your stay" faqs={faqs} />
 
       {/* CTA */}
-      <section className="relative isolate overflow-hidden bg-navy px-5 py-24 text-center text-white sm:px-8">
+      <section className="relative isolate overflow-hidden bg-navy px-5 py-16 text-center text-white sm:px-8 md:py-20">
         <Image src="/vi/IMG_2624.jpg" alt="" fill sizes="100vw" className="-z-10 object-cover opacity-20" />
         <div className="mx-auto max-w-3xl">
           <Eyebrow light>Book direct &amp; save</Eyebrow>
