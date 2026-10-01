@@ -17,7 +17,7 @@ export const formatNaira = (n: number) => `₦${n.toLocaleString("en-NG")}`;
 export const VI_ROOMS: Room[] = [
   {
     type: "Studio",
-    price: 35000,
+    price: 40000,
     tagline: "Smart and compact, made for the solo business traveller.",
     bed: "Single bed",
     occupancy: "Ideal for 1 guest",
@@ -27,7 +27,7 @@ export const VI_ROOMS: Room[] = [
   },
   {
     type: "Elite",
-    price: 45000,
+    price: 50000,
     tagline: "A comfortable double with a minibar and in-room safe.",
     bed: "Double bed",
     occupancy: "Up to 2 adults",
@@ -37,7 +37,7 @@ export const VI_ROOMS: Room[] = [
   },
   {
     type: "Premium",
-    price: 50000,
+    price: 60000,
     tagline: "Queen bed, robes and slippers, and coffee on tap.",
     bed: "Queen bed",
     occupancy: "Up to 2 adults",
@@ -47,7 +47,7 @@ export const VI_ROOMS: Room[] = [
   },
   {
     type: "Luxury",
-    price: 65000,
+    price: 70000,
     tagline: "A king room with its own living area and city views.",
     bed: "King bed",
     occupancy: "2 adults + 1 child",
