@@ -47,7 +47,7 @@ const faqs = [
   {
     question: "Is parking available?",
     answer:
-      "Ikad Hotel & Suites Victoria Island has on-site parking for up to 5 cars, available on a first-come basis. At Ikad Hotel Yaba, parking space is limited, so please contact us before you arrive and we'll confirm whether we can make a space available for you.",
+      "Ikad Hotel & Suites Victoria Island has on-site parking for up to 5 cars. Please inform the front desk before you arrive so we can reserve a space for you. At Ikad Hotel Yaba, parking space is limited, so please contact us before you arrive and we'll confirm whether we can make a space available for you.",
   },
 ];
 
