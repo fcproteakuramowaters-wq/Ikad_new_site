@@ -8,7 +8,6 @@ import {
   BoltIcon,
   TvIcon,
   BedIcon,
-  BriefcaseIcon,
   CarIcon,
   DiningIcon,
   MailIcon,
@@ -26,13 +25,12 @@ const hotel = HOTELS.yaba;
 const vi = HOTELS["victoria-island"];
 
 const amenities = [
-  { icon: CarIcon, title: "Free secure parking", text: "On-site parking for every guest at no extra cost." },
+  { icon: CarIcon, title: "Parking on request", text: "Space is limited. Let us know before you arrive and we'll confirm if we can hold a spot for you." },
   { icon: BoltIcon, title: "24/7 power supply", text: "Constant electricity, day and night, so work and rest never stop." },
   { icon: TvIcon, title: "Weekend live sports", text: "Every weekend's big matches on the restaurant screens, and on the TV in every room." },
   { icon: WifiIcon, title: "Free high-speed Wi-Fi", text: "Reliable internet throughout the property." },
   { icon: DiningIcon, title: "Restaurant & bar", text: "Hearty local dishes and cold drinks in our dining lounge." },
   { icon: ShieldIcon, title: "24-hour front desk", text: "Friendly staff on hand day and night." },
-  { icon: BriefcaseIcon, title: "Conference room", text: "A private space for meetings, trainings and interviews." },
   { icon: CheckIcon, title: "Laundry service", text: "Quick, efficient laundry so you can pack light." },
 ];
 
@@ -59,12 +57,8 @@ const faqs = [
       "Yes. Every weekend we show the big matches in our restaurant and bar, so you can watch with other guests over pepper soup, drinks and more from our menu. Every room's smart TV also carries the matches if you'd rather watch in private.",
   },
   {
-    question: "Is parking free?",
-    answer: "Yes. Ikad Hotel Yaba has free, secure on-site parking for all guests.",
-  },
-  {
-    question: "Can I host a meeting at the hotel?",
-    answer: `Yes, we have a conference room for meetings, trainings and interviews. Contact us on ${hotel.phoneDisplay} or WhatsApp to check availability.`,
+    question: "Is parking available?",
+    answer: `Parking space is limited, so please contact us on ${hotel.phoneDisplay} or WhatsApp before you arrive. We'll confirm whether we can make a space available for your dates.`,
   },
   {
     question: "How far is the hotel from the airport and Victoria Island?",
@@ -111,7 +105,7 @@ export default function Yaba() {
             Smart, comfortable rooms at honest prices in the heart of mainland Lagos, minutes from the Third Mainland Bridge and Yaba&apos;s tech hub.
           </p>
           <ul className="mt-8 flex flex-wrap gap-2 text-xs font-medium sm:text-sm">
-            {["24/7 power", "Free parking", "Free Wi-Fi", "Weekend live sports", `From ${hotel.fromPrice}/night`].map((chip) => (
+            {["24/7 power", "Restaurant & bar", "Free Wi-Fi", "Weekend live sports", `From ${hotel.fromPrice}/night`].map((chip) => (
               <li key={chip} className="rounded-full border border-white/25 bg-white/10 px-4 py-1.5 backdrop-blur">{chip}</li>
             ))}
           </ul>
@@ -140,7 +134,7 @@ export default function Yaba() {
                 Ikad Hotel Yaba is the smart choice for travellers who want a clean, comfortable room, a warm welcome and a fair price. On Borno Way, close to the Third Mainland Bridge, we put the start-ups of Yaba, the campuses of YABATECH and UNILAG, and the rest of Lagos within easy reach.
               </p>
               <p>
-                Whether you&apos;re here for business, study, a family visit or a quick stopover, you&apos;ll find 24/7 power, free parking, fast Wi-Fi, a relaxed restaurant and bar, and a team that treats you like family.
+                Whether you&apos;re here for business, study, a family visit or a quick stopover, you&apos;ll find 24/7 power, fast Wi-Fi, a relaxed restaurant and bar, and a team that treats you like family.
               </p>
             </div>
           </div>
@@ -229,7 +223,7 @@ export default function Yaba() {
               Match days, pepper soup & good company
             </h2>
             <p className="mt-6 leading-relaxed text-white/75">
-              Every weekend the big matches are live on our restaurant screens. Come and watch with fellow guests over a hot bowl of pepper soup, cold drinks and plenty more from the menu. Prefer your own space? Every room&apos;s TV shows the matches too. During the week, book our conference room for a team meeting, training or interview without leaving the hotel.
+              Every weekend the big matches are live on our restaurant screens. Come and watch with fellow guests over a hot bowl of pepper soup, cold drinks and plenty more from the menu. Prefer your own space? Every room&apos;s TV shows the matches too.
             </p>
             <div className="mt-8 grid grid-cols-2 gap-4">
               <div className="relative aspect-[4/3] overflow-hidden rounded-xl">

@@ -47,7 +47,7 @@ const faqs = [
   {
     question: "Is parking available?",
     answer:
-      "Ikad Hotel Yaba offers free secure parking for all guests. For parking at our Victoria Island hotel, please contact the front desk before arrival.",
+      "Parking is limited at both hotels. Please contact the front desk before you arrive and we'll confirm whether a space can be made available for you.",
   },
 ];
 
@@ -152,7 +152,7 @@ export default function Home() {
               Whether you are in Lagos for a board meeting on the Island, a conference on the mainland or a weekend with family, Ikad Hotels gives you a calm, well-run base to return to.
             </p>
             <p>
-              Choose <Link href="/victoria-island" className="font-medium text-navy underline decoration-gold decoration-2 underline-offset-4">Ikad Hotel &amp; Suites, Victoria Island</Link> for refined suites close to Lekki and Lagos Island, or <Link href="/yaba" className="font-medium text-navy underline decoration-gold decoration-2 underline-offset-4">Ikad Hotel Yaba</Link> for comfortable, great-value rooms with free parking on the mainland.
+              Choose <Link href="/victoria-island" className="font-medium text-navy underline decoration-gold decoration-2 underline-offset-4">Ikad Hotel &amp; Suites, Victoria Island</Link> for refined suites close to Lekki and Lagos Island, or <Link href="/yaba" className="font-medium text-navy underline decoration-gold decoration-2 underline-offset-4">Ikad Hotel Yaba</Link> for comfortable, great-value rooms with 24/7 power on the mainland.
             </p>
           </div>
         </div>
